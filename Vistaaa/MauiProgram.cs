@@ -17,6 +17,9 @@ namespace Vistaaa
 
 #if DEBUG
     		builder.Logging.AddDebug();
+            builder.Services.AddSingleton<MainPage>();
+            builder.Services.AddTransient<MainPage>();
+            builder.Services.AddSingleton<Database>();
 #endif
 
             return builder.Build();

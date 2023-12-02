@@ -1,24 +1,35 @@
-﻿namespace Vistaaa
+﻿using Vistaaa.Classes;
+using Vistaaa.Views;
+
+namespace Vistaaa
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
+        readonly Database database;
+        public List<Advertisement>? Advertisements { get; set; }
 
-        public MainPage()
+        public MainPage(Database database)
         {
             InitializeComponent();
+            this.database = database;
+            LoadData();
+        }
+        private async void LoadData()
+        {
+            Advertisements = await database.GetAdvertisementsAsync();
+            collectionView.ItemsSource = Advertisements;
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
+        private async void Button_Clicked(object sender, EventArgs e)
         {
-            count++;
+            var button = sender as Button;
+            var advertisement = button?.BindingContext as Advertisement;
+            await Navigation.PushAsync(new AdvertisementPage(advertisement));
+        }
 
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
+        private async void Button_Clicked_1(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("///dogs");
         }
     }
 
