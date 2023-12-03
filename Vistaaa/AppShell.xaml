@@ -9,11 +9,11 @@
     <Shell.FlyoutBackdrop>
         <LinearGradientBrush StartPoint="0,0"
                              EndPoint="1,1">
-            <GradientStop Color="#8A2387"
+            <GradientStop Color="#EE8A2387"
                           Offset="0.1" />
-            <GradientStop Color="#E94057"
+            <GradientStop Color="#DDE94057"
                           Offset="0.6" />
-            <GradientStop Color="#F27121"
+            <GradientStop Color="#EEF27121"
                           Offset="1.0" />
         </LinearGradientBrush>
     </Shell.FlyoutBackdrop>
@@ -45,13 +45,12 @@
                       Icon="monkey.png"
                       ContentTemplate="{DataTemplate local:MainPage}" />
         <Tab Title="Oferty pracy"
-             Icon="paw.png">
+             Icon="paw.png" Route="offers">
             <ShellContent Title="Najnowsze"
                           Icon="cat.png" 
                           ContentTemplate="{DataTemplate local:MainPage}" Appearing="ShellContent_Appearing"/>
             <ShellContent Title="Ostatnio oglądane"
                           Icon="dog.png"
-                          Route="dogs"
                           ContentTemplate="{DataTemplate local:MainPage}" Appearing="ShellContent_Appearing2"/>
         </Tab>
         <ShellContent Title="Profil"

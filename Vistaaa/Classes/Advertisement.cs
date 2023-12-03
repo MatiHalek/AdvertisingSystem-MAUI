@@ -12,6 +12,7 @@ namespace Vistaaa.Classes
         [PrimaryKey, AutoIncrement]
         public uint Id { get; set; }
         public string Title { get; set; }
+        public uint CompanyId { get; set; }
         public string PositionName { get; set; }
         public string PositionLevel { get; set; }
         public string ContractType { get; set; }
@@ -20,15 +21,33 @@ namespace Vistaaa.Classes
         public decimal? LowestSalary { get; set; }
         public decimal HighestSalary { get; set; }
         public string WorkDays { get; set; }
+        [Ignore]
+        public string CompanyName
+        {
+            get
+            {
+                Database database = new();
+                var companies = Task.Run(database.GetCompaniesAsync).Result;
+                foreach (var company in companies)
+                {
+                    if (company.Id == CompanyId)
+                    {
+                        return company.Name;
+                    }
+                }
+                return "Unknown company";
+            }
+        }
         public DateTime CreationDate { get; set; }
         public DateTime ExpirationDate { get; set; }
         public string Responsibilities { get; set; }
         public string Requirements { get; set; }
         public string Offer { get; set; }
 
-        public Advertisement(string title, string positionName, string positionLevel, string contractType, string employment, string workType, decimal? lowestSalary, decimal highestSalary, string workDays, DateTime creationDate, DateTime expirationDate, string responsibilities, string requirements, string offer)
+        public Advertisement(string title, uint companyId, string positionName, string positionLevel, string contractType, string employment, string workType, decimal? lowestSalary, decimal highestSalary, string workDays, DateTime creationDate, DateTime expirationDate, string responsibilities, string requirements, string offer)
         {
             Title = title;
+            CompanyId = companyId;
             PositionName = positionName;
             PositionLevel = positionLevel;
             ContractType = contractType;
