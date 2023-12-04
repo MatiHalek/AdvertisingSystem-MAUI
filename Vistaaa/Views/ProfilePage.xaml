@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Vistaaa.Views.ProfilePage"
+             Title="ProfilePage">
+    <Grid>
+        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="20" MaximumWidthRequest="300">
+            <Label Text="Witaj w Vistaaa! Wygląda na to, że nie jesteś zalogowany." HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="20"/>
+            <Label Text="Zaloguj się, by móc w pełni korzystać z systemu Vistaaa."/>
+            <Button Text="Zaloguj się"/>
+            <Label Text="Nie masz jeszcze konta? Zarejestruj się za darmo."/>
+            <Button Text="Zarejestruj się"/>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

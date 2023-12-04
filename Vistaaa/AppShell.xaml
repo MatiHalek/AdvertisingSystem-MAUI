@@ -53,7 +53,7 @@
         </Tab>
         <ShellContent Title="Profil"
                       Icon="bear.png"
-                      ContentTemplate="{DataTemplate local:MainPage}" />
+                      ContentTemplate="{DataTemplate local:Views.ProfilePage}" />
     </FlyoutItem>
     <ShellContent Title="Vistaaa - informacje"
                   Icon="info.png"

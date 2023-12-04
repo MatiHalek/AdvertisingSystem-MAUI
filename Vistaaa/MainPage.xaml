@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Vistaaa.MainPage">
-    <ScrollView>
+    <ScrollView x:Name="AdvertisementScrollView">
         <VerticalStackLayout MaximumWidthRequest="1000"
             Padding="10,0"
             Spacing="25">
@@ -10,7 +10,7 @@
             <Picker/>
             <ActivityIndicator IsRunning="True" x:Name="loading" />
             <!--<RefreshView RefreshColor="Yellow">-->
-                <CollectionView x:Name="collectionView">
+                <CollectionView x:Name="AdvertisementCollectionView">
                     <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <StackLayout>
@@ -68,9 +68,9 @@
                         Span="2" VerticalItemSpacing="10" HorizontalItemSpacing="10" />
                     </CollectionView.ItemsLayout>
                 <CollectionView.Footer>
-                    <HorizontalStackLayout x:Name="test" HorizontalOptions="Center">
-                        <Button x:Name="previousPage" Clicked="PreviousPage_Clicked" Text="&lt;"/>
-                        <Button x:Name="nextPage" Clicked="NextPage_Clicked" Text="&gt;"/>
+                    <HorizontalStackLayout Spacing="10" x:Name="test" HorizontalOptions="Center">
+                        <Button x:Name="previousPageBtn" Clicked="PreviousPageButton_Clicked" Text="&lt;"/>
+                        <Button x:Name="nextPageBtn" Clicked="NextPageButton_Clicked" Text="&gt;"/>
                     </HorizontalStackLayout>
                 </CollectionView.Footer>
             </CollectionView>

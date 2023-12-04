@@ -26,7 +26,7 @@ public partial class HomePage : ContentPage
         {
             var stackLayout = (StackLayout)counter.Children[i];
             var grid = (Grid)stackLayout.Children[0];
-            _ = grid.TranslateTo(0, -50 * int.Parse(numberString[i].ToString()), 500 + 80 * (uint)i, Easing.SinInOut);
+            _ = grid.TranslateTo(0, -50 * int.Parse(numberString[i].ToString()), 500 + 100 * (uint)i, Easing.SinInOut);
         }
     }
 }

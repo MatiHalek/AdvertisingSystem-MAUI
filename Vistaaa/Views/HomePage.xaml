@@ -137,6 +137,19 @@
                     </VerticalStackLayout>
                 </Border>
             </AbsoluteLayout>
+            <Image HeightRequest="200" Source="employer.jpg" HorizontalOptions="Center">
+                <Image.Clip>
+                    <EllipseGeometry Center="100, 100"
+                         RadiusX="80"
+                         RadiusY="80" />
+                </Image.Clip>
+                <Image.Shadow>
+                    <Shadow Brush="Black"
+                Offset="10,10"
+                Opacity="0.8" />
+                </Image.Shadow>
+            </Image>
         </VerticalStackLayout>
+
     </ScrollView>
 </ContentPage>

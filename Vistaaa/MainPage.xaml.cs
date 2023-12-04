@@ -6,8 +6,9 @@ namespace Vistaaa
     public partial class MainPage : ContentPage
     {
         readonly Database database;
-        const uint ADVERTISEMENTS_PER_PAGE = 50;
-        public List<Advertisement>? Advertisements { get; set; }
+        const uint ADVERTISEMENTS_PER_PAGE = 5;
+        uint currentPage = 1;
+        public List<Advertisement>? AdvertisementList { get; set; }
         public MainPage(Database database)
         {
             InitializeComponent();
@@ -19,9 +20,23 @@ namespace Vistaaa
         private async void LoadData()
         {
             loading.IsRunning = true;
-            Advertisements = await database.GetAdvertisementsAsync(searchBar.Text);          
-            collectionView.ItemsSource = Advertisements;
-            loading.IsRunning = false;           
+            string searchBarText = string.Empty;
+            if (searchBar.Text != null)
+                searchBarText = searchBar.Text;
+            int advertisementCount = (await database.GetAdvertisementsAsync(searchBarText)).Count;
+            if (ADVERTISEMENTS_PER_PAGE * currentPage == advertisementCount + ADVERTISEMENTS_PER_PAGE)
+                currentPage--;
+            AdvertisementList = await database.GetAdvertisementsAsync(currentPage, ADVERTISEMENTS_PER_PAGE, searchBarText);
+            AdvertisementCollectionView.ItemsSource = AdvertisementList;
+            if (currentPage < 2)
+                previousPageBtn.IsEnabled = false;
+            else
+                previousPageBtn.IsEnabled = true;
+            if (currentPage == Math.Ceiling(advertisementCount / (float)ADVERTISEMENTS_PER_PAGE))
+                nextPageBtn.IsEnabled = false;
+            else
+                nextPageBtn.IsEnabled = true;
+            loading.IsRunning = false;
         }
         private async void Button_Clicked(object sender, EventArgs e)
         {
@@ -31,17 +46,23 @@ namespace Vistaaa
         }
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
+            currentPage = 1;
             LoadData();
         }
-
-        private void PreviousPage_Clicked(object sender, EventArgs e)
+        private void PreviousPageButton_Clicked(object sender, EventArgs e)
         {
-
+            if(currentPage > 1)
+            {
+                currentPage--;
+                AdvertisementScrollView.ScrollToAsync(0, 0, true);
+                LoadData();
+            }
         }
-
-        private void NextPage_Clicked(object sender, EventArgs e)
+        private void NextPageButton_Clicked(object sender, EventArgs e)
         {
-
+            currentPage++;
+            AdvertisementScrollView.ScrollToAsync(0, 0, true);
+            LoadData();
         }
     }
 
