@@ -40,8 +40,8 @@ namespace Vistaaa
             await Init();
             var advertisements = GetAdvertisementsAsync(search);
             if (search != null)
-                return await DatabaseHandler.Table<Advertisement>().Where(advertisement => advertisement.Title.ToLower().Contains(search.ToLower())).ToListAsync();
-            return await DatabaseHandler.Table<Advertisement>().ToListAsync();
+                return await DatabaseHandler.Table<Advertisement>().Where(advertisement => advertisement.Title.ToLower().Contains(search.ToLower())).Skip((int)((pageNumber - 1) * advertisementsOnPage)).Take((int)advertisementsOnPage).ToListAsync();
+            return await DatabaseHandler.Table<Advertisement>().Skip((int)((pageNumber - 1) * advertisementsOnPage)).Take((int)advertisementsOnPage).ToListAsync();
         }
         public async Task<int> DeleteAdvertisementAsync(Advertisement advertisement)
         {

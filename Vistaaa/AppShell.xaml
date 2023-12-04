@@ -5,7 +5,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Vistaaa"
     Shell.FlyoutBehavior="Flyout" Shell.NavBarHasShadow="True" NavigationPage.BackButtonTitle="Wstecz" 
-    Title="Vistaaa - serwis ogłoszeniowy" BackgroundColor="#0FA">
+    Title="Vistaaa - serwis ogłoszeniowy" BackgroundColor="OrangeRed">
+    <Shell.TitleView>
+        <Grid BackgroundColor="Yellow">
+        </Grid>
+    </Shell.TitleView>
     <Shell.FlyoutBackdrop>
         <LinearGradientBrush StartPoint="0,0"
                              EndPoint="1,1">
@@ -34,16 +38,10 @@
             </VerticalStackLayout>
         </DataTemplate>
     </Shell.FlyoutFooterTemplate>
-    <!--<ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage">       
-    </ShellContent>-->
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems" Title="aaaa">
-        
         <ShellContent Title="Strona główna"
                       Icon="monkey.png"
-                      ContentTemplate="{DataTemplate local:MainPage}" />
+                      ContentTemplate="{DataTemplate local:Views.HomePage}" />
         <Tab Title="Oferty pracy"
              Icon="paw.png" Route="offers">
             <ShellContent Title="Najnowsze"
