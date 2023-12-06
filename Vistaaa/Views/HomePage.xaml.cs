@@ -5,13 +5,13 @@ namespace Vistaaa.Views;
 public partial class HomePage : ContentPage
 {
     int number = 6549;
-    Random r = new();
+    readonly Random r = new();
     public HomePage()
 	{
 		InitializeComponent();
         var myTimer = new System.Timers.Timer();
         myTimer.Elapsed += new ElapsedEventHandler(IncreaseOffers);
-        myTimer.Interval = 2000;  
+        myTimer.Interval = 3000;  
         myTimer.Enabled = true;
     }
     private void IncreaseOffers(object? source, ElapsedEventArgs e)

@@ -4,8 +4,11 @@ namespace Vistaaa.Views;
 
 public partial class AdvertisementPage : ContentPage
 {
-	public AdvertisementPage(Advertisement? advertisement)
+    private Advertisement? Advertisement { get; set;}
+    public AdvertisementPage(Advertisement? advertisement)
 	{
 		InitializeComponent();
+		Advertisement = advertisement;
+        advertisementTitle.Text = Advertisement?.Title;
 	}
 }

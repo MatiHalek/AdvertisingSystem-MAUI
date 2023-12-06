@@ -9,13 +9,18 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <ScrollView>
-            
+            <VerticalStackLayout>
+                <VerticalStackLayout MaximumWidthRequest="1200" Padding="15">
+                    <Label FontFamily="SignikaNegative" FontAttributes="Bold" FontSize="25" x:Name="advertisementTitle"/>
+                    <Label FontFamily="FAS" Text="&#xf118;" FontAttributes="Bold" FontSize="25"/>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
         </ScrollView>
-        <StackLayout Grid.Row="1">
-            <HorizontalStackLayout HorizontalOptions="Center">
-                <Button Text="Aplikuj"/>
-                <Button Text="Zapisz"/>
-            </HorizontalStackLayout>
+        <StackLayout Grid.Row="1" Padding="15">
+            <FlexLayout JustifyContent="Center">
+                <Button FontFamily="SignikaNegative" Margin="0, 0, 10, 0" Text="Aplikuj" FlexLayout.Shrink="1" FlexLayout.Basis="350" TextColor="White" FontAttributes="Bold" FontSize="18" CharacterSpacing="1" CornerRadius="20" BackgroundColor="SeaGreen"/>
+                <Button FontFamily="SignikaNegative" Margin="10, 0, 0, 0" Text="Zapisz" FlexLayout.Shrink="1" FlexLayout.Basis="350"  BackgroundColor="Transparent" BorderWidth="2" BorderColor="DodgerBlue" CornerRadius="20" TextColor="DodgerBlue" FontAttributes="Bold" FontSize="18" CharacterSpacing="1"/>
+            </FlexLayout>
         </StackLayout>
     </Grid>
 </ContentPage>

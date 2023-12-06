@@ -4,36 +4,50 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Vistaaa"
-    Shell.FlyoutBehavior="Flyout" Shell.NavBarHasShadow="True" NavigationPage.BackButtonTitle="Wstecz" 
-    Title="Vistaaa - serwis ogłoszeniowy" BackgroundColor="OrangeRed">
-    <Shell.TitleView>
-        <Grid BackgroundColor="Yellow">
+    Shell.FlyoutBehavior="Flyout" Shell.NavBarHasShadow="True" NavigationPage.BackButtonTitle="Wstecz" BackgroundColor="SeaGreen"
+    Title="Vistaaa - serwis ogłoszeniowy" >
+    <!--<Shell.TitleView>
+        <Grid >
         </Grid>
-    </Shell.TitleView>
+    </Shell.TitleView>-->
+    <Shell.MenuBarItems>
+        <MenuBarItem Text="Pomoc">
+            <MenuFlyoutItem Text="Coś tam"/>
+            <MenuFlyoutSeparator/>
+            <MenuFlyoutSubItem Text="Wybierz..">
+                <MenuFlyoutItem Text="Vista"/>
+                <MenuFlyoutItem Text="11" />
+            </MenuFlyoutSubItem>
+        </MenuBarItem>
+    </Shell.MenuBarItems>
     <Shell.FlyoutBackdrop>
         <LinearGradientBrush StartPoint="0,0"
                              EndPoint="1,1">
-            <GradientStop Color="#EE8A2387"
-                          Offset="0.1" />
-            <GradientStop Color="#DDE94057"
+            <GradientStop Color="#F02E8B57"
+                          Offset="0.3" />
+            <GradientStop Color="#E21E90FF"
                           Offset="0.6" />
-            <GradientStop Color="#EEF27121"
+            <GradientStop Color="#FF663399"
                           Offset="1.0" />
         </LinearGradientBrush>
     </Shell.FlyoutBackdrop>
     <Shell.FlyoutHeaderTemplate>
         <DataTemplate>
-            <Label Text="Vistaaa" FontSize="25"                       
-                       FontAttributes="Bold"
-                       HorizontalTextAlignment="Center"
-                       VerticalTextAlignment="Center" />
+            <VerticalStackLayout>
+                <Label Text="System ogłoszeniowy" FontAttributes="Bold" HorizontalOptions="Center" Margin="0, 15, 0, 0"/>
+                <AbsoluteLayout HorizontalOptions="Center">
+                    <Image Source="vistaaa_full_logo.png" Margin="15" HorizontalOptions="Center" WidthRequest="200"/>
+                    <Label Text="{Binding Path=AppVersion, StringFormat='v{0}'}" FontFamily="SignikaNegative" FontAttributes="Bold" FontSize="22" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.73, 0.65, AutoSize, AutoSize"/>
+                </AbsoluteLayout>
+                <Label Text="{Binding Path=ReleaseDate, StringFormat='Data wydania: {0:d.M.yyyy}'}" FontAttributes="Bold" HorizontalOptions="Center" Margin="0, 0, 0, 15"/>
+            </VerticalStackLayout>
         </DataTemplate>
     </Shell.FlyoutHeaderTemplate>
     <Shell.FlyoutFooterTemplate>
         <DataTemplate>
-            <VerticalStackLayout Padding="10">
-                <Label Text="© 2024 MH Corporation." FontSize="13"/>
-                <Label Text="Wszelkie prawa zastrzeżone." FontSize="13"/>
+            <VerticalStackLayout Padding="15">
+                <Label Text="© 2024 MH Corporation." FontAttributes="Bold" FontSize="13"/>
+                <Label Text="Wszelkie prawa zastrzeżone." FontAttributes="Bold" FontSize="13"/>
                 <Label Text="Made with love by Windows Vista Lover!" FontSize="13"/>
             </VerticalStackLayout>
         </DataTemplate>
@@ -42,20 +56,11 @@
         <ShellContent Title="Strona główna"
                       Icon="monkey.png"
                       ContentTemplate="{DataTemplate local:Views.HomePage}" />
-        <Tab Title="Oferty pracy"
-             Icon="paw.png" Route="offers">
-            <ShellContent Title="Najnowsze"
-                          Icon="cat.png" 
-                          ContentTemplate="{DataTemplate local:MainPage}" Appearing="ShellContent_Appearing"/>
-            <ShellContent Title="Ostatnio oglądane"
-                          Icon="dog.png"
-                          ContentTemplate="{DataTemplate local:MainPage}" Appearing="ShellContent_Appearing2"/>
-        </Tab>
+        <ShellContent Title="Oferty pracy" Route="offers"
+              Icon="monkey.png"
+              ContentTemplate="{DataTemplate local:MainPage}" />
         <ShellContent Title="Profil"
                       Icon="bear.png"
                       ContentTemplate="{DataTemplate local:Views.ProfilePage}" />
     </FlyoutItem>
-    <ShellContent Title="Vistaaa - informacje"
-                  Icon="info.png"
-                  ContentTemplate="{DataTemplate local:MainPage}" />
 </Shell>

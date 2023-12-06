@@ -2,17 +2,30 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Vistaaa.Views.HomePage"
-             Title="HomePage">
+             Title="Strona główna">
     <ScrollView>
         <VerticalStackLayout>
             <AbsoluteLayout>
                 <Image Source="finding_job.jpg" Aspect="AspectFill"  VerticalOptions="Center" AbsoluteLayout.LayoutFlags="WidthProportional" MaximumHeightRequest="500"  AbsoluteLayout.LayoutBounds="0, 0, 1, AutoSize" />
-                <Border StrokeThickness="0" Padding="25" BackgroundColor="#77FFFFFF" AbsoluteLayout.LayoutFlags="YProportional" AbsoluteLayout.LayoutBounds="50, 0.5, AutoSize, AutoSize">
+                <Border StrokeThickness="0" Padding="25" MaximumWidthRequest="500" AbsoluteLayout.LayoutFlags="WidthProportional" AbsoluteLayout.LayoutBounds="50, 60, 0.7, AutoSize" HorizontalOptions="Start">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0"
+                     EndPoint="1,1">
+                            <GradientStop Color="#FF2E8B57"
+                  Offset="0" />
+                            <GradientStop Color="#772E8B57"
+                  Offset="0.3" />
+                            <GradientStop Color="#DD2E8B57"
+                  Offset="0.6" />
+                            <GradientStop Color="#BB2E8B57"
+                  Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Border.Background>
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
-                    <VerticalStackLayout >
-                        <Label Text="Najlepsze oferty pracy" FontAttributes="Bold" FontSize="20"/>
+                    <VerticalStackLayout>
+                        <Label FontFamily="SignikaNegative" Text="Mamy już" FontAttributes="Bold" FontSize="28" TextColor="White"/>
                         <Border StrokeThickness="0">
                             <HorizontalStackLayout x:Name="counter">
                                 <StackLayout HeightRequest="50" WidthRequest="25">
@@ -32,16 +45,45 @@
                                             <RowDefinition Height="50"/>
                                             <RowDefinition Height="50"/>
                                         </Grid.RowDefinitions>
-                                        <Label Text="0" FontSize="35" FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="1" FontSize="35" FontAttributes="Bold" Grid.Row="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="2" FontSize="35" FontAttributes="Bold" Grid.Row="2" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="3" FontSize="35" FontAttributes="Bold" Grid.Row="3" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="4" FontSize="35" FontAttributes="Bold" Grid.Row="4" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="5" FontSize="35" FontAttributes="Bold" Grid.Row="5" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="6" FontSize="35" FontAttributes="Bold" Grid.Row="6" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="7" FontSize="35" FontAttributes="Bold" Grid.Row="7" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="8" FontSize="35" FontAttributes="Bold" Grid.Row="8" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="9" FontSize="35" FontAttributes="Bold" Grid.Row="9" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="0" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="1" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="2" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="2" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="3" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="3" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="4" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="4" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="5" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="5" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="6" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="6" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="7" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="7" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="8" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="8" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="9" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="9" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                    </Grid>
+                                </StackLayout>
+                                <StackLayout HeightRequest="50" WidthRequest="25" Margin="10, 0, 0, 0">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="50"/>
+                                            <RowDefinition Height="50"/>
+                                            <RowDefinition Height="50"/>
+                                            <RowDefinition Height="50"/>
+                                            <RowDefinition Height="50"/>
+                                            <RowDefinition Height="50"/>
+                                            <RowDefinition Height="50"/>
+                                            <RowDefinition Height="50"/>
+                                            <RowDefinition Height="50"/>
+                                            <RowDefinition Height="50"/>
+                                        </Grid.RowDefinitions>
+                                        <Label Text="0" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="1" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="2" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="2" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="3" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="3" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="4" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="4" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="5" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="5" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="6" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="6" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="7" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="7" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="8" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="8" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="9" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="9" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
                                     </Grid>
                                 </StackLayout>
                                 <StackLayout HeightRequest="50" WidthRequest="25">
@@ -61,16 +103,16 @@
                                             <RowDefinition Height="50"/>
                                             <RowDefinition Height="50"/>
                                         </Grid.RowDefinitions>
-                                        <Label Text="0" FontSize="35" FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="1" FontSize="35" FontAttributes="Bold" Grid.Row="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="2" FontSize="35" FontAttributes="Bold" Grid.Row="2" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="3" FontSize="35" FontAttributes="Bold" Grid.Row="3" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="4" FontSize="35" FontAttributes="Bold" Grid.Row="4" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="5" FontSize="35" FontAttributes="Bold" Grid.Row="5" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="6" FontSize="35" FontAttributes="Bold" Grid.Row="6" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="7" FontSize="35" FontAttributes="Bold" Grid.Row="7" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="8" FontSize="35" FontAttributes="Bold" Grid.Row="8" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="9" FontSize="35" FontAttributes="Bold" Grid.Row="9" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="0" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="1" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="2" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="2" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="3" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="3" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="4" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="4" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="5" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="5" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="6" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="6" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="7" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="7" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="8" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="8" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="9" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="9" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
                                     </Grid>
                                 </StackLayout>
                                 <StackLayout HeightRequest="50" WidthRequest="25">
@@ -90,49 +132,21 @@
                                             <RowDefinition Height="50"/>
                                             <RowDefinition Height="50"/>
                                         </Grid.RowDefinitions>
-                                        <Label Text="0" FontSize="35" FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="1" FontSize="35" FontAttributes="Bold" Grid.Row="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="2" FontSize="35" FontAttributes="Bold" Grid.Row="2" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="3" FontSize="35" FontAttributes="Bold" Grid.Row="3" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="4" FontSize="35" FontAttributes="Bold" Grid.Row="4" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="5" FontSize="35" FontAttributes="Bold" Grid.Row="5" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="6" FontSize="35" FontAttributes="Bold" Grid.Row="6" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="7" FontSize="35" FontAttributes="Bold" Grid.Row="7" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="8" FontSize="35" FontAttributes="Bold" Grid.Row="8" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="9" FontSize="35" FontAttributes="Bold" Grid.Row="9" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                    </Grid>
-                                </StackLayout>
-                                <StackLayout HeightRequest="50" WidthRequest="25">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="50"/>
-                                            <RowDefinition Height="50"/>
-                                            <RowDefinition Height="50"/>
-                                            <RowDefinition Height="50"/>
-                                            <RowDefinition Height="50"/>
-                                            <RowDefinition Height="50"/>
-                                            <RowDefinition Height="50"/>
-                                            <RowDefinition Height="50"/>
-                                            <RowDefinition Height="50"/>
-                                            <RowDefinition Height="50"/>
-                                        </Grid.RowDefinitions>
-                                        <Label Text="0" FontSize="35" FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="1" FontSize="35" FontAttributes="Bold" Grid.Row="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="2" FontSize="35" FontAttributes="Bold" Grid.Row="2" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="3" FontSize="35" FontAttributes="Bold" Grid.Row="3" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="4" FontSize="35" FontAttributes="Bold" Grid.Row="4" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="5" FontSize="35" FontAttributes="Bold" Grid.Row="5" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="6" FontSize="35" FontAttributes="Bold" Grid.Row="6" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="7" FontSize="35" FontAttributes="Bold" Grid.Row="7" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="8" FontSize="35" FontAttributes="Bold" Grid.Row="8" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                                        <Label Text="9" FontSize="35" FontAttributes="Bold" Grid.Row="9" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="0" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="1" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="2" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="2" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="3" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="3" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="4" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="4" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="5" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="5" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="6" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="6" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="7" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="7" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="8" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="8" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                        <Label Text="9" TextColor="#EBD6FF" FontFamily="SignikaNegative" FontSize="45" FontAttributes="Bold" Grid.Row="9" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
                                     </Grid>
                                 </StackLayout>
                             </HorizontalStackLayout>
                         </Border>
+                        <Label FontFamily="SignikaNegative" Text="ofert od sprawdzonych pracodawców" FontAttributes="Bold" FontSize="28" TextColor="White"/>
 
                     </VerticalStackLayout>
                 </Border>
@@ -144,7 +158,7 @@
                          RadiusY="80" />
                 </Image.Clip>
                 <Image.Shadow>
-                    <Shadow Brush="Black"
+                    <Shadow Brush="#555"
                 Offset="10,10"
                 Opacity="0.8" />
                 </Image.Shadow>

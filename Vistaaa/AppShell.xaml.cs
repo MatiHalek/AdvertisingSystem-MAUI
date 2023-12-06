@@ -2,18 +2,14 @@
 {
     public partial class AppShell : Shell
     {
+
+        public string AppVersion { get; } = "1.0.0";
+        public DateOnly ReleaseDate { get; } = new DateOnly(2023, 12, 19);
         public AppShell()
         {
             InitializeComponent();
-        }
-
-        private void ShellContent_Appearing(object sender, EventArgs e)
-        {
-
-        }
-        private void ShellContent_Appearing2(object sender, EventArgs e)
-        {
-
+            BindingContext = this;
+            
         }
     }
 }
