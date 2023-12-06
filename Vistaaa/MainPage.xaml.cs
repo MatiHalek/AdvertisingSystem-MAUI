@@ -1,4 +1,4 @@
-﻿using Vistaaa.Classes;
+﻿using Vistaaa.Models;
 using Vistaaa.Views;
 
 namespace Vistaaa

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Vistaaa.Classes;
+using Vistaaa.Models;
 
 namespace Vistaaa
 {
@@ -22,6 +22,7 @@ namespace Vistaaa
             DatabaseHandler = new SQLiteAsyncConnection(Constants.DatabasePath, Constants.Flags);
             await DatabaseHandler.CreateTableAsync<Advertisement>();
             await DatabaseHandler.CreateTableAsync<Company>();
+            await DatabaseHandler.CreateTableAsync<Category>();
         }
         public async Task<int> CreateAdvertisementAsync(Advertisement advertisement)
         {
@@ -42,6 +43,11 @@ namespace Vistaaa
             if (search != null)
                 return await DatabaseHandler.Table<Advertisement>().Where(advertisement => advertisement.Title.ToLower().Contains(search.ToLower())).Skip((int)((pageNumber - 1) * advertisementsOnPage)).Take((int)advertisementsOnPage).ToListAsync();
             return await DatabaseHandler.Table<Advertisement>().Skip((int)((pageNumber - 1) * advertisementsOnPage)).Take((int)advertisementsOnPage).ToListAsync();
+        }
+        public async Task<List<Category>> GetCategoriesAsync()
+        {
+            await Init();
+            return await DatabaseHandler.Table<Category>().ToListAsync();
         }
         public async Task<int> DeleteAdvertisementAsync(Advertisement advertisement)
         {

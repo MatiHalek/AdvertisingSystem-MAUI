@@ -16,7 +16,7 @@ namespace Vistaaa
                 fonts.AddFont("Free-Regular-400.otf", "FAR");
                 fonts.AddFont("Free-Solid-900.otf", "FAS");
                 fonts.AddFont("SignikaNegative-Medium.ttf", "SignikaNegative");
-            }).UseMauiCommunityToolkit();
+            }).UseMauiCommunityToolkit().UseMauiMaps();
 #if DEBUG
             builder.Logging.AddDebug();
             builder.Services.AddSingleton<MainPage>();

@@ -6,6 +6,7 @@ public partial class HomePage : ContentPage
 {
     int number = 6549;
     readonly Random r = new();
+    List<string> list = ["aaa", "bbb", "ccc"];
     public HomePage()
 	{
 		InitializeComponent();
@@ -28,5 +29,10 @@ public partial class HomePage : ContentPage
             var grid = (Grid)stackLayout.Children[0];
             _ = grid.TranslateTo(0, -50 * int.Parse(numberString[i].ToString()), 500 + 100 * (uint)i, Easing.SinInOut);
         }
+    }
+
+    private void Button_Clicked(object sender, EventArgs e)
+    {
+       Shell.Current.GoToAsync("//offers");
     }
 }

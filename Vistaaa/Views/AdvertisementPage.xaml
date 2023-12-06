@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Vistaaa.Views.AdvertisementPage"
-             Title="AdvertisementPage">
+             Title="Szczegóły ogłoszenia">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -10,9 +10,72 @@
         </Grid.RowDefinitions>
         <ScrollView>
             <VerticalStackLayout>
-                <VerticalStackLayout MaximumWidthRequest="1200" Padding="15">
-                    <Label FontFamily="SignikaNegative" FontAttributes="Bold" FontSize="25" x:Name="advertisementTitle"/>
-                    <Label FontFamily="FAS" Text="&#xf118;" FontAttributes="Bold" FontSize="25"/>
+                <VerticalStackLayout HeightRequest="250" BackgroundColor="Gray" />
+                <VerticalStackLayout MaximumWidthRequest="1200" Padding="15" TranslationY="-50">
+                    <Border StrokeThickness="0" BackgroundColor="#663399" Padding="15" >
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="15"/>
+                        </Border.StrokeShape>
+                        <VerticalStackLayout Spacing="10">
+                            <Label LineBreakMode="WordWrap">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span FontFamily="SignikaNegative" FontAttributes="Bold" FontSize="25" x:Name="advertisementTitle"/>
+                                        <Span x:Name="advertisementId"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label x:Name="advertisementCategory" TextColor="LightGray" FontFamily="SignikaNegative" FontAttributes="Bold"/>
+                            <FlexLayout Wrap="Wrap" JustifyContent="SpaceBetween">
+                                <Label>
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span FontFamily="FAS" Text="&#xf271; " FontAttributes="Bold" FontSize="20"/>
+                                            <Span FontSize="15" x:Name="advertisementDateAdded"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label>
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span FontFamily="FAS" Text="&#xf783; " FontAttributes="Bold" FontSize="20"/>
+                                            <Span FontSize="15" x:Name="advertisementDateExpire"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </FlexLayout>
+                            <Border StrokeThickness="0" Padding="20" HorizontalOptions="Center" Margin="0, 20, 0, 0">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#FF2E8B57" Offset="0" />
+                                        <GradientStop Color="#772E8B57" Offset="0.3" />
+                                        <GradientStop Color="#DD2E8B57" Offset="0.6" />
+                                        <GradientStop Color="#BB2E8B57" Offset="1.0" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="15"/>
+                                </Border.StrokeShape>
+                                <Label VerticalTextAlignment="Center">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span FontFamily="FAS" Text="&#xf81d; " FontAttributes="Bold" FontSize="30"/>
+                                            <Span FontFamily="SignikaNegative" FontAttributes="Bold" FontSize="25" x:Name="advertisementEarnings"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </Border>
+                            
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border StrokeThickness="0" BackgroundColor="White" Margin="0, 20, 0, 0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="15"/>
+                        </Border.StrokeShape>
+                        <VerticalStackLayout Padding="15" Spacing="10">
+                            <Label FontFamily="SignikaNegative" FontAttributes="Bold" FontSize="20" Text="Opis"/>
+                        </VerticalStackLayout>
+                    </Border>
                 </VerticalStackLayout>
             </VerticalStackLayout>
         </ScrollView>

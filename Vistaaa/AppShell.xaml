@@ -9,7 +9,7 @@
     <!--<Shell.TitleView>
         <Grid >
         </Grid>
-    </Shell.TitleView>-->
+    </Shell.TitleView>
     <Shell.MenuBarItems>
         <MenuBarItem Text="Pomoc">
             <MenuFlyoutItem Text="Coś tam"/>
@@ -19,7 +19,7 @@
                 <MenuFlyoutItem Text="11" />
             </MenuFlyoutSubItem>
         </MenuBarItem>
-    </Shell.MenuBarItems>
+    </Shell.MenuBarItems>-->
     <Shell.FlyoutBackdrop>
         <LinearGradientBrush StartPoint="0,0"
                              EndPoint="1,1">

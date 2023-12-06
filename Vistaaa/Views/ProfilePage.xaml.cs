@@ -1,3 +1,5 @@
+using CommunityToolkit.Maui.Views;
+
 namespace Vistaaa.Views;
 
 public partial class ProfilePage : ContentPage
@@ -6,11 +8,15 @@ public partial class ProfilePage : ContentPage
 	{
 		InitializeComponent();
 		DisplayAlert("Welcome", Preferences.ContainsKey("userId").ToString(), "OK");
-		Preferences.Set("userId", "aaa");
+		Preferences.Set("userId", null);
 	}
 
     private void Button_Clicked(object sender, EventArgs e)
     {
-		Navigation.PushModalAsync(new LoginPage());
+		var loginPopup = new LoginPage
+		{
+			CanBeDismissedByTappingOutsideOfPopup = false
+		};
+		this.ShowPopup(loginPopup);
     }
 }

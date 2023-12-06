@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Vistaaa.Views.AddOrEditAdvertisement"
+             Title="Dodaj nowe ogłoszenie">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ScrollView>
+            <VerticalStackLayout>
+                <Entry Keyboard="Text" Placeholder="Tytuł ogłoszenia"/>
+                <Picker Title="Wybierz kategorię..."/>
+                <Picker Title="Wybierz firmę..."/>
+                <DatePicker/>
+                <Entry Keyboard="Text" Placeholder="Nazwa stanowiska"/>
+                <Entry Keyboard="Text" Placeholder="Poziom stanowiska"/>
+                <Entry Keyboard="Text" Placeholder="Rodzaj umowy"/>
+                <Entry Keyboard="Text" Placeholder="Wymiar zatrudnienia"/>
+                <Entry Keyboard="Text" Placeholder="Rodzaj pracy"/>
+                <Entry Keyboard="Numeric" Placeholder="Minimalne wynagrodzenie"/>
+                <Entry Keyboard="Numeric" Placeholder="Maksymalne wynagrodzenie"/>
+                <Entry Keyboard="Text" Placeholder="Dni pracy"/>
+                <Entry Keyboard="Text" Placeholder="Godziny pracy"/>
+                <Editor Placeholder="Zakres obowiązków"/>
+                <Editor Placeholder="Wymagania wobec kandydata"/>
+                <Editor Placeholder="Oferta pracodawcy"/>
+            </VerticalStackLayout>
+        </ScrollView>
+        <StackLayout Grid.Row="1" Padding="15">
+            <FlexLayout JustifyContent="Center">
+                <Button FontFamily="SignikaNegative" Margin="0, 0, 10, 0" Text="Dodaj" FlexLayout.Shrink="1" FlexLayout.Basis="350" TextColor="White" FontAttributes="Bold" FontSize="18" CharacterSpacing="1" CornerRadius="20" BackgroundColor="SeaGreen"/>
+                <Button FontFamily="SignikaNegative" Margin="10, 0, 0, 0" Text="Anuluj" FlexLayout.Shrink="1" FlexLayout.Basis="350"  BackgroundColor="Transparent" BorderWidth="2" BorderColor="DarkRed" CornerRadius="20" TextColor="DarkRed" FontAttributes="Bold" FontSize="18" CharacterSpacing="1"/>
+            </FlexLayout>
+        </StackLayout>
+    </Grid>
+</ContentPage>

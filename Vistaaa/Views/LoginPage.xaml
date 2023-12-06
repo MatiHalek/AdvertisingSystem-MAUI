@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Vistaaa.Views.LoginPage" NavigationPage.HasNavigationBar="False" Shell.NavBarIsVisible="false" IsBusy="True" Title=""
-              WidthRequest="100" HeightRequest="200" Background="Green">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
-</ContentPage>
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="Vistaaa.Views.LoginPage" NavigationPage.HasNavigationBar="False" Shell.NavBarIsVisible="false">
+    <Border>
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="10"/>
+        </Border.StrokeShape>
+        <Label Text="This is a very important message!" />
+    </Border>
+</toolkit:Popup>
