@@ -1,4 +1,5 @@
 using CommunityToolkit.Maui.Views;
+using Vistaaa.Classes;
 
 namespace Vistaaa.Views;
 
@@ -9,6 +10,7 @@ public partial class ProfilePage : ContentPage
 		InitializeComponent();
 		DisplayAlert("Welcome", Preferences.ContainsKey("userId").ToString(), "OK");
 		Preferences.Set("userId", null);
+		DisplayAlert("Test", PasswordHasher.Verify("Test", PasswordHasher.Hash("test")).ToString(), "OK");
 	}
 
     private void Button_Clicked(object sender, EventArgs e)

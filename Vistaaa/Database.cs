@@ -8,7 +8,7 @@ using Vistaaa.Models;
 
 namespace Vistaaa
 {
-    public class Database
+    public class Database : IAsyncDisposable
     {
         SQLiteAsyncConnection? DatabaseHandler;
 
@@ -23,6 +23,7 @@ namespace Vistaaa
             await DatabaseHandler.CreateTableAsync<Advertisement>();
             await DatabaseHandler.CreateTableAsync<Company>();
             await DatabaseHandler.CreateTableAsync<Category>();
+            await DatabaseHandler.CreateTableAsync<User>();
         }
         public async Task<int> CreateAdvertisementAsync(Advertisement advertisement)
         {
@@ -78,6 +79,12 @@ namespace Vistaaa
         {
             await Init();
             return await DatabaseHandler.UpdateAsync(company);
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            await DatabaseHandler?.CloseAsync();
+            GC.SuppressFinalize(this);
         }
     }
 }
