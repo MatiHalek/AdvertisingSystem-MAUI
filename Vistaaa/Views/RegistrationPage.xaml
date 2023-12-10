@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="Vistaaa.Views.RegistrationPage" Shell.PresentationMode="ModalNotAnimated" Appearing="RegistrationPage_Appearing">
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0"
+                     EndPoint="1,1">
+            <GradientStop Color="#802E8B57"
+                  Offset="0.3" />
+            <GradientStop Color="#701E90FF"
+                  Offset="0.6" />
+            <GradientStop Color="#90663399"
+                  Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+    <Border x:Name="registrationModal" Opacity="0" BackgroundColor="White" VerticalOptions="Center" Margin="15" MaximumWidthRequest="500" StrokeThickness="0" Padding="15" TranslationY="200">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="7"/>
+        </Border.StrokeShape>
+        <VerticalStackLayout>
+            <Label Text="cos" TextColor="Black"/>
+            <Entry TextColor="Black" BackgroundColor="LightSeaGreen" Text="{Binding UserName.Value, Mode=TwoWay}">
+                <Entry.Behaviors>
+                    <mct:EventToCommandBehavior
+            EventName="TextChanged"
+            Command="{Binding ValidateUsernameCommand}" />
+                </Entry.Behaviors>
+                <Entry.Triggers>
+                    <DataTrigger 
+            TargetType="Entry"
+            Binding="{Binding UserName.IsValid}"
+            Value="False">
+                        <Setter Property="BackgroundColor" Value="Red" />
+                    </DataTrigger>
+                </Entry.Triggers>
+            </Entry>
+            <Button Text="Anuluj" Clicked="CancelRegistrationButton_Clicked"/>
+        </VerticalStackLayout>
+    </Border>
+</ContentPage>

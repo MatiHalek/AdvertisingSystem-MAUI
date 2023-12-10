@@ -42,7 +42,7 @@ namespace Vistaaa.Classes
             int iterations = int.Parse(segments[2]);
             HashAlgorithmName algorithm = new(segments[3]);
             byte[] inputHash = Rfc2898DeriveBytes.Pbkdf2(
-                input,
+                input ?? "",
                 salt,
                 iterations,
                 algorithm,

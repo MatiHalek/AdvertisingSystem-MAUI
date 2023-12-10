@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Maps;
 
 namespace Vistaaa
 {
@@ -16,7 +17,7 @@ namespace Vistaaa
                 fonts.AddFont("Free-Regular-400.otf", "FAR");
                 fonts.AddFont("Free-Solid-900.otf", "FAS");
                 fonts.AddFont("SignikaNegative-Medium.ttf", "SignikaNegative");
-            }).UseMauiCommunityToolkit().UseMauiMaps();
+            }).UseMauiCommunityToolkit().UseMauiMaps().UseMauiCommunityToolkitMaps("Ak_wMJAB-SJeH0OlnHcRfEN31jFCL4bxutEaEV1L7EYTYGwSu-84TDfWXDLx0xtS");
 #if DEBUG
             builder.Logging.AddDebug();
             builder.Services.AddSingleton<MainPage>();

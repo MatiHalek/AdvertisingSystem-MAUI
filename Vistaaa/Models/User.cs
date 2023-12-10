@@ -15,11 +15,11 @@ namespace Vistaaa.Models
         public string? FirstName { get; set; }
         [MaxLength(100)]
         public string? LastName { get; set; }
-        public DateTime? BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
         [MaxLength(254)]
-        public string Email { get; set; }
+        public string Email { get; set; } = "";
         [MaxLength(255)]
-        public string Password { get; set; }
+        public string Password { get; set; } = "";
         [MaxLength(20)]
         public string? Phone { get; set; }
         [MaxLength(50)]
@@ -36,7 +36,7 @@ namespace Vistaaa.Models
         public string? StreetNumber { get; set; }
         public bool IsAdmin { get; set; }
 
-        public User(string? firstName, string? lastName, DateTime? birthDate, string email, string password, string? phone, string? city, string? country, string? postalCode, string? postalName, string? streetName, string? streetNumber, bool isAdmin)
+        public User(string? firstName, string? lastName, DateTime birthDate, string email, string password, string? phone, string? city, string? country, string? postalCode, string? postalName, string? streetName, string? streetNumber, bool isAdmin)
         {
             FirstName = firstName;
             LastName = lastName;

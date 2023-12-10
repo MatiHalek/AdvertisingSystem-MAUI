@@ -1,4 +1,5 @@
-﻿using Vistaaa.Models;
+﻿using Vistaaa.Classes;
+using Vistaaa.Models;
 using Vistaaa.Views;
 
 namespace Vistaaa
@@ -6,7 +7,7 @@ namespace Vistaaa
     public partial class MainPage : ContentPage
     {
         readonly Database database;
-        const uint ADVERTISEMENTS_PER_PAGE = 5;
+        const uint ADVERTISEMENTS_PER_PAGE = 6;
         uint currentPage = 1;
         public List<Advertisement>? AdvertisementList { get; set; }
         public MainPage(Database database)
@@ -15,7 +16,8 @@ namespace Vistaaa
             this.database = database; 
             LoadData();
             //database.CreateCompanyAsync(new Company("Vistaaa", "Najlepsza firma zajmująca się wspaniałym systemem Windows Vista!", "Zielona", "5", "Limanowa", "34-600"));
-            //database.CreateAdvertisementAsync(new Advertisement("Programowanie w Scratchu", 1, "Programista", "Junior Developer", "Umowa o pracę", "Pełen etat", "Praca zdalna", 10000.07m, 20000.78m, "aaa", DateTime.Now, DateTime.Now, "aaa", "aaa", "aaa"));         
+            //database.CreateAdvertisementAsync(new Advertisement("Programowanie w Scratchu", 1, "Programista", "Junior Developer", "Umowa o pracę", "Pełen etat", "Praca zdalna", 10000.07m, 20000.78m, "aaa", DateTime.Now, DateTime.Now, "aaa", "aaa", "aaa"));
+            //database.CreateUserAsync(new User("Mateusz", "Marmuźniak", new DateTime(2005, 2, 7), "mateusz.marmuzniak.poland@gmail.com", PasswordHasher.Hash("zaq1@WSX"), "123456789", "Limanowa", "Polska", "34-600", "Limanowa", "Zielona", "5", true));
         }
         private async void LoadData()
         {
@@ -23,10 +25,10 @@ namespace Vistaaa
             string searchBarText = string.Empty;
             if (searchBar.Text != null)
                 searchBarText = searchBar.Text;
-            int advertisementCount = (await database.GetAdvertisementsAsync(searchBarText)).Count;
+            int advertisementCount = (await database.GetAdvertisementsAsync(searchBarText.Trim())).Count;
             if (ADVERTISEMENTS_PER_PAGE * currentPage == advertisementCount + ADVERTISEMENTS_PER_PAGE)
                 currentPage--;
-            AdvertisementList = await database.GetAdvertisementsAsync(currentPage, ADVERTISEMENTS_PER_PAGE, searchBarText);
+            AdvertisementList = await database.GetAdvertisementsAsync(currentPage, ADVERTISEMENTS_PER_PAGE, searchBarText.Trim());
             AdvertisementCollectionView.ItemsSource = AdvertisementList;
             if (currentPage < 2)
                 previousPageBtn.IsEnabled = false;

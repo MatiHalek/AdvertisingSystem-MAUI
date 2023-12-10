@@ -1,12 +1,29 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="Vistaaa.Views.LoginPage" NavigationPage.HasNavigationBar="False" Shell.NavBarIsVisible="false">
-    <Border>
+             x:Class="Vistaaa.Views.LoginPage"
+             Shell.PresentationMode="ModalNotAnimated" Appearing="LoginPage_Appearing">
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0"
+                 EndPoint="1,1">
+            <GradientStop Color="#802E8B57"
+              Offset="0.3" />
+            <GradientStop Color="#701E90FF"
+              Offset="0.6" />
+            <GradientStop Color="#90663399"
+              Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+    <Border x:Name="loginModal" Opacity="0" BackgroundColor="White" VerticalOptions="Center" Margin="15" MaximumWidthRequest="500" StrokeThickness="0" Padding="15" TranslationY="200">
         <Border.StrokeShape>
-            <RoundRectangle CornerRadius="10"/>
+            <RoundRectangle CornerRadius="7"/>
         </Border.StrokeShape>
-        <Label Text="This is a very important message!" />
+        <VerticalStackLayout>
+            <Label Text="cos" TextColor="Black"/>
+            <Entry Keyboard="Email" Placeholder="Adres e-mail" MaxLength="254" x:Name="emailEntry" TextColor="Black"/>
+            <Entry Keyboard="Text" Placeholder="Hasło" IsPassword="True" MaxLength="255" x:Name="passwordEntry"/>
+            <Button Text="Zaloguj się" Clicked="LoginButton_Clicked"/>
+            <Button Text="Anuluj" Clicked="CancelLoginButton_Clicked"/>
+        </VerticalStackLayout>
     </Border>
-</toolkit:Popup>
+</ContentPage>

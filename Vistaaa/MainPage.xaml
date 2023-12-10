@@ -50,7 +50,7 @@
                                             </Label.Text>
                                         </Label>
                                     </FlexLayout>
-                                    <Button Margin="0, 10, 0, 0" Text="Szczegóły" BackgroundColor="DodgerBlue" FontAttributes="Bold"  TextColor="White" HorizontalOptions="Center" Clicked="Button_Clicked"/>
+                                    <Button Margin="0, 10, 0, 0" Text="Szczegóły" BackgroundColor="DodgerBlue" FontAttributes="Bold" FontFamily="SignikaNegative" TextColor="White" HorizontalOptions="Center" Clicked="Button_Clicked"/>
                                     <FlyoutBase.ContextFlyout>
                                         <MenuFlyout>
                                             <MenuFlyoutItem Text="Usuń"/>
@@ -78,8 +78,8 @@
                     </CollectionView.ItemsLayout>
                 <CollectionView.Footer>
                     <HorizontalStackLayout Spacing="10" x:Name="test" HorizontalOptions="Center">
-                        <Button x:Name="previousPageBtn" Clicked="PreviousPageButton_Clicked" Text="&lt;"/>
-                        <Button x:Name="nextPageBtn" Clicked="NextPageButton_Clicked" Text="&gt;"/>
+                        <Button x:Name="previousPageBtn" Clicked="PreviousPageButton_Clicked" Text="&lt;" ToolTipProperties.Text="Poprzednia strona"/>
+                        <Button x:Name="nextPageBtn" Clicked="NextPageButton_Clicked" Text="&gt;" ToolTipProperties.Text="Następna strona"/>
                     </HorizontalStackLayout>
                 </CollectionView.Footer>
             </CollectionView>
