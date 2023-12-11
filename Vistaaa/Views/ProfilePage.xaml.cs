@@ -7,28 +7,37 @@ namespace Vistaaa.Views;
 
 public partial class ProfilePage : ContentPage
 {
-	public ProfilePage()
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        UpdateView();
+    }
+
+    public ProfilePage()
 	{
 		InitializeComponent();
-		//DisplayAlert("Welcome", Preferences.Get("userId", "").ToString(), "OK");
-		//Preferences.Set("userId", null);
-		//DisplayAlert("Test", PasswordHasher.Verify("Test", PasswordHasher.Hash("test")).ToString(), "OK");
-		UpdateView();
 	}
+
 	private async void UpdateView()
 	{
         if (Preferences.ContainsKey("userId"))
         {
-            profilePage.Clear();
+            form.IsVisible = false;
             Database database = new();
-            profilePage.Add(new ProfileView(await database.GetUserAsync(uint.Parse(Preferences.Get("userId", null) ?? ""))));
+            var profileView = new ProfileView(await database.GetUserAsync(uint.Parse(Preferences.Get("userId", null) ?? "")));
+            profileView.logoutButton.Clicked += (object? sender, EventArgs e) =>
+            {
+                Preferences.Set("userId", null);
+                profilePage.Remove(profileView);
+                form.IsVisible = true;
+            };  
+            profilePage.Add(profileView);
         }
     }
 
     private void LoginButton_Clicked(object sender, EventArgs e)
     {
         Navigation.PushModalAsync(new LoginPage());
-		UpdateView();
     }
 
     private void RegistrationButton_Clicked(object sender, EventArgs e)

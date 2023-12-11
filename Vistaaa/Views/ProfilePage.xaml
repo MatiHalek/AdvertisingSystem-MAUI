@@ -2,9 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Vistaaa.Views.ProfilePage"
-             Title="Profil">
+             Title="Profil" >
     <Grid x:Name="profilePage">
-        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="20" MaximumWidthRequest="300">
+        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="20" MaximumWidthRequest="300" x:Name="form">
             <Label Text="Witaj w Vistaaa! Wygląda na to, że nie jesteś zalogowany." HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="20"/>
             <Label Text="Zaloguj się, by móc w pełni korzystać z systemu Vistaaa."/>
             <Button Text="Zaloguj się" Clicked="LoginButton_Clicked"/>

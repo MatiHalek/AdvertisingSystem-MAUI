@@ -6,4 +6,9 @@ public partial class AddOrEditAdvertisement : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    private void CancelButton_Clicked(object sender, EventArgs e)
+    {
+		Navigation.PopAsync();
+    }
 }

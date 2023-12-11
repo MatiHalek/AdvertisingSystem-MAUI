@@ -7,6 +7,6 @@
             Text="Welcome to .NET MAUI!"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Button Text="Wyloguj się" Clicked="LogoutButton_Clicked"/>
+        <Button x:Name="logoutButton" x:FieldModifier="public"  Text="Wyloguj się"/>
     </VerticalStackLayout>
 </ContentView>

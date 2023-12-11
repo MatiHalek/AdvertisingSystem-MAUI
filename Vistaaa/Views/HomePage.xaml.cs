@@ -6,7 +6,9 @@ public partial class HomePage : ContentPage
 {
     int number = 6549;
     readonly Random r = new();
-    List<string> list = ["aaa", "bbb", "ccc"];
+    readonly List<string> list = ["programowanie", "kierowca", "elektryk"];
+    readonly string stringList = "";
+    int iterator = 0;
     public HomePage()
 	{
 		InitializeComponent();
@@ -14,12 +16,40 @@ public partial class HomePage : ContentPage
         myTimer.Elapsed += new ElapsedEventHandler(IncreaseOffers);
         myTimer.Interval = 3000;  
         myTimer.Enabled = true;
+
+        stringList = string.Join(';', list);
+        var searchTimer = new System.Timers.Timer();    
+        searchTimer.Elapsed += new ElapsedEventHandler(ChangeSearch);
+        searchTimer.Interval = 800;
+        searchTimer.Enabled = true;
     }
+
     private void IncreaseOffers(object? source, ElapsedEventArgs e)
     {
-         number += r.Next(-3, 6);
+        number += r.Next(-3, 6);
         SetCounter();
     }
+
+    private void ChangeSearch(object? source, ElapsedEventArgs e)
+    {
+        MainThread.BeginInvokeOnMainThread(() => {
+            if(iterator == stringList.Length)
+            {
+                searchAnimationLabel.Text = string.Empty;
+                iterator = 0;
+                return;
+            }    
+            if (stringList[iterator] == ';')
+            {
+                searchAnimationLabel.Text = string.Empty;
+                iterator++;
+                return;
+            } 
+            searchAnimationLabel.Text += stringList[iterator];
+            iterator++;                         
+        });
+    }
+
     private void SetCounter()
     {
         string numberString = number.ToString();
@@ -33,6 +63,6 @@ public partial class HomePage : ContentPage
 
     private void Button_Clicked(object sender, EventArgs e)
     {
-       Shell.Current.GoToAsync("//offers");
+        Shell.Current.GoToAsync("//offers");
     }
 }

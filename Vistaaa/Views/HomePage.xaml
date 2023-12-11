@@ -222,7 +222,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <Label FontFamily="SignikaNegative" Text="test" FontSize="30" Padding="15" TextColor="Gray" x:Name="searchAnimationLabel"/>
+                            <Label FontFamily="SignikaNegative"  FontSize="30" Padding="15" TextColor="Gray" x:Name="searchAnimationLabel"/>
                             <Border Grid.Column="1" StrokeThickness="0">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="45"/>

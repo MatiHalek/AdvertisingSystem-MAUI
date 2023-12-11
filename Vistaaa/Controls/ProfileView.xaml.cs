@@ -11,10 +11,4 @@ public partial class ProfileView : ContentView
 		User = user;
 		label.Text = User.FirstName;
 	}
-
-    private void LogoutButton_Clicked(object sender, EventArgs e)
-    {
-		Preferences.Set("userId", null);
-
-    }
 }

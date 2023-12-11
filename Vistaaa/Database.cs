@@ -34,17 +34,29 @@ namespace Vistaaa
         public async Task<List<Advertisement>> GetAdvertisementsAsync(string? search = null)
         {
             await Init();
+            DateTime currentTime = DateTime.Now;
+            List<Advertisement> allAdvertisements = await DatabaseHandler!.Table<Advertisement>().ToListAsync();
             if(search != null)
-                return await DatabaseHandler!.Table<Advertisement>().Where(advertisement => advertisement.Title.ToLower().Contains(search.ToLower())).OrderByDescending(advertisement => advertisement.CreationDate).ToListAsync();
-            return await DatabaseHandler!.Table<Advertisement>().ToListAsync();
+            {
+                allAdvertisements =
+                [
+                    .. allAdvertisements.Where(advertisement => advertisement.Title.ToLower().Contains(search.ToLower())),
+                ];
+            }
+            List<Advertisement> advertisements = [];
+            advertisements =
+            [
+                .. allAdvertisements.Where(advertisement => advertisement.ExpirationDate >= currentTime).OrderByDescending(advertisement => advertisement.CreationDate),
+            ];
+            advertisements.AddRange(allAdvertisements.Where(advertisement => advertisement.ExpirationDate < currentTime).OrderByDescending(advertisement => advertisement.CreationDate));   
+            return advertisements;
         }
         public async Task<List<Advertisement>> GetAdvertisementsAsync(uint pageNumber, uint advertisementsOnPage, string? search = null)
         {
-            await Init();
-            var advertisements = GetAdvertisementsAsync(search);
-            if (search != null)
-                return await DatabaseHandler!.Table<Advertisement>().Where(advertisement => advertisement.Title.ToLower().Contains(search.ToLower())).Skip((int)((pageNumber - 1) * advertisementsOnPage)).Take((int)advertisementsOnPage).ToListAsync();
-            return await DatabaseHandler!.Table<Advertisement>().Skip((int)((pageNumber - 1) * advertisementsOnPage)).Take((int)advertisementsOnPage).ToListAsync();
+            var advertisements = await GetAdvertisementsAsync(search);
+            //if (search != null)
+                //return advertisements.Where(advertisement => advertisement.Title.ToLower().Contains(search.ToLower())).Skip((int)((pageNumber - 1) * advertisementsOnPage)).Take((int)advertisementsOnPage).ToList();
+            return advertisements.Skip((int)((pageNumber - 1) * advertisementsOnPage)).Take((int)advertisementsOnPage).ToList();
         }
         public async Task<List<Category>> GetCategoriesAsync()
         {

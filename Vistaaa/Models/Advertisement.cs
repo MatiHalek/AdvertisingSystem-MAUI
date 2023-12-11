@@ -23,6 +23,14 @@ namespace Vistaaa.Models
         public decimal HighestSalary { get; set; }
         public string WorkDays { get; set; } = "";
         [Ignore]
+        public bool IsUpToDate
+        {
+            get
+            {
+                return ExpirationDate >= DateTime.Now;
+            }
+        }
+        [Ignore]
         public string CompanyName
         {
             get
