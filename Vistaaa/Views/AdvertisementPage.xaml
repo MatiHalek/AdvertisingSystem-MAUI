@@ -86,7 +86,7 @@
         <StackLayout Grid.Row="1" Padding="15">
             <FlexLayout JustifyContent="Center">
                 <Button FontFamily="SignikaNegative" Margin="0, 0, 10, 0" Text="Aplikuj" FlexLayout.Shrink="1" FlexLayout.Basis="350" TextColor="White" FontAttributes="Bold" FontSize="18" CharacterSpacing="1" CornerRadius="20" BackgroundColor="SeaGreen"/>
-                <Button FontFamily="SignikaNegative" Margin="10, 0, 0, 0" Text="Zapisz" FlexLayout.Shrink="1" FlexLayout.Basis="350"  BackgroundColor="Transparent" BorderWidth="2" BorderColor="DodgerBlue" CornerRadius="20" TextColor="DodgerBlue" FontAttributes="Bold" FontSize="18" CharacterSpacing="1"/>
+                <Button FontFamily="SignikaNegative" Margin="10, 0, 0, 0" Text="Zapisz" FlexLayout.Shrink="1" FlexLayout.Basis="350"  BackgroundColor="Transparent" BorderWidth="2" BorderColor="DodgerBlue" CornerRadius="20" TextColor="DodgerBlue" FontAttributes="Bold" FontSize="18" CharacterSpacing="1" Clicked="SaveButton_Clicked"/>
             </FlexLayout>
         </StackLayout>
     </Grid>

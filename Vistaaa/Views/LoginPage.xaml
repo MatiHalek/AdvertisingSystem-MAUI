@@ -20,7 +20,15 @@
         </Border.StrokeShape>
         <VerticalStackLayout>
             <Label Text="cos" TextColor="Black"/>
-            <Entry Keyboard="Email" Placeholder="Adres e-mail" MaxLength="254" x:Name="emailEntry" TextColor="Black"/>
+            <Entry Placeholder="Adres e-mail" MaxLength="254" x:Name="emailEntry" TextColor="Black">
+                <Entry.Keyboard>
+                    <Keyboard x:FactoryMethod="Create">
+                        <x:Arguments>
+                            <KeyboardFlags>Suggestions,CapitalizeNone</KeyboardFlags>
+                        </x:Arguments>
+                    </Keyboard>
+                </Entry.Keyboard>
+            </Entry>
             <Entry Keyboard="Text" Placeholder="Hasło" IsPassword="True" MaxLength="255" x:Name="passwordEntry"/>
             <Button Text="Zaloguj się" Clicked="LoginButton_Clicked"/>
             <Button Text="Anuluj" Clicked="CancelLoginButton_Clicked"/>

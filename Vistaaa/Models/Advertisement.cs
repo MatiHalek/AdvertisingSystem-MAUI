@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using SQLiteNetExtensions.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,6 +70,8 @@ namespace Vistaaa.Models
         public string Responsibilities { get; set; } = "";
         public string Requirements { get; set; } = "";
         public string Offer { get; set; } = "";
+        [ManyToMany(typeof(UserAdvertisement))]
+        public List<User>? Users { get; set; }
 
         public Advertisement(string title, uint companyId, uint categoryId, string positionName, string positionLevel, string contractType, string employment, string workType, decimal? lowestSalary, decimal highestSalary, string workDays, DateTime creationDate, DateTime expirationDate, string responsibilities, string requirements, string offer)
         {

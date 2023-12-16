@@ -26,6 +26,7 @@
                 <Editor Placeholder="Zakres obowiązków"/>
                 <Editor Placeholder="Wymagania wobec kandydata"/>
                 <Editor Placeholder="Oferta pracodawcy"/>
+                <Button Text="Wybierz" Clicked="FilePickerButton_Clicked" />
             </VerticalStackLayout>
         </ScrollView>
         <StackLayout Grid.Row="1" Padding="15">

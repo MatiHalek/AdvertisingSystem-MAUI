@@ -56,10 +56,12 @@
         <ShellContent Title="Strona główna"
                       Icon="monkey.png"
                       ContentTemplate="{DataTemplate local:Views.HomePage}" />
-        <ShellContent Title="Oferty pracy" Route="offers"
+        <ShellContent Title="Oferty pracy"
+              Route="offers"
               Icon="monkey.png"
               ContentTemplate="{DataTemplate local:MainPage}" />
         <ShellContent Title="Profil"
+                      Route="profile"
                       Icon="bear.png"
                       ContentTemplate="{DataTemplate local:Views.ProfilePage}" />
     </FlyoutItem>

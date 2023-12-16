@@ -25,6 +25,7 @@ namespace Vistaaa
             await DatabaseHandler.CreateTableAsync<Company>();
             await DatabaseHandler.CreateTableAsync<Category>();
             await DatabaseHandler.CreateTableAsync<User>();
+            await DatabaseHandler.CreateTableAsync<UserAdvertisement>();
         }
         public async Task<int> CreateAdvertisementAsync(Advertisement advertisement)
         {
@@ -113,6 +114,21 @@ namespace Vistaaa
                     return user;
             }
             return null;
+        }
+        public async Task<int> CreateUserAdvertisementAsync(UserAdvertisement userAdvertisement)
+        {
+            await Init();
+            return await DatabaseHandler!.InsertAsync(userAdvertisement);
+        }
+        public async Task<List<UserAdvertisement>> GetUserAdvertisementsAsync()
+        {
+            await Init();
+            return await DatabaseHandler!.Table<UserAdvertisement>().ToListAsync();
+        }
+        public async Task<int> DeleteUserAdvertisementAsync(UserAdvertisement userAdvertisement)
+        {
+            await Init();
+            return await DatabaseHandler!.DeleteAsync(userAdvertisement);
         }
         public async ValueTask DisposeAsync()
         {

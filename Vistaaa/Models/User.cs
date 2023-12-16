@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using SQLiteNetExtensions.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,8 @@ namespace Vistaaa.Models
         [MaxLength(10)]
         public string? StreetNumber { get; set; }
         public bool IsAdmin { get; set; }
+        [ManyToMany(typeof(UserAdvertisement))]
+        public List<Advertisement>? Advertisements { get; set; }    
 
         public User(string? firstName, string? lastName, DateTime birthDate, string email, string password, string? phone, string? city, string? country, string? postalCode, string? postalName, string? streetName, string? streetNumber, bool isAdmin)
         {
