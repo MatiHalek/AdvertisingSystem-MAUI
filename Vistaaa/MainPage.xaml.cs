@@ -91,12 +91,7 @@ namespace Vistaaa
             loading.IsVisible = false;
             loading.IsRunning = false;           
         }
-        private async void Button_Clicked(object sender, EventArgs e)
-        {
-            var button = sender as Button;
-            var advertisement = button?.BindingContext as Advertisement;
-            await Navigation.PushAsync(new AdvertisementPage(advertisement));
-        }
+
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
             currentPage = 1;
@@ -135,9 +130,11 @@ namespace Vistaaa
             Navigation.PushAsync(new AddOrEditAdvertisement());   
         }
 
-        private void AdvertisementCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void AdvertisementCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //AdvertisementCollectionView.SelectionMode = SelectionMode.Multiple;
+            var advertisement = AdvertisementCollectionView.SelectedItem as Advertisement;
+            await Navigation.PushAsync(new AdvertisementPage(advertisement));
         }
 
         private void AdvertisementsOnPagePicker_SelectedIndexChanged(object? sender, EventArgs e)
@@ -149,6 +146,13 @@ namespace Vistaaa
         private void SortTypePicker_SelectedIndexChanged(object? sender, EventArgs e)
         {
             LoadData();
+        }
+
+        private void EditAdvertisementMenuItem_Clicked(object sender, EventArgs e)
+        {
+            MenuFlyoutItem menuItem = (MenuFlyoutItem)sender;
+            Advertisement advertisement = (Advertisement)menuItem.CommandParameter;
+            Navigation.PushAsync(new AddOrEditAdvertisement(advertisement));
         }
     }
 

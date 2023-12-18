@@ -5,14 +5,18 @@ namespace Vistaaa.Views;
 public partial class AddOrEditAdvertisement : ContentPage
 {
 	private readonly Database Database = new();
+    public Advertisement? Advertisement{ get; set; }
+
     public AddOrEditAdvertisement()
 	{
 		InitializeComponent();
 	}
-
-    private void CancelButton_Clicked(object sender, EventArgs e)
+    public AddOrEditAdvertisement(Advertisement advertisement)
     {
-        Navigation.PopAsync();
+        InitializeComponent();
+        addOrEditAdvertisementContentPage.Title = "Edytuj og≥oszenie";
+        submitButton.Text = "Zatwierdü zmiany";
+        Advertisement = advertisement;
     }
 
     private async void FilePickerButton_Clicked(object sender, EventArgs e)
@@ -49,5 +53,10 @@ public partial class AddOrEditAdvertisement : ContentPage
             offerEntry.Text
             ));
         await Navigation.PopAsync();
+    }
+
+    private void CancelButton_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PopAsync();
     }
 }
