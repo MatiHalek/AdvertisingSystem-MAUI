@@ -361,3 +361,16 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+Vistaaa/*
+!Vistaaa/bin
+Vistaaa/bin/*
+!Vistaaa/bin/Debug
+Vistaaa/bin/Debug/*
+!Vistaaa/bin/Debug/net8.0-windows10.0.19041.0
+Vistaaa/bin/Debug/net8.0-windows10.0.19041.0/*
+!Vistaaa/bin/Debug/net8.0-windows10.0.19041.0/win10-x64
+Vistaaa/bin/Debug/net8.0-windows10.0.19041.0/win10-x64/*
+!Vistaaa/bin/Debug/net8.0-windows10.0.19041.0/win10-x64/AppX
+Vistaaa/bin/Debug/net8.0-windows10.0.19041.0/win10-x64/AppX/*
+!Vistaaa/bin/Debug/net8.0-windows10.0.19041.0/win10-x64/AppX/test.db3

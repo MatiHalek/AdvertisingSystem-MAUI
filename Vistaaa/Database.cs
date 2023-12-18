@@ -32,7 +32,7 @@ namespace Vistaaa
             await Init();
             return await DatabaseHandler!.InsertAsync(advertisement);
         }
-        public async Task<List<Advertisement>> GetAdvertisementsAsync(string? search = null, SortBy sortBy = SortBy.Date)
+        public async Task<List<Advertisement>> GetAdvertisementsAsync(string? search = null, SortBy sortBy = SortBy.Date, bool savedOnly = false)
         {
             await Init();
             DateTime currentTime = DateTime.Now;
@@ -42,6 +42,14 @@ namespace Vistaaa
                 allAdvertisements =
                 [
                     .. allAdvertisements.Where(advertisement => advertisement.Title.ToLower().Contains(search.ToLower())),
+                ];
+            }
+            if(savedOnly)
+            {
+                List<UserAdvertisement> userAdvertisements = await DatabaseHandler!.Table<UserAdvertisement>().ToListAsync();
+                allAdvertisements =
+                [
+                    .. allAdvertisements.Where(advertisement => userAdvertisements.Any(userAdvertisement => userAdvertisement.AdvertisementId == advertisement.Id)),
                 ];
             }
             List<Advertisement> advertisements = [];
@@ -61,7 +69,7 @@ namespace Vistaaa
             advertisements.AddRange(allAdvertisements.Where(advertisement => advertisement.ExpirationDate < currentTime).OrderByDescending(advertisement => advertisement.CreationDate));   
             return advertisements;
         }
-        public async Task<List<Advertisement>> GetAdvertisementsAsync(uint pageNumber, uint advertisementsOnPage, string? search = null, SortBy sortBy = SortBy.Date)
+        public async Task<List<Advertisement>> GetAdvertisementsAsync(uint pageNumber, uint advertisementsOnPage, string? search = null, SortBy sortBy = SortBy.Date, bool savedOnly = false)
         {
             var advertisements = await GetAdvertisementsAsync(search, sortBy);
             return advertisements.Skip((int)((pageNumber - 1) * advertisementsOnPage)).Take((int)advertisementsOnPage).ToList();

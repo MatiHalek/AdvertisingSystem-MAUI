@@ -22,7 +22,7 @@ namespace Vistaaa
             advertisementsOnPagePicker.ItemsSource = new List<uint> { 10, 20, 40, 100 };
             advertisementsOnPagePicker.SelectedIndex = 0;
             advertisementsOnPagePicker.SelectedIndexChanged += AdvertisementsOnPagePicker_SelectedIndexChanged;
-            sortTypePicker.ItemsSource = new List<SortBy> { SortBy.Date, SortBy.Salary};
+            sortTypePicker.ItemsSource = new List<Tuple<string, SortBy>> { new("Od najnowszych", SortBy.Date), new("Od najlepiej płatnych", SortBy.Salary)};
             sortTypePicker.SelectedIndex = 0;
             sortTypePicker.SelectedIndexChanged += SortTypePicker_SelectedIndexChanged;
             this.database = database;
@@ -45,15 +45,20 @@ namespace Vistaaa
             string searchBarText = string.Empty;
             if (searchBar.Text != null)
                 searchBarText = searchBar.Text;
-            int advertisementCount = (await database.GetAdvertisementsAsync(searchBarText.Trim(), (SortBy)sortTypePicker.SelectedItem)).Count;
+            int advertisementCount = (await database.GetAdvertisementsAsync(searchBarText.Trim(), ((Tuple<string, SortBy>)sortTypePicker.SelectedItem).Item2)).Count;
             if (ADVERTISEMENTS_PER_PAGE * currentPage == advertisementCount + ADVERTISEMENTS_PER_PAGE)
                 currentPage--;
-            AdvertisementList = await database.GetAdvertisementsAsync(currentPage, ADVERTISEMENTS_PER_PAGE, searchBarText.Trim(), (SortBy)sortTypePicker.SelectedItem);
+            AdvertisementList = await database.GetAdvertisementsAsync(currentPage, ADVERTISEMENTS_PER_PAGE, searchBarText.Trim(), ((Tuple<string, SortBy>)sortTypePicker.SelectedItem).Item2);
             AdvertisementCollectionView.ItemsSource = AdvertisementList;
+            pageButtons.Children.Clear();
             if(AdvertisementList.Count > 0)
             {                
                 headerCollectionViewLabel.Text = "Znalezione oferty (" + AdvertisementList.Count + ")";
                 headerCollectionViewLabel.IsVisible = true;
+                pageButtons.Children.Add(new Button()
+                {
+                    Text = currentPage.ToString(),
+                });
                 footerCollectionViewStackLayout.IsVisible = true;
             }               
             else
@@ -72,9 +77,15 @@ namespace Vistaaa
                 firstPageBtn.IsEnabled = true;
             }
             if (currentPage == Math.Ceiling(advertisementCount / (float)ADVERTISEMENTS_PER_PAGE))
+            {
                 nextPageBtn.IsEnabled = false;
+                lastPageBtn.IsEnabled = false;
+            }
             else
+            {
                 nextPageBtn.IsEnabled = true;
+                lastPageBtn.IsEnabled = true;
+            }            
             if(!emptyCollectionViewPlaceholder.IsVisible)
                 emptyCollectionViewPlaceholder.IsVisible = true;
             loading.IsVisible = false;

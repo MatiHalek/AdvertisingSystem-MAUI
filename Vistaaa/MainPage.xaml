@@ -8,26 +8,26 @@
             Spacing="25">
             <SearchBar Placeholder="Wyszukaj po nazwie..." x:Name="searchBar" TextChanged="SearchBar_TextChanged" IsTextPredictionEnabled="True"/>
             <FlexLayout Wrap="Wrap" JustifyContent="SpaceBetween">
-                <HorizontalStackLayout Spacing="15">
+                <HorizontalStackLayout Spacing="15" Margin="5">
                     <Label Text="Sortuj:" VerticalOptions="Center"/>
-                    <Picker x:Name="sortTypePicker"/>
+                    <Picker x:Name="sortTypePicker" ItemDisplayBinding="{Binding Item1}"/>
                 </HorizontalStackLayout>
-                <HorizontalStackLayout Spacing="15">
+                <HorizontalStackLayout Margin="5">
+                    <CheckBox/>
+                    <Label Text="Tylko ulubione" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Spacing="15" Margin="5"> 
                     <Label Text="Liczba ogłoszeń na stronie:" VerticalOptions="Center"/>
                     <Picker x:Name="advertisementsOnPagePicker"/>
                 </HorizontalStackLayout>
             </FlexLayout>
             <HorizontalStackLayout>
-                <HorizontalStackLayout>
-                    <CheckBox/>
-                    <Label Text="Tylko ulubione" VerticalOptions="Center"/>
-                </HorizontalStackLayout>
                 <Button Text="Dodaj" Clicked="AddButton_Clicked"/>
                 <Button Text="Usuń wszystkie (0)"/>
             </HorizontalStackLayout>
             <ActivityIndicator IsRunning="True" x:Name="loading" />
             <RefreshView x:Name="refreshView" RefreshColor="#1E90FF">
-                <CollectionView x:Name="AdvertisementCollectionView" SelectionMode="Single" SelectionChanged="AdvertisementCollectionView_SelectionChanged"  >
+                <CollectionView x:Name="AdvertisementCollectionView" >
                     <CollectionView.Header>
                         <Label IsVisible="False" HorizontalOptions="Center" FontSize="20" FontAttributes="Bold" FontFamily="SignikaNegative" x:Name="headerCollectionViewLabel"/>
                     </CollectionView.Header>
@@ -45,7 +45,7 @@
                                 </Border.StrokeShape>
                                 <Label Text="{Binding Path=CreationDate, StringFormat='{0:d MMM yyyy}'}" TextColor="White" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
                             </Border>
-                            <Border IsEnabled="{Binding IsUpToDate}" StrokeThickness="1" Margin="0, -20, 0, 0">
+                            <Border  StrokeThickness="1" Margin="0, -20, 0, 0">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="10"/>
                                 </Border.StrokeShape>
@@ -94,13 +94,14 @@
                         Span="2" VerticalItemSpacing="10" HorizontalItemSpacing="10" />
                     </CollectionView.ItemsLayout>
                 <CollectionView.Footer>
-                    <HorizontalStackLayout IsVisible="False" Spacing="10" x:Name="footerCollectionViewStackLayout" HorizontalOptions="Center" Margin="10">
-                        <Button x:Name="firstPageBtn" FontFamily="FAS" Clicked="FirstPageButton_Clicked"  Text="&#xf049;" ToolTipProperties.Text="Pierwsza strona"/>
-                        <Button x:Name="previousPageBtn" FontFamily="FAS" Clicked="PreviousPageButton_Clicked" Text="&#xf048;" ToolTipProperties.Text="Poprzednia strona"/>
-                        <Button x:Name="nextPageBtn" FontFamily="FAS" Clicked="NextPageButton_Clicked" Text="&#xf051;" ToolTipProperties.Text="Następna strona"/>
-                        <Button x:Name="lastPageBtn" FontFamily="FAS" Clicked="LastPageButton_Clicked" Text="&#xf050;" ToolTipProperties.Text="Ostatnia strona"/>
-                    </HorizontalStackLayout>
-                </CollectionView.Footer>
+                        <HorizontalStackLayout IsVisible="False" Spacing="10" x:Name="footerCollectionViewStackLayout" HorizontalOptions="Center" Margin="10">
+                            <Button x:Name="firstPageBtn" FontFamily="FAS" Clicked="FirstPageButton_Clicked"  Text="&#xf049;" ToolTipProperties.Text="Pierwsza strona"/>
+                            <Button x:Name="previousPageBtn" FontFamily="FAS" Clicked="PreviousPageButton_Clicked" Text="&#xf048;" ToolTipProperties.Text="Poprzednia strona"/>
+                            <HorizontalStackLayout x:Name="pageButtons" Spacing="10"/>
+                            <Button x:Name="nextPageBtn" FontFamily="FAS" Clicked="NextPageButton_Clicked" Text="&#xf051;" ToolTipProperties.Text="Następna strona"/>
+                            <Button x:Name="lastPageBtn" FontFamily="FAS" Clicked="LastPageButton_Clicked" Text="&#xf050;" ToolTipProperties.Text="Ostatnia strona"/>
+                        </HorizontalStackLayout>
+                    </CollectionView.Footer>
             </CollectionView>
             </RefreshView>
         </StackLayout>
