@@ -9,30 +9,29 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <ScrollView>
-            <VerticalStackLayout>
-                <Entry Keyboard="Text" Placeholder="Tytuł ogłoszenia"/>
-                <Picker Title="Wybierz kategorię..."/>
-                <Picker Title="Wybierz firmę..."/>
-                <DatePicker/>
-                <Entry Keyboard="Text" Placeholder="Nazwa stanowiska"/>
-                <Entry Keyboard="Text" Placeholder="Poziom stanowiska"/>
-                <Entry Keyboard="Text" Placeholder="Rodzaj umowy"/>
-                <Entry Keyboard="Text" Placeholder="Wymiar zatrudnienia"/>
-                <Entry Keyboard="Text" Placeholder="Rodzaj pracy"/>
-                <Entry Keyboard="Numeric" Placeholder="Minimalne wynagrodzenie"/>
-                <Entry Keyboard="Numeric" Placeholder="Maksymalne wynagrodzenie"/>
-                <Entry Keyboard="Text" Placeholder="Dni pracy"/>
-                <Entry Keyboard="Text" Placeholder="Godziny pracy"/>
-                <Editor Placeholder="Zakres obowiązków"/>
-                <Editor Placeholder="Wymagania wobec kandydata"/>
-                <Editor Placeholder="Oferta pracodawcy"/>
+            <VerticalStackLayout Padding="15" MaximumWidthRequest="1200">
+                <Entry Keyboard="Text" Placeholder="Tytuł ogłoszenia" x:Name="titleEntry"/>
+                <Picker Title="Wybierz kategorię..." x:Name="categoryPicker"/>
+                <Picker Title="Wybierz firmę..." x:Name="companyPicker"/>
+                <DatePicker x:Name="expirationDatePicker"/>
+                <Entry Keyboard="Text" Placeholder="Nazwa stanowiska" x:Name="positionNameEntry"/>
+                <Entry Keyboard="Text" Placeholder="Poziom stanowiska" x:Name="positionLevelEntry"/>
+                <Entry Keyboard="Text" Placeholder="Rodzaj umowy" x:Name="contractTypeEntry"/>
+                <Entry Keyboard="Text" Placeholder="Wymiar zatrudnienia" x:Name="employmentTypeEntry"/>
+                <Entry Keyboard="Text" Placeholder="Rodzaj pracy" x:Name="workTypeEntry"/>
+                <Entry Keyboard="Numeric" Placeholder="Minimalne wynagrodzenie" x:Name="lowestSalaryEntry"/>
+                <Entry Keyboard="Numeric" Placeholder="Maksymalne wynagrodzenie" x:Name="highestSalaryEntry"/>
+                <Entry Keyboard="Text" Placeholder="Dni i godziny pracy" x:Name="workDaysEntry"/>
+                <Editor Placeholder="Zakres obowiązków" x:Name="responsibilitiesEntry"/>
+                <Editor Placeholder="Wymagania wobec kandydata" x:Name="requirementsEntry"/>
+                <Editor Placeholder="Oferta pracodawcy" x:Name="offerEntry"/>
                 <Button Text="Wybierz" Clicked="FilePickerButton_Clicked" />
             </VerticalStackLayout>
         </ScrollView>
         <StackLayout Grid.Row="1" Padding="15">
             <FlexLayout JustifyContent="Center">
-                <Button FontFamily="SignikaNegative" Margin="0, 0, 10, 0" Text="Dodaj" FlexLayout.Shrink="1" FlexLayout.Basis="350" TextColor="White" FontAttributes="Bold" FontSize="18" CharacterSpacing="1" CornerRadius="20" BackgroundColor="SeaGreen"/>
-                <Button FontFamily="SignikaNegative" Margin="10, 0, 0, 0" Text="Anuluj" FlexLayout.Shrink="1" FlexLayout.Basis="350"  BackgroundColor="Transparent" BorderWidth="2" BorderColor="DarkRed" CornerRadius="20" TextColor="DarkRed" FontAttributes="Bold" FontSize="18" CharacterSpacing="1" Clicked="CancelButton_Clicked"/>
+                <Button x:Name="submitButton" FontFamily="SignikaNegative" Margin="0, 0, 10, 0" Text="Dodaj" FlexLayout.Shrink="1" FlexLayout.Basis="350" TextColor="White" FontAttributes="Bold" FontSize="18" CharacterSpacing="1" CornerRadius="20" BackgroundColor="SeaGreen" Clicked="SubmitButton_Clicked"/>
+                <Button FontFamily="SignikaNegative" Margin="10, 0, 0, 0" Text="Anuluj" FlexLayout.Shrink="1" FlexLayout.Basis="350"  BackgroundColor="Transparent" BorderWidth="2" BorderColor="Red" CornerRadius="20" TextColor="Red" FontAttributes="Bold" FontSize="18" CharacterSpacing="1" Clicked="CancelButton_Clicked"/>
             </FlexLayout>
         </StackLayout>
     </Grid>

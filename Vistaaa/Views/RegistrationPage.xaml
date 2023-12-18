@@ -20,21 +20,12 @@
         </Border.StrokeShape>
         <VerticalStackLayout>
             <Label Text="cos" TextColor="Black"/>
-            <Entry TextColor="Black" BackgroundColor="LightSeaGreen" Text="{Binding UserName.Value, Mode=TwoWay}">
-                <Entry.Behaviors>
-                    <mct:EventToCommandBehavior
-            EventName="TextChanged"
-            Command="{Binding ValidateUsernameCommand}" />
-                </Entry.Behaviors>
-                <Entry.Triggers>
-                    <DataTrigger 
-            TargetType="Entry"
-            Binding="{Binding UserName.IsValid}"
-            Value="False">
-                        <Setter Property="BackgroundColor" Value="Red" />
-                    </DataTrigger>
-                </Entry.Triggers>
-            </Entry>
+            <Entry Keyboard="Email" TextColor="Black" x:Name="emailEntry"/>
+            <Entry Keyboard="Text" IsPassword="True" TextColor="Black" x:Name="passwordEntry"/>
+            <Entry Keyboard="Text" IsPassword="True" TextColor="Black" x:Name="confirmPasswordEntry"/>
+            <DatePicker x:Name="birthDatePicker"/>
+            <CheckBox/>
+            <Button Text="Zarejestruj się" Clicked="RegistrationButton_Clicked"/>
             <Button Text="Anuluj" Clicked="CancelRegistrationButton_Clicked"/>
         </VerticalStackLayout>
     </Border>

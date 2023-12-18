@@ -1,13 +1,15 @@
 using System.Windows.Input;
 using Vistaaa.Classes;
+using Vistaaa.Models;
 
 namespace Vistaaa.Views;
 
 public partial class RegistrationPage : ContentPage
 {
-    public ValidatableObject<string> UserName { get; private set; } = new();
-    public ValidatableObject<string> Password { get; private set; }
-    private void AddValidations()
+    private readonly Database Database = new();
+    //public ValidatableObject<string> UserName { get; private set; } = new();
+    //public ValidatableObject<string> Password { get; private set; }
+    /*private void AddValidations()
     {
         UserName.Validations.Add(new IsNotNullOrEmptyRule<string>
         {
@@ -17,20 +19,20 @@ public partial class RegistrationPage : ContentPage
         /*Password.Validations.Add(new IsNotNullOrEmptyRule<string>
         {
             ValidationMessage = "A password is required."
-        });*/
-    }
+        });
+    }*/
     public RegistrationPage()
 	{
 		InitializeComponent();
-        AddValidations();UserName.Value = " ";
-        ValidateUsername = new Command(ValidateUsername2);
+        //AddValidations();UserName.Value = " ";
+        //ValidateUsername = new Command(ValidateUsername2);
     }
 
-    public ICommand ValidateUsername { get; }
+    //public ICommand ValidateUsername { get; }
 
     private void ValidateUsername2()
     {
-        DisplayAlert("Test", UserName.IsValid.ToString(), "OK");    
+        //DisplayAlert("Test", UserName.IsValid.ToString(), "OK");    
     }
 
     private async void CancelRegistrationButton_Clicked(object sender, EventArgs e)
@@ -44,5 +46,18 @@ public partial class RegistrationPage : ContentPage
     {
         _= registrationModal.TranslateTo(0, 0, 500, Easing.SinInOut);
         await registrationModal.FadeTo(1, 500, Easing.SinInOut);
+    }
+
+    private async void RegistrationButton_Clicked(object sender, EventArgs e)
+    {
+        uint insertedId = await Database.CreateUser(new User(        
+            null, null,
+            birthDatePicker.Date,
+            emailEntry.Text,
+            PasswordHasher.Hash(passwordEntry.Text),
+            null, null, null, null, null, null, null, false
+        ));
+        Preferences.Set("userId", insertedId.ToString());
+        await Navigation.PopModalAsync();
     }
 }

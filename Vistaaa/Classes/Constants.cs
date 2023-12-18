@@ -17,4 +17,9 @@ namespace Vistaaa
         public static string DatabasePath =>
             Path.Combine(AppDomain.CurrentDomain.BaseDirectory, DatabaseFilename);
     }
+    public enum SortBy
+    {
+        Date,
+        Salary,
+    }
 }

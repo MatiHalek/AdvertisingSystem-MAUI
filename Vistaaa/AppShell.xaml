@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Vistaaa"
     Shell.FlyoutBehavior="Flyout" Shell.NavBarHasShadow="True" NavigationPage.BackButtonTitle="Wstecz" BackgroundColor="SeaGreen"
-    Title="Vistaaa - serwis ogłoszeniowy" >
+    Title="Vistaaa - serwis ogłoszeniowy" Shell.TabBarUnselectedColor="#6700FFFF" Shell.TabBarForegroundColor="DodgerBlue" Shell.TabBarTitleColor="#2E8B57">
     <!--<Shell.TitleView>
         <Grid >
         </Grid>
@@ -34,7 +34,7 @@
     <Shell.FlyoutHeaderTemplate>
         <DataTemplate>
             <VerticalStackLayout>
-                <Label Text="System ogłoszeniowy" FontAttributes="Bold" HorizontalOptions="Center" Margin="0, 15, 0, 0"/>
+                <Label Text="Serwis ogłoszeniowy" FontAttributes="Bold" HorizontalOptions="Center" Margin="0, 15, 0, 0"/>
                 <AbsoluteLayout HorizontalOptions="Center">
                     <Image Source="vistaaa_full_logo.png" Margin="15" HorizontalOptions="Center" WidthRequest="200"/>
                     <Label Text="{Binding Path=AppVersion, StringFormat='v{0}'}" FontFamily="SignikaNegative" FontAttributes="Bold" FontSize="22" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.73, 0.65, AutoSize, AutoSize"/>
@@ -52,17 +52,18 @@
             </VerticalStackLayout>
         </DataTemplate>
     </Shell.FlyoutFooterTemplate>
-    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems" Title="aaaa">
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent Title="Strona główna"
-                      Icon="monkey.png"
+                      Icon="home.png"
+                      Route="home"
                       ContentTemplate="{DataTemplate local:Views.HomePage}" />
         <ShellContent Title="Oferty pracy"
               Route="offers"
-              Icon="monkey.png"
+              Icon="briefcase.png"
               ContentTemplate="{DataTemplate local:MainPage}" />
         <ShellContent Title="Profil"
                       Route="profile"
-                      Icon="bear.png"
+                      Icon="profile.png"
                       ContentTemplate="{DataTemplate local:Views.ProfilePage}" />
     </FlyoutItem>
 </Shell>

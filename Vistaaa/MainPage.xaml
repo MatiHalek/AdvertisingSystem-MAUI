@@ -4,30 +4,32 @@
              x:Class="Vistaaa.MainPage" Title="Oferty pracy">
     <ScrollView x:Name="AdvertisementScrollView">
         <StackLayout MaximumWidthRequest="1000"
-            Padding="10,0"
+            Padding="10, 20, 10, 0"
             Spacing="25">
-            <SearchBar Placeholder="Wyszukaj" x:Name="searchBar" TextChanged="SearchBar_TextChanged" IsTextPredictionEnabled="True"/>
-            <HorizontalStackLayout Spacing="15" HorizontalOptions="End">
-                <Label Text="Sortuj:" VerticalOptions="Center"/>
-                <Picker>
-                    <Picker.Items>
-                        <x:String>Od najnowszych</x:String>
-                        <x:String>Od najpopularniejszych</x:String>
-                    </Picker.Items>
-                </Picker>
+            <SearchBar Placeholder="Wyszukaj po nazwie..." x:Name="searchBar" TextChanged="SearchBar_TextChanged" IsTextPredictionEnabled="True"/>
+            <FlexLayout Wrap="Wrap" JustifyContent="SpaceBetween">
+                <HorizontalStackLayout Spacing="15">
+                    <Label Text="Sortuj:" VerticalOptions="Center"/>
+                    <Picker x:Name="sortTypePicker"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Spacing="15">
+                    <Label Text="Liczba ogłoszeń na stronie:" VerticalOptions="Center"/>
+                    <Picker x:Name="advertisementsOnPagePicker"/>
+                </HorizontalStackLayout>
+            </FlexLayout>
+            <HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <CheckBox/>
+                    <Label Text="Tylko ulubione" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+                <Button Text="Dodaj" Clicked="AddButton_Clicked"/>
+                <Button Text="Usuń wszystkie (0)"/>
             </HorizontalStackLayout>
             <ActivityIndicator IsRunning="True" x:Name="loading" />
             <RefreshView x:Name="refreshView" RefreshColor="#1E90FF">
-                <CollectionView x:Name="AdvertisementCollectionView" >
+                <CollectionView x:Name="AdvertisementCollectionView" SelectionMode="Single" SelectionChanged="AdvertisementCollectionView_SelectionChanged"  >
                     <CollectionView.Header>
-                        <HorizontalStackLayout>
-                            <HorizontalStackLayout>
-                                <CheckBox/>
-                                <Label Text="Tylko ulubione" VerticalOptions="Center"/>
-                            </HorizontalStackLayout>
-                            <Button Text="Dodaj" Clicked="AddButton_Clicked"/>
-                            <Button Text="Usuń wszystkie (0)"/>
-                        </HorizontalStackLayout>
+                        <Label IsVisible="False" HorizontalOptions="Center" FontSize="20" FontAttributes="Bold" FontFamily="SignikaNegative" x:Name="headerCollectionViewLabel"/>
                     </CollectionView.Header>
                     <CollectionView.EmptyView>
                         <VerticalStackLayout x:Name="emptyCollectionViewPlaceholder" IsVisible="False">
@@ -37,13 +39,13 @@
                     <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <StackLayout>
-                            <Border IsEnabled="{Binding IsUpToDate}" HeightRequest="30" Padding="10, 5" BackgroundColor="SeaGreen" StrokeThickness="0" TranslationX="-10" HorizontalOptions="End" ZIndex="999">
+                            <Border IsEnabled="{Binding IsUpToDate}" HeightRequest="30" Padding="10, 5" BackgroundColor="SeaGreen" StrokeThickness="0" TranslationX="-25" HorizontalOptions="End" ZIndex="999">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="15"/>
                                 </Border.StrokeShape>
                                 <Label Text="{Binding Path=CreationDate, StringFormat='{0:d MMM yyyy}'}" TextColor="White" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
                             </Border>
-                            <Border StrokeThickness="1" Margin="0, -20, 0, 0">
+                            <Border IsEnabled="{Binding IsUpToDate}" StrokeThickness="1" Margin="0, -20, 0, 0">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="10"/>
                                 </Border.StrokeShape>
@@ -92,7 +94,7 @@
                         Span="2" VerticalItemSpacing="10" HorizontalItemSpacing="10" />
                     </CollectionView.ItemsLayout>
                 <CollectionView.Footer>
-                    <HorizontalStackLayout Spacing="10" x:Name="test" HorizontalOptions="Center" Margin="10">
+                    <HorizontalStackLayout IsVisible="False" Spacing="10" x:Name="footerCollectionViewStackLayout" HorizontalOptions="Center" Margin="10">
                         <Button x:Name="firstPageBtn" FontFamily="FAS" Clicked="FirstPageButton_Clicked"  Text="&#xf049;" ToolTipProperties.Text="Pierwsza strona"/>
                         <Button x:Name="previousPageBtn" FontFamily="FAS" Clicked="PreviousPageButton_Clicked" Text="&#xf048;" ToolTipProperties.Text="Poprzednia strona"/>
                         <Button x:Name="nextPageBtn" FontFamily="FAS" Clicked="NextPageButton_Clicked" Text="&#xf051;" ToolTipProperties.Text="Następna strona"/>

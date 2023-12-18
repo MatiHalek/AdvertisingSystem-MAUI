@@ -32,7 +32,7 @@ namespace Vistaaa
             await Init();
             return await DatabaseHandler!.InsertAsync(advertisement);
         }
-        public async Task<List<Advertisement>> GetAdvertisementsAsync(string? search = null)
+        public async Task<List<Advertisement>> GetAdvertisementsAsync(string? search = null, SortBy sortBy = SortBy.Date)
         {
             await Init();
             DateTime currentTime = DateTime.Now;
@@ -45,6 +45,15 @@ namespace Vistaaa
                 ];
             }
             List<Advertisement> advertisements = [];
+            if(sortBy == SortBy.Salary)
+            {
+                advertisements =
+                [
+                    .. allAdvertisements.Where(advertisement => advertisement.ExpirationDate >= currentTime).OrderByDescending(advertisement => advertisement.HighestSalary),
+                ];
+                advertisements.AddRange(allAdvertisements.Where(advertisement => advertisement.ExpirationDate < currentTime).OrderByDescending(advertisement => advertisement.HighestSalary));
+                return advertisements;
+            }
             advertisements =
             [
                 .. allAdvertisements.Where(advertisement => advertisement.ExpirationDate >= currentTime).OrderByDescending(advertisement => advertisement.CreationDate),
@@ -52,14 +61,12 @@ namespace Vistaaa
             advertisements.AddRange(allAdvertisements.Where(advertisement => advertisement.ExpirationDate < currentTime).OrderByDescending(advertisement => advertisement.CreationDate));   
             return advertisements;
         }
-        public async Task<List<Advertisement>> GetAdvertisementsAsync(uint pageNumber, uint advertisementsOnPage, string? search = null)
+        public async Task<List<Advertisement>> GetAdvertisementsAsync(uint pageNumber, uint advertisementsOnPage, string? search = null, SortBy sortBy = SortBy.Date)
         {
-            var advertisements = await GetAdvertisementsAsync(search);
-            //if (search != null)
-                //return advertisements.Where(advertisement => advertisement.Title.ToLower().Contains(search.ToLower())).Skip((int)((pageNumber - 1) * advertisementsOnPage)).Take((int)advertisementsOnPage).ToList();
+            var advertisements = await GetAdvertisementsAsync(search, sortBy);
             return advertisements.Skip((int)((pageNumber - 1) * advertisementsOnPage)).Take((int)advertisementsOnPage).ToList();
         }
-        public async Task<List<Category>> GetCategoriesAsync()
+        public async Task<List<Category>> GetCategories()
         {
             await Init();
             return await DatabaseHandler!.Table<Category>().ToListAsync();
@@ -99,10 +106,11 @@ namespace Vistaaa
             await Init();
             return await DatabaseHandler!.Table<User>().Where(user => user.Id == id).FirstOrDefaultAsync();
         }
-        public async Task<int> CreateUserAsync(User user)
+        public async Task<uint> CreateUser(User user)
         {
             await Init();
-            return await DatabaseHandler!.InsertAsync(user);
+            await DatabaseHandler!.InsertAsync(user);
+            return user.Id;
         }   
         public async Task<User?> VerifyUserAsync(string email, string password)
         {
@@ -120,10 +128,11 @@ namespace Vistaaa
             await Init();
             return await DatabaseHandler!.InsertAsync(userAdvertisement);
         }
-        public async Task<List<UserAdvertisement>> GetUserAdvertisementsAsync()
+        public async Task<UserAdvertisement?> CheckIfUserAdvertisementExists(uint userId, uint advertisementId)
         {
             await Init();
-            return await DatabaseHandler!.Table<UserAdvertisement>().ToListAsync();
+            UserAdvertisement userAdvertisement = await DatabaseHandler!.Table<UserAdvertisement>().Where(item => item.UserId == userId && item.AdvertisementId == advertisementId).FirstOrDefaultAsync();
+           return userAdvertisement;
         }
         public async Task<int> DeleteUserAdvertisementAsync(UserAdvertisement userAdvertisement)
         {

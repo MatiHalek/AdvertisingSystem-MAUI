@@ -9,6 +9,9 @@ public partial class ProfileView : ContentView
 	{
 		InitializeComponent();
 		User = user;
-		label.Text = User.FirstName;
+		if(User.FirstName is not null)
+			nameAndSurnameLabel.Text = User.FirstName + " " + User.LastName;
+		else
+			nameAndSurnameLabel.Text = User.Email;
 	}
 }

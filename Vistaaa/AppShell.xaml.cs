@@ -8,8 +8,7 @@
         public AppShell()
         {
             InitializeComponent();
-            BindingContext = this;
-            
+            BindingContext = this;            
         }
     }
 }

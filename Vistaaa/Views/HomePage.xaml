@@ -212,7 +212,7 @@
                     </Ellipse>
                 </AbsoluteLayout>
                 <VerticalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Spacing="10">
-                    <Label FontFamily="SignikaNegative" Text="Znajdź dla siebie wymarzoną pracę!" FontAttributes="Bold" FontSize="28" TextColor="White"/>
+                    <Label FontFamily="SignikaNegative" Text="Znajdź dla siebie wymarzoną pracę już teraz!" FontAttributes="Bold" FontSize="28" TextColor="#cc66ff" TextTransform="Uppercase"/>
                     <Border>
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="45"/>
@@ -222,7 +222,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <Label FontFamily="SignikaNegative"  FontSize="30" Padding="15" TextColor="Gray" x:Name="searchAnimationLabel"/>
+                            <Label FontFamily="SignikaNegative"  FontSize="25" Padding="15" TextColor="Gray" x:Name="searchAnimationLabel" LineBreakMode="MiddleTruncation"/>
                             <Border Grid.Column="1" StrokeThickness="0">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="45"/>

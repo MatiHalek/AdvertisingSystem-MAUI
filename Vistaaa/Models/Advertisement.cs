@@ -13,12 +13,14 @@ namespace Vistaaa.Models
         [PrimaryKey, AutoIncrement]
         public uint Id { get; set; }
         public string Title { get; set; } = "";
+        [ForeignKey(typeof(Company))]
         public uint CompanyId { get; set; }
+        [ForeignKey(typeof(Category))]
         public uint CategoryId { get; set; }
         public string PositionName { get; set; } = "";
         public string PositionLevel { get; set; } = "";
         public string ContractType { get; set; } = "";
-        public string Employment { get; set; } = "";
+        public string EmploymentType { get; set; } = "";
         public string WorkType { get; set; } = "";
         public decimal? LowestSalary { get; set; }
         public decimal HighestSalary { get; set; }
@@ -54,7 +56,7 @@ namespace Vistaaa.Models
             get
             {
                 Database database = new();
-                var categories = Task.Run(database.GetCategoriesAsync).Result;
+                var categories = Task.Run(database.GetCategories).Result;
                 foreach (var category in categories)
                 {
                     if (category.Id == CategoryId)
@@ -73,7 +75,7 @@ namespace Vistaaa.Models
         [ManyToMany(typeof(UserAdvertisement))]
         public List<User>? Users { get; set; }
 
-        public Advertisement(string title, uint companyId, uint categoryId, string positionName, string positionLevel, string contractType, string employment, string workType, decimal? lowestSalary, decimal highestSalary, string workDays, DateTime creationDate, DateTime expirationDate, string responsibilities, string requirements, string offer)
+        public Advertisement(string title, uint companyId, uint categoryId, string positionName, string positionLevel, string contractType, string employmentType, string workType, decimal? lowestSalary, decimal highestSalary, string workDays, DateTime creationDate, DateTime expirationDate, string responsibilities, string requirements, string offer)
         {
             Title = title;
             CompanyId = companyId;
@@ -81,7 +83,7 @@ namespace Vistaaa.Models
             PositionName = positionName;
             PositionLevel = positionLevel;
             ContractType = contractType;
-            Employment = employment;
+            EmploymentType = employmentType;
             WorkType = workType;
             LowestSalary = lowestSalary;
             HighestSalary = highestSalary;
