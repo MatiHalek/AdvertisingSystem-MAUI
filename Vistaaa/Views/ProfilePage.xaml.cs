@@ -7,6 +7,7 @@ namespace Vistaaa.Views;
 
 public partial class ProfilePage : ContentPage
 {
+    private ProfileView? ProfileView = null;
     protected override void OnAppearing()
     {
         base.OnAppearing();
@@ -22,16 +23,18 @@ public partial class ProfilePage : ContentPage
 	{
         if (Preferences.ContainsKey("userId"))
         {
+            if (ProfileView is not null)
+                profilePage.Remove(ProfileView);
             form.IsVisible = false;
             Database database = new();
-            var profileView = new ProfileView(await database.GetUserAsync(uint.Parse(Preferences.Get("userId", null) ?? "")));
-            profileView.logoutButton.Clicked += (object? sender, EventArgs e) =>
+            ProfileView = new ProfileView(await database.GetUserAsync(uint.Parse(Preferences.Get("userId", null) ?? "")));
+            ProfileView.logoutButton.Clicked += (object? sender, EventArgs e) =>
             {
                 Preferences.Set("userId", null);
-                profilePage.Remove(profileView);
+                profilePage.Remove(ProfileView);
                 form.IsVisible = true;
             };  
-            profilePage.Add(profileView);
+            profilePage.Add(ProfileView);
         }
     }
 

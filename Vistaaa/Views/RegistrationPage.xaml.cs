@@ -7,7 +7,11 @@ namespace Vistaaa.Views;
 public partial class RegistrationPage : ContentPage
 {
     private readonly Database Database = new();
-    //public ValidatableObject<string> UserName { get; private set; } = new();
+
+    public ValidatableObject<string>? Email { get; private set; }
+    public ICommand ValidateEmailCommand => new Command(ValidateEmail);
+    private VerticalStackLayout? IndividualUserStackLayout;
+    private VerticalStackLayout? CompanyStackLayout;
     //public ValidatableObject<string> Password { get; private set; }
     /*private void AddValidations()
     {
@@ -24,15 +28,29 @@ public partial class RegistrationPage : ContentPage
     public RegistrationPage()
 	{
 		InitializeComponent();
+        picker.ItemsSource = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6"];
+        picker.SelectedIndices = [2, 4, 5];
+        /*ValidatableObject<string> UserName = new()
+        {
+            Value = "ggg ",
+        };
+        UserName.Validations.Add(new IsNotNullOrEmptyRule<string>
+        {
+            ValidationMessage = "A username is required."
+        });
+        UserName.Validate();
+        DisplayAlert("Test", UserName.IsValid.ToString(), "OK");*/
+
         //AddValidations();UserName.Value = " ";
-        //ValidateUsername = new Command(ValidateUsername2);
     }
 
     //public ICommand ValidateUsername { get; }
 
-    private void ValidateUsername2()
+    private void ValidateEmail()
     {
-        //DisplayAlert("Test", UserName.IsValid.ToString(), "OK");    
+        //DisplayAlert("Test", UserName.IsValid.ToString(), "OK");
+        DisplayAlert("Test", Email?.Value, "OK");
+        Email?.Validate();    
     }
 
     private async void CancelRegistrationButton_Clicked(object sender, EventArgs e)
@@ -50,14 +68,31 @@ public partial class RegistrationPage : ContentPage
 
     private async void RegistrationButton_Clicked(object sender, EventArgs e)
     {
-        uint insertedId = await Database.CreateUser(new User(        
-            null, null,
-            birthDatePicker.Date,
-            emailEntry.Text,
-            PasswordHasher.Hash(passwordEntry.Text),
-            null, null, null, null, null, null, null, false
-        ));
-        Preferences.Set("userId", insertedId.ToString());
-        await Navigation.PopModalAsync();
+        //VerticalStackLayout? stackLayout = (VerticalStackLayout?)((Button)sender).Parent;
+        //carouselView.CurrentItem = 1;
+        //await DisplayAlert("Test", ((Entry?)stackLayout?.Children[1])?.Text, "OK");    
+        //await DisplayAlert("Test", ((Entry)st1.Children[1]).Text, "OK");
+        if(carouselView.CurrentItem.ToString() == "IndividualUser")
+        {
+            uint insertedId = await Database.CreateUser(new User(        
+                null, null,
+                ((DatePicker)IndividualUserStackLayout!.Children[8]).Date,
+                ((Entry)IndividualUserStackLayout!.Children[2]).Text,
+                PasswordHasher.Hash(((Entry)IndividualUserStackLayout!.Children[4]).Text),
+                null, null, null, null, null, null, null, false
+            ));
+            Preferences.Set("userId", insertedId.ToString());
+            await Navigation.PopModalAsync();
+        }       
+    }
+
+    private void VerticalStackLayout_Loaded(object sender, EventArgs e)
+    {
+        IndividualUserStackLayout = (VerticalStackLayout)sender;
+    }
+
+    private void VerticalStackLayout_Loaded_1(object sender, EventArgs e)
+    {
+        CompanyStackLayout = (VerticalStackLayout)sender;
     }
 }

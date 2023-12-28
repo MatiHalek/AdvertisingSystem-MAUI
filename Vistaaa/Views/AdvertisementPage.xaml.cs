@@ -34,18 +34,34 @@ public partial class AdvertisementPage : ContentPage
 	}
 	private async void CheckIfSaved()
 	{
+		if(Advertisement?.ExpirationDate < DateTime.Now)
+		{
+            expiredAdvertisementLabel.IsVisible = true;
+			applyButton.IsVisible = false;
+        }
+		else
+		{
+			expiredAdvertisementLabel.IsVisible = false;
+			saveButton.IsVisible = true;
+		}
 		if(Preferences.ContainsKey("userId") && await Database.CheckIfUserAdvertisementExists(uint.Parse(Preferences.Get("userId", null) ?? ""), Advertisement?.Id ?? 0) is not null)
 		{
             saveButton.Text = "Usuñ z zapisanych";
             saveButton.TextColor = Colors.Red;
             saveButton.BorderColor = Colors.Red;
-
         }
         else
 		{
-            saveButton.Text = "Zapisz";
-            saveButton.TextColor = Colors.DodgerBlue;
-            saveButton.BorderColor = Colors.DodgerBlue;
+			if(Advertisement?.ExpirationDate < DateTime.Now)
+			{
+				saveButton.IsVisible = false;
+			}
+			else
+			{
+				saveButton.Text = "Zapisz";
+				saveButton.TextColor = Colors.DodgerBlue;
+				saveButton.BorderColor = Colors.DodgerBlue;
+			}           
         }
 		saveButton.IsEnabled = true;
 	}
@@ -65,4 +81,13 @@ public partial class AdvertisementPage : ContentPage
 			_= Shell.Current.GoToAsync("//profile");
     }
 
+    private void ApplyButton_Clicked(object sender, EventArgs e)
+    {
+        if (Preferences.ContainsKey("userId"))
+        {
+            //CheckIfSaved();
+        }
+        else
+            _ = Shell.Current.GoToAsync("//profile");
+    }
 }

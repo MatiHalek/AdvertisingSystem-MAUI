@@ -26,6 +26,7 @@
                 <Editor Placeholder="Wymagania wobec kandydata" x:Name="requirementsEntry"/>
                 <Editor Placeholder="Oferta pracodawcy" x:Name="offerEntry"/>
                 <Button Text="Wybierz" Clicked="FilePickerButton_Clicked" />
+                <Image x:Name="image" WidthRequest="150"/>
             </VerticalStackLayout>
         </ScrollView>
         <StackLayout Grid.Row="1" Padding="15">

@@ -2,6 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:local="clr-namespace:Vistaaa.Selectors"
+             xmlns:control="clr-namespace:Vistaaa.Controls"
              x:Class="Vistaaa.Views.RegistrationPage" Shell.PresentationMode="ModalNotAnimated" Appearing="RegistrationPage_Appearing">
     <ContentPage.Background>
         <LinearGradientBrush StartPoint="0,0"
@@ -14,19 +16,106 @@
                   Offset="1.0" />
         </LinearGradientBrush>
     </ContentPage.Background>
-    <Border x:Name="registrationModal" Opacity="0" BackgroundColor="White" VerticalOptions="Center" Margin="15" MaximumWidthRequest="500" StrokeThickness="0" Padding="15" TranslationY="200">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="individualUserTemplate">
+            <VerticalStackLayout Spacing="10" Padding="10, 0, 10, 10" Loaded="VerticalStackLayout_Loaded">
+                <Label Text="jako użytkownik indywidualny" TextColor="Black" FontSize="20" FontFamily="SignikaNegative" HorizontalOptions="Center" FontAttributes="Bold"/>
+                <Border Style="{StaticResource formBorder}">
+                    <Label Text="Adres e-mail" Style="{StaticResource formLabel}"/>
+                </Border>
+                <Entry Keyboard="Email" PlaceholderColor="Gray" MaxLength="254" BackgroundColor="#DDD" Placeholder="Adres e-mail" TextColor="Black">
+
+                </Entry>
+                <Border Style="{StaticResource formBorder}">
+                    <Label Text="Hasło" Style="{StaticResource formLabel}"/>
+                </Border>
+                <Entry PlaceholderColor="Gray" MaxLength="255" BackgroundColor="#DDD" Keyboard="Text" Placeholder="Hasło" TextColor="Black" IsPassword="True"/>
+                <Border Style="{StaticResource formBorder}">
+                    <Label Text="Powtórz hasło" Style="{StaticResource formLabel}"/>
+                </Border>
+                <Entry PlaceholderColor="Gray" MaxLength="255" BackgroundColor="#DDD" Keyboard="Text" Placeholder="Powtórz hasło" TextColor="Black" IsPassword="True"/>
+                <Border Style="{StaticResource formBorder}">
+                    <Label Text="Data urodzenia" Style="{StaticResource formLabel}"/>
+                </Border>
+                <DatePicker TextColor="Black" BackgroundColor="#DDD" x:Name="birthDatePicker" WidthRequest="420"/>
+                <HorizontalStackLayout>
+                    <CheckBox Color="Green"/>
+                    <Label Text="Akceptuję regulamin serwisu Vistaaa." TextColor="Black" VerticalTextAlignment="Center"/>
+                </HorizontalStackLayout>
+                
+            </VerticalStackLayout>
+        </DataTemplate>
+        <DataTemplate x:Key="companyUserTemplate">
+            <VerticalStackLayout Spacing="10" Padding="10, 0, 10, 10" Loaded="VerticalStackLayout_Loaded_1">
+                <Label Text="jako firma" TextColor="Black" FontSize="20" FontFamily="SignikaNegative" HorizontalOptions="Center" FontAttributes="Bold"/>
+                <Entry Keyboard="Email" PlaceholderColor="Gray" MaxLength="254" BackgroundColor="#DDD" Placeholder="Adres e-mail" TextColor="Black" Margin="0, 10, 0, 0"/>
+                <Entry PlaceholderColor="Gray" MaxLength="255" BackgroundColor="#DDD" Keyboard="Text" Placeholder="Nazwa firmy" TextColor="Black"/>
+                <Entry PlaceholderColor="Gray" MaxLength="255" BackgroundColor="#DDD" Keyboard="Text" Placeholder="Hasło" TextColor="Black" IsPassword="True"/>
+                <Entry PlaceholderColor="Gray" MaxLength="255" BackgroundColor="#DDD" Keyboard="Text" Placeholder="Powtórz hasło" TextColor="Black" IsPassword="True"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Entry PlaceholderColor="Gray" MaxLength="255" BackgroundColor="#DDD" Keyboard="Text" Placeholder="Ulica" TextColor="Black"/>
+                    <Entry PlaceholderColor="Gray" Grid.Column="1" MaxLength="255" BackgroundColor="#DDD" Keyboard="Numeric"  Placeholder="Numer" TextColor="Black"/>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Entry PlaceholderColor="Gray" MaxLength="255" BackgroundColor="#DDD" Keyboard="Numeric"  Placeholder="Kod pocztowy" TextColor="Black"/>
+                    <Entry PlaceholderColor="Gray" Grid.Column="1" MaxLength="255" BackgroundColor="#DDD" Keyboard="Text" Placeholder="Miejscowość" TextColor="Black"/>
+                </Grid>
+            </VerticalStackLayout>
+        </DataTemplate>
+        <local:RegistrationTemplateSelector x:Key="registrationTemplateSelector" IndividualUserTemplate="{StaticResource individualUserTemplate}" CompanyTemplate="{StaticResource companyUserTemplate}"/>
+    </ContentPage.Resources>
+    <Border BackgroundColor="White" x:Name="registrationModal" VerticalOptions="Center" Margin="15" MaximumWidthRequest="500" StrokeThickness="0" Padding="15" TranslationY="200">
         <Border.StrokeShape>
             <RoundRectangle CornerRadius="7"/>
         </Border.StrokeShape>
-        <VerticalStackLayout>
-            <Label Text="cos" TextColor="Black"/>
-            <Entry Keyboard="Email" TextColor="Black" x:Name="emailEntry"/>
-            <Entry Keyboard="Text" IsPassword="True" TextColor="Black" x:Name="passwordEntry"/>
-            <Entry Keyboard="Text" IsPassword="True" TextColor="Black" x:Name="confirmPasswordEntry"/>
-            <DatePicker x:Name="birthDatePicker"/>
-            <CheckBox/>
-            <Button Text="Zarejestruj się" Clicked="RegistrationButton_Clicked"/>
-            <Button Text="Anuluj" Clicked="CancelRegistrationButton_Clicked"/>
+        <VerticalStackLayout Spacing="5">
+            <Label Text="Zarejestruj się" TextColor="Black" FontSize="30" FontFamily="SignikaNegative" HorizontalOptions="Center" FontAttributes="Bold"/>
+            <CarouselView MaximumWidthRequest="440" Loop="False" x:Name="carouselView" ItemTemplate="{StaticResource registrationTemplateSelector}" IndicatorView="indicatorView">
+                <CarouselView.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>IndividualUser</x:String>
+                        <x:String>Company</x:String>
+                    </x:Array>
+                </CarouselView.ItemsSource>
+            </CarouselView>
+            <IndicatorView Margin="0, 15, 0, 0" Scale="1.3" x:Name="indicatorView"
+                   IndicatorColor="DarkGray"
+                   SelectedIndicatorColor="DodgerBlue"
+                   HorizontalOptions="Center" />
+            <!--<Entry Keyboard="Email" TextColor="Black" Text="{Binding Email.Value, Mode=TwoWay}">
+                <Entry.Behaviors>
+                    <mct:EventToCommandBehavior
+EventName="TextChanged"
+Command="{Binding ValidateEmailCommand}" />
+                </Entry.Behaviors>
+                <Entry.Triggers>
+                    <DataTrigger 
+TargetType="Entry"
+Binding="{Binding Email.IsValid}"
+Value="False">
+                        <Setter Property="BackgroundColor" Value="Red" />
+                    </DataTrigger>
+                </Entry.Triggers>
+            </Entry>-->
+            <control:MultiSelectionPicker x:Name="picker" BackgroundColor="White"/>
+            <Grid ColumnSpacing="15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Text="Zarejestruj się" Clicked="RegistrationButton_Clicked"  Style="{StaticResource successButton}"/>
+                <Button Grid.Column="1" Text="Nie, dziękuję" Clicked="CancelRegistrationButton_Clicked"  Style="{StaticResource failButton}"/>
+            </Grid>
         </VerticalStackLayout>
+        
+        
     </Border>
 </ContentPage>

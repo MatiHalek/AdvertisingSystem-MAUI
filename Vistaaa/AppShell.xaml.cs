@@ -4,7 +4,7 @@
     {
 
         public string AppVersion { get; } = "1.0.0";
-        public DateOnly ReleaseDate { get; } = new DateOnly(2023, 12, 19);
+        public DateOnly ReleaseDate { get; } = new DateOnly(2024, 1, 2);
         public AppShell()
         {
             InitializeComponent();

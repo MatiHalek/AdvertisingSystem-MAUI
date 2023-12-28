@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Maps;
+using Vistaaa.Views;
 
 namespace Vistaaa
 {
@@ -18,11 +19,18 @@ namespace Vistaaa
                 fonts.AddFont("Free-Solid-900.otf", "FAS");
                 fonts.AddFont("SignikaNegative-Medium.ttf", "SignikaNegative");
             }).UseMauiCommunityToolkit().UseMauiMaps().UseMauiCommunityToolkitMaps("Ak_wMJAB-SJeH0OlnHcRfEN31jFCL4bxutEaEV1L7EYTYGwSu-84TDfWXDLx0xtS");
+
+            builder.Services.AddSingleton<HomePage>();
+            builder.Services.AddSingleton<OffersPage>();
+            builder.Services.AddSingleton<ProfilePage>();
+            builder.Services.AddSingleton<Database>();
+
+            builder.Services.AddTransient<LoginPage>();
+            builder.Services.AddTransient<RegistrationPage>();
+            builder.Services.AddTransient<AdvertisementPage>();
+            builder.Services.AddTransient<AddOrEditAdvertisement>();
 #if DEBUG
             builder.Logging.AddDebug();
-            builder.Services.AddSingleton<MainPage>();
-            builder.Services.AddTransient<MainPage>();
-            builder.Services.AddSingleton<Database>();
 #endif
             return builder.Build();
         }

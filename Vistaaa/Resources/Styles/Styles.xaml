@@ -8,6 +8,71 @@
         <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
     </Style>
 
+    <Style x:Key="successButton" TargetType="Button">
+        <Setter Property="FontFamily"  Value="SignikaNegative" />
+        <Setter Property="TextColor"  Value="White" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="CharacterSpacing" Value="1" />
+        <Setter Property="CornerRadius" Value="20" />
+        <Setter Property="BackgroundColor" Value="Green" />
+    </Style>
+
+    <Style x:Key="failButton" TargetType="Button">
+        <Setter Property="FontFamily"  Value="SignikaNegative" />
+        <Setter Property="TextColor"  Value="Red" />
+        <Setter Property="BorderWidth"  Value="2" />
+        <Setter Property="BorderColor"  Value="Red" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="CharacterSpacing" Value="1" />
+        <Setter Property="CornerRadius" Value="20" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+    </Style>
+
+    <Style x:Key="commonButton" TargetType="Button">
+        <Setter Property="FontFamily"  Value="SignikaNegative" />
+        <Setter Property="TextColor"  Value="DodgerBlue" />
+        <Setter Property="BorderWidth"  Value="2" />
+        <Setter Property="BorderColor"  Value="DodgerBlue" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="CharacterSpacing" Value="1" />
+        <Setter Property="CornerRadius" Value="20" />
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+        <Setter Property="Background">
+            <Setter.Value>
+                <RadialGradientBrush>
+                    <GradientStop Color="Transparent"/>
+                    <GradientStop Color="#551E90FF" Offset="1"/>
+                </RadialGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="formBorder" TargetType="Border">
+        <Setter Property="StrokeThickness" Value="0"/>
+        <Setter Property="TranslationX" Value="10"/>
+        <Setter Property="TranslationY" Value="20"/>
+        <Setter Property="Margin" Value="0, -20, 0, 0"/>
+        <Setter Property="BackgroundColor" Value="#663399"/>
+        <Setter Property="HorizontalOptions" Value="Start"/>
+        <Setter Property="ZIndex" Value="99"/>
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="7"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="formLabel" TargetType="Label">
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Padding" Value="7, 2"/>
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="TextTransform" Value="Uppercase"/>
+    </Style>
+
     <Style TargetType="IndicatorView">
         <Setter Property="IndicatorColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}"/>
         <Setter Property="SelectedIndicatorColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray100}}"/>

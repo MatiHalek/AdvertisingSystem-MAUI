@@ -14,13 +14,14 @@
               Offset="1.0" />
         </LinearGradientBrush>
     </ContentPage.Background>
-    <Border x:Name="loginModal" Opacity="0" BackgroundColor="White" VerticalOptions="Center" Margin="15" MaximumWidthRequest="500" StrokeThickness="0" Padding="15" TranslationY="200">
+    <Border x:Name="loginModal"  BackgroundColor="White" VerticalOptions="Center" Margin="15" MaximumWidthRequest="500" StrokeThickness="0" Padding="15" TranslationY="200">
         <Border.StrokeShape>
             <RoundRectangle CornerRadius="7"/>
         </Border.StrokeShape>
-        <VerticalStackLayout>
-            <Label Text="cos" TextColor="Black"/>
-            <Entry Placeholder="Adres e-mail" MaxLength="254" x:Name="emailEntry" TextColor="Black">
+        <VerticalStackLayout Spacing="10">
+            <Image Source="vistaaa_full_logo.png" WidthRequest="150"/>
+            <Label Text="Zaloguj się" TextColor="Black" FontSize="30" FontFamily="SignikaNegative" HorizontalOptions="Center" FontAttributes="Bold"/>
+            <Entry PlaceholderColor="Gray" MaxLength="254" BackgroundColor="#DDD" Placeholder="Adres e-mail" x:Name="emailEntry" TextColor="Black">
                 <Entry.Keyboard>
                     <Keyboard x:FactoryMethod="Create">
                         <x:Arguments>
@@ -29,9 +30,16 @@
                     </Keyboard>
                 </Entry.Keyboard>
             </Entry>
-            <Entry Keyboard="Text" Placeholder="Hasło" IsPassword="True" MaxLength="255" x:Name="passwordEntry"/>
-            <Button Text="Zaloguj się" Clicked="LoginButton_Clicked"/>
-            <Button Text="Anuluj" Clicked="CancelLoginButton_Clicked"/>
+            <Entry PlaceholderColor="Gray" MaxLength="255" BackgroundColor="#DDD" Keyboard="Text" Placeholder="Hasło" TextColor="Black" IsPassword="True" x:Name="passwordEntry"/>
+            <Grid ColumnSpacing="15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Text="Zaloguj się" Clicked="LoginButton_Clicked" Style="{StaticResource successButton}"/>
+                <Button Grid.Column="1" Text="Nie, dziękuję" Clicked="CancelLoginButton_Clicked" Style="{StaticResource failButton}"/>
+            </Grid>
+            
         </VerticalStackLayout>
     </Border>
 </ContentPage>

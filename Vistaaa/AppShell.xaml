@@ -39,7 +39,7 @@
                     <Image Source="vistaaa_full_logo.png" Margin="15" HorizontalOptions="Center" WidthRequest="200"/>
                     <Label Text="{Binding Path=AppVersion, StringFormat='v{0}'}" FontFamily="SignikaNegative" FontAttributes="Bold" FontSize="22" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0.73, 0.65, AutoSize, AutoSize"/>
                 </AbsoluteLayout>
-                <Label Text="{Binding Path=ReleaseDate, StringFormat='Data wydania: {0:d.M.yyyy}'}" FontAttributes="Bold" HorizontalOptions="Center" Margin="0, 0, 0, 15"/>
+                <Label Text="{Binding Path=ReleaseDate, StringFormat='Data wydania: {0:d.MM.yyyy}'}" FontAttributes="Bold" HorizontalOptions="Center" Margin="0, 0, 0, 15"/>
             </VerticalStackLayout>
         </DataTemplate>
     </Shell.FlyoutHeaderTemplate>
@@ -60,7 +60,7 @@
         <ShellContent Title="Oferty pracy"
               Route="offers"
               Icon="briefcase.png"
-              ContentTemplate="{DataTemplate local:MainPage}" />
+              ContentTemplate="{DataTemplate local:Views.OffersPage}" />
         <ShellContent Title="Profil"
                       Route="profile"
                       Icon="profile.png"

@@ -213,7 +213,7 @@
                 </AbsoluteLayout>
                 <VerticalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Spacing="10">
                     <Label FontFamily="SignikaNegative" Text="Znajdź dla siebie wymarzoną pracę już teraz!" FontAttributes="Bold" FontSize="28" TextColor="#cc66ff" TextTransform="Uppercase"/>
-                    <Border>
+                    <Border Stroke="Gray" StrokeThickness="1">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="45"/>
                         </Border.StrokeShape>
