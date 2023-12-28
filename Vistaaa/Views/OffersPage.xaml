@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:control="clr-namespace:Vistaaa.Controls"
+             x:Class="Vistaaa.Views.OffersPage" Title="Oferty pracy">
+    <ContentPage.Resources>
+        <Style TargetType="SwipeView">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                Value="#441E90FF" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+    <StackLayout MaximumWidthRequest="1200"
+        Padding="10, 20, 10, 0"
+        Spacing="25">
+        <SearchBar Placeholder="Wyszukaj po nazwie..." x:Name="searchBar" TextChanged="SearchBar_TextChanged" IsTextPredictionEnabled="True"/>
+        <control:MultiSelectionPicker x:Name="picker" BackgroundColor="White"/>
+        <FlexLayout Wrap="Wrap" JustifyContent="SpaceBetween">
+            <HorizontalStackLayout Spacing="15" Margin="5">
+                <Label Text="Sortuj:" VerticalOptions="Center"/>
+                <Picker x:Name="sortTypePicker" ItemDisplayBinding="{Binding Item1}"/>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout Margin="5" IsEnabled="False" x:Name="onlySavedStackLayout">
+                <CheckBox x:Name="onlySavedCheckbox" CheckedChanged="OnlySavedCheckbox_CheckedChanged"/>
+                <Label Text="Tylko zapisane" VerticalOptions="Center" FontSize="16" FontAttributes="Bold">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnlySavedLabel_Tapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout Spacing="15" Margin="5">
+                <Label Text="Liczba ogłoszeń na stronie:" VerticalOptions="Center"/>
+                <Picker x:Name="advertisementsOnPagePicker"/>
+            </HorizontalStackLayout>
+        </FlexLayout>
+        <HorizontalStackLayout>
+            <Button Text="Dodaj" Clicked="AddButton_Clicked"/>
+            <Switch Toggled="DeleteSwitch_Toggled"/>
+            <Button Text="Usuń wszystkie (0)"/>
+        </HorizontalStackLayout>
+        <ActivityIndicator IsRunning="True" x:Name="loading" />
+        <RefreshView x:Name="refreshView" RefreshColor="#1E90FF">
+            <CollectionView x:Name="AdvertisementCollectionView" SelectionMode="None"  SelectionChanged="AdvertisementCollectionView_SelectionChanged">
+                <CollectionView.Header>
+                    <Label IsVisible="False" HorizontalOptions="Center" FontSize="20" FontAttributes="Bold" FontFamily="SignikaNegative" x:Name="headerCollectionViewLabel"/>
+                </CollectionView.Header>
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout x:Name="emptyCollectionViewPlaceholder" IsVisible="False">
+                        <Label Text="Nie znaleziono ofert pasujących do podanych warunków." HorizontalOptions="Center" HorizontalTextAlignment="Center" FontSize="20" FontAttributes="Bold" FontFamily="SignikaNegative"/>
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <SwipeView>
+                            <SwipeView.LeftItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Edytuj"
+                                        BackgroundColor="LightGreen"
+                                        Invoked="EditAdvertisementMenuItem_Clicked"/>
+                                </SwipeItems>
+                            </SwipeView.LeftItems>
+                            <StackLayout>
+                                <Border IsEnabled="{Binding IsUpToDate}" HeightRequest="30" Padding="10, 5" BackgroundColor="SeaGreen" StrokeThickness="0" TranslationX="-25" HorizontalOptions="End" ZIndex="999">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="15"/>
+                                    </Border.StrokeShape>
+                                    <Label Text="{Binding Path=CreationDate, StringFormat='{0:d MMM yyyy}'}" TextColor="White" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                                </Border>
+                                <Border StrokeThickness="1" Margin="0, -20, 0, 0">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Opacity" Value="1"/>
+                                            <Style.Triggers>
+                                                <DataTrigger TargetType="Border" Binding="{Binding IsUpToDate}" Value="False">
+                                                    <Setter Property="Opacity" Value="0.4"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="10"/>
+                                    </Border.StrokeShape>
+                                    <StackLayout Margin="10, 5" >
+                                        <Label Text="{Binding CategoryName}" Margin="0, 15, 0, 0" FontSize="12" FontAttributes="Bold" TextColor="Gray" Opacity="0.9"/>
+                                        <Label Text="{Binding Title}" FontSize="17" FontAttributes="Bold"/>
+                                        <Label Text="{Binding Path=CompanyName, StringFormat='przez: {0}'}" FontSize="13" FontAttributes="Bold"/>
+                                        <Label TextColor="#B566FF" Text="{Binding Path=HighestSalary, StringFormat='do {0:N0} zł'}" FontSize="13" FontAttributes="Bold"/>
+                                        <FlexLayout Wrap="Wrap">
+                                            <Label Opacity="0.8">
+                                                <Label.Text>
+                                                    <MultiBinding StringFormat="{}{0}  &#x2022; {1}  &#x2022; {2} &#x2022; {3} &#x2022; {4} ">
+                                                        <Binding Path="PositionName" />
+                                                        <Binding Path="PositionLevel" />
+                                                        <Binding Path="ContractType" />
+                                                        <Binding Path="Employment" />
+                                                        <Binding Path="WorkType" />
+                                                    </MultiBinding>
+                                                </Label.Text>
+                                            </Label>
+                                        </FlexLayout>
+                                        <Button Margin="0, 10, 0, 0" Text="Szczegóły" BackgroundColor="DodgerBlue" FontAttributes="Bold" FontFamily="SignikaNegative" TextColor="White" HorizontalOptions="Center" Clicked="DetailsButton_Clicked"/>
+                                        <FlyoutBase.ContextFlyout>
+                                            <MenuFlyout>
+                                                <MenuFlyoutItem Text="Edytuj ogłoszenie" Clicked="EditAdvertisementMenuItem_Clicked"/>
+                                                <MenuFlyoutSeparator/>
+                                                <MenuFlyoutSubItem Text="Zmień">
+                                                    <MenuFlyoutItem Text="Zmień nazwę"/>
+                                                    <MenuFlyoutItem Text="Zmień opis"/>
+                                                </MenuFlyoutSubItem>
+                                            </MenuFlyout>
+                                        </FlyoutBase.ContextFlyout>
+                                    </StackLayout>
+                                    <!--<Border.Shadow>
+                                <Shadow  Brush="#BBB"
+                                Offset="3, 3"
+                                Radius="5"
+                                Opacity="0.9" />
+                            </Border.Shadow>-->
+                                </Border>
+                            </StackLayout>
+                        </SwipeView>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                    Span="{OnIdiom 3, Phone=1, Tablet=2}" VerticalItemSpacing="10" HorizontalItemSpacing="10" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.Footer>
+                    <HorizontalStackLayout IsVisible="False" Spacing="10" x:Name="footerCollectionViewStackLayout" HorizontalOptions="Center" Margin="10">
+                        <Button x:Name="firstPageBtn" FontFamily="FAS" Clicked="FirstPageButton_Clicked"  Text="&#xf049;" ToolTipProperties.Text="Pierwsza strona"/>
+                        <Button x:Name="previousPageBtn" FontFamily="FAS" Clicked="PreviousPageButton_Clicked" Text="&#xf048;" ToolTipProperties.Text="Poprzednia strona"/>
+                        <HorizontalStackLayout x:Name="pageButtons" Spacing="10"/>
+                        <Button x:Name="nextPageBtn" FontFamily="FAS" Clicked="NextPageButton_Clicked" Text="&#xf051;" ToolTipProperties.Text="Następna strona"/>
+                        <Button x:Name="lastPageBtn" FontFamily="FAS" Clicked="LastPageButton_Clicked" Text="&#xf050;" ToolTipProperties.Text="Ostatnia strona"/>
+                    </HorizontalStackLayout>
+                </CollectionView.Footer>
+            </CollectionView>
+        </RefreshView>
+    </StackLayout>
+</ContentPage>

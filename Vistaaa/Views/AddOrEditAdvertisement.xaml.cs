@@ -67,4 +67,15 @@ public partial class AddOrEditAdvertisement : ContentPage
     {
         Navigation.PopAsync();
     }
+
+    private void AddNewCategoryButton_Clicked(object sender, EventArgs e)
+    {
+        DisplayPromptAsync("Dodaj now¹ kategoriê", "WprowadŸ nazwê nowej kategorii", "Dodaj", "Anuluj", "Nazwa kategorii", 100, Keyboard.Text, "Nowa kategoria").ContinueWith((task) =>
+        {
+            if (task.Result is not null)
+            {
+                //Database.CreateCategoryAsync(new Category(task.Result));
+            }
+        }); 
+    }
 }

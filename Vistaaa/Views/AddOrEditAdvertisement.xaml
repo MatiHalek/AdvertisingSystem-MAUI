@@ -11,7 +11,14 @@
         <ScrollView>
             <VerticalStackLayout Padding="15" MaximumWidthRequest="1200">
                 <Entry Keyboard="Text" Placeholder="Tytuł ogłoszenia" x:Name="titleEntry"/>
-                <Picker Title="Wybierz kategorię..." x:Name="categoryPicker"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Picker Title="Wybierz kategorię..." x:Name="categoryPicker"/>
+                    <Button Text="Dodaj nową" Grid.Column="1" Clicked="AddNewCategoryButton_Clicked"/>
+                </Grid>
                 <Picker Title="Wybierz firmę..." x:Name="companyPicker"/>
                 <DatePicker x:Name="expirationDatePicker"/>
                 <Entry Keyboard="Text" Placeholder="Nazwa stanowiska" x:Name="positionNameEntry"/>

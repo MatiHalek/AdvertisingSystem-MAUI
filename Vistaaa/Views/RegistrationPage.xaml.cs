@@ -28,8 +28,6 @@ public partial class RegistrationPage : ContentPage
     public RegistrationPage()
 	{
 		InitializeComponent();
-        picker.ItemsSource = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6"];
-        picker.SelectedIndices = [2, 4, 5];
         /*ValidatableObject<string> UserName = new()
         {
             Value = "ggg ",

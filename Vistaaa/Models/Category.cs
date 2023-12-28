@@ -11,6 +11,7 @@ namespace Vistaaa.Models
     {
         [PrimaryKey, AutoIncrement]
         public uint Id { get; set; }
+        [MaxLength(100)]
         public string Name { get; set; } = "";
 
         public Category(uint id, string name)
