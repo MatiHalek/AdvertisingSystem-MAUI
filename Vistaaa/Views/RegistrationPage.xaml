@@ -45,7 +45,7 @@
                 <Border Style="{StaticResource formBorder}">
                     <Label Text="Data urodzenia" Style="{StaticResource formLabel}"/>
                 </Border>
-                <DatePicker TextColor="Black" BackgroundColor="#DDD" x:Name="birthDatePicker" WidthRequest="420"/>
+                <DatePicker TextColor="Black" BackgroundColor="#DDD" x:Name="birthDatePicker" HorizontalOptions="FillAndExpand"/>
                 <HorizontalStackLayout>
                     <CheckBox Color="Green"/>
                     <Label Text="Akceptuję regulamin serwisu Vistaaa." TextColor="Black" VerticalTextAlignment="Center"/>

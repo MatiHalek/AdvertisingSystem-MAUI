@@ -14,14 +14,17 @@ namespace Vistaaa.Models
         [MaxLength(100)]
         public string Name { get; set; } = "";
 
-        public Category(uint id, string name)
+        public Category(string name)
         {
-            Id = id;
             Name = name;
         }
         public Category()
         {
 
+        }
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

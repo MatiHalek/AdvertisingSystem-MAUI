@@ -26,6 +26,62 @@ namespace Vistaaa
             await DatabaseHandler.CreateTableAsync<Category>();
             await DatabaseHandler.CreateTableAsync<User>();
             await DatabaseHandler.CreateTableAsync<UserAdvertisement>();
+            await DatabaseHandler.CreateTableAsync<WorkType>();
+            await DatabaseHandler.CreateTableAsync<EmploymentType>();
+            await DatabaseHandler.CreateTableAsync<ContractType>();
+            await DatabaseHandler!.Table<WorkType>().CountAsync().ContinueWith(task =>
+            {
+                if (task.Result == 0)
+                {
+                    DatabaseHandler.InsertAllAsync(
+                        new List<WorkType>
+                        {
+                            new("Stacjonarna"),
+                            new("Hybrydowa"),
+                            new("Zdalna"),
+                        }
+                    );
+                }
+            });
+            await DatabaseHandler!.Table<EmploymentType>().CountAsync().ContinueWith(task =>
+            {
+                if (task.Result == 0)
+                {
+                    DatabaseHandler.InsertAllAsync(
+                        new List<EmploymentType>
+                        {
+                                new("Pełny etat"),
+                                new("Pół etatu"),
+                                new("1/4 etatu"),
+                                new("3/4 etatu"),
+                                new("Staż"),
+                                new("Praktyki"),
+                                new("Wolontariat"),
+                        }
+                    );
+                }
+            });
+            await DatabaseHandler!.Table<ContractType>().CountAsync().ContinueWith(task =>
+            {
+                if (task.Result == 0)
+                {
+                    DatabaseHandler.InsertAllAsync(
+                        new List<ContractType>
+                        {
+                            new("Umowa o pracę"),
+                            new("Umowa zlecenie"),
+                            new("Umowa o dzieło"),
+                        }
+                    );
+                }
+            });
+            await DatabaseHandler!.Table<User>().CountAsync().ContinueWith(task =>
+            {
+                if (task.Result == 0)
+                {
+                    Preferences.Set("userId", null);
+                }
+            });           
         }
         public async Task<int> CreateAdvertisementAsync(Advertisement advertisement)
         {
@@ -80,12 +136,17 @@ namespace Vistaaa
             await Init();
             return await DatabaseHandler!.Table<Category>().ToListAsync();
         }
+        public async Task<int> CreateCategory(Category category)
+        {
+            await Init();
+            return await DatabaseHandler!.InsertAsync(category);
+        }
         public async Task<int> DeleteAdvertisementAsync(Advertisement advertisement)
         {
             await Init();
             return await DatabaseHandler!.DeleteAsync(advertisement);
         }
-        public async Task<int> UpdateAdvertisementAsync(Advertisement advertisement)
+        public async Task<int> UpdateAdvertisement(Advertisement advertisement)
         {
             await Init();
             return await DatabaseHandler!.UpdateAsync(advertisement);
@@ -95,7 +156,7 @@ namespace Vistaaa
             await Init();
             return await DatabaseHandler!.InsertAsync(company);
         }
-        public async Task<List<Company>> GetCompaniesAsync()
+        public async Task<List<Company>> GetCompanies()
         {
             await Init();
             return await DatabaseHandler!.Table<Company>().ToListAsync();
@@ -147,6 +208,21 @@ namespace Vistaaa
         {
             await Init();
             return await DatabaseHandler!.DeleteAsync(userAdvertisement);
+        }
+        public async Task<List<ContractType>> GetContractTypes()
+        {
+            await Init();
+            return await DatabaseHandler!.Table<ContractType>().ToListAsync();
+        }
+        public async Task<List<EmploymentType>> GetEmploymentTypes()
+        {
+            await Init();
+            return await DatabaseHandler!.Table<EmploymentType>().ToListAsync();
+        }
+        public async Task<List<WorkType>> GetWorkTypes()
+        {
+            await Init();
+            return await DatabaseHandler!.Table<WorkType>().ToListAsync();
         }
         public async ValueTask DisposeAsync()
         {

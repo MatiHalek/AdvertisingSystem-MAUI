@@ -19,9 +19,9 @@ namespace Vistaaa.Models
         public uint CategoryId { get; set; }
         public string PositionName { get; set; } = "";
         public string PositionLevel { get; set; } = "";
-        public string ContractType { get; set; } = "";
-        public string EmploymentType { get; set; } = "";
-        public string WorkType { get; set; } = "";
+        public uint ContractType { get; set; }
+        public uint EmploymentType { get; set; }
+        public uint WorkType { get; set; }
         public decimal? LowestSalary { get; set; }
         public decimal HighestSalary { get; set; }
         public string WorkDays { get; set; } = "";
@@ -39,7 +39,7 @@ namespace Vistaaa.Models
             get
             {
                 Database database = new();
-                var companies = Task.Run(database.GetCompaniesAsync).Result;
+                var companies = Task.Run(database.GetCompanies).Result;
                 foreach (var company in companies)
                 {
                     if (company.Id == CompanyId)
@@ -67,6 +67,57 @@ namespace Vistaaa.Models
                 return "Unknown category";
             }
         }
+        [Ignore]
+        public string ContractTypeName
+        {
+            get
+            {
+                Database database = new();
+                var contractTypes = Task.Run(database.GetContractTypes).Result;
+                foreach (var contractType in contractTypes)
+                {
+                    if (contractType.ContractTypeId == ContractType)
+                    {
+                        return contractType.Name;
+                    }
+                }
+                return "Unknown contract type";
+            }
+        }
+        [Ignore]
+        public string EmploymentTypeName
+        {
+            get
+            {
+                Database database = new();
+                var employmentTypes = Task.Run(database.GetEmploymentTypes).Result;
+                foreach (var employmentType in employmentTypes)
+                {
+                    if (employmentType.EmploymentTypeId == EmploymentType)
+                    {
+                        return employmentType.Name;
+                    }
+                }
+                return "Unknown employment type";
+            }
+        }
+        [Ignore]
+        public string WorkTypeName
+        {
+            get
+            {
+                Database database = new();
+                var workTypes = Task.Run(database.GetWorkTypes).Result;
+                foreach (var workType in workTypes)
+                {
+                    if (workType.WorkTypeId == WorkType)
+                    {
+                        return workType.Name;
+                    }
+                }
+                return "Unknown work type";
+            }
+        }
         public DateTime CreationDate { get; set; }
         public DateTime ExpirationDate { get; set; }
         public string Responsibilities { get; set; } = "";
@@ -75,7 +126,7 @@ namespace Vistaaa.Models
         [ManyToMany(typeof(UserAdvertisement))]
         public List<User>? Users { get; set; }
 
-        public Advertisement(string title, uint companyId, uint categoryId, string positionName, string positionLevel, string contractType, string employmentType, string workType, decimal? lowestSalary, decimal highestSalary, string workDays, DateTime creationDate, DateTime expirationDate, string responsibilities, string requirements, string offer)
+        public Advertisement(string title, uint companyId, uint categoryId, string positionName, string positionLevel, uint contractType, uint employmentType, uint workType, decimal? lowestSalary, decimal highestSalary, string workDays, DateTime creationDate, DateTime expirationDate, string responsibilities, string requirements, string offer)
         {
             Title = title;
             CompanyId = companyId;

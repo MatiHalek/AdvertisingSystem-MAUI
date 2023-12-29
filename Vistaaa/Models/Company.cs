@@ -35,5 +35,9 @@ namespace Vistaaa.Models
         {
 
         }
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

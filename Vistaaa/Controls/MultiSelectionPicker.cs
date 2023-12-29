@@ -42,7 +42,7 @@ namespace Vistaaa.Controls
             ctrl.Text = string.Join(" | ", selectedItems);
         }
 
-        bool IsControlLoaded = false;
+        //bool IsControlLoaded = false;
 
         public MultiSelectionPicker()
         {

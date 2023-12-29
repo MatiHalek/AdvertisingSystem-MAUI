@@ -66,7 +66,6 @@
                     </HorizontalStackLayout>
                 </FlexLayout>
             </VerticalStackLayout>
-
         </Border>
         <ActivityIndicator IsRunning="True" x:Name="loading" />
         <RefreshView x:Name="refreshView" RefreshColor="#1E90FF">
@@ -86,6 +85,7 @@
                                 <SwipeItems>
                                     <SwipeItem Text="Edytuj"
                                         BackgroundColor="LightGreen"
+                                        CommandParameter="{Binding .}"
                                         Invoked="EditAdvertisementMenuItem_Clicked"/>
                                 </SwipeItems>
                             </SwipeView.LeftItems>
@@ -121,9 +121,9 @@
                                                     <MultiBinding StringFormat="{}{0}  &#x2022; {1}  &#x2022; {2} &#x2022; {3} &#x2022; {4} ">
                                                         <Binding Path="PositionName" />
                                                         <Binding Path="PositionLevel" />
-                                                        <Binding Path="ContractType" />
-                                                        <Binding Path="Employment" />
-                                                        <Binding Path="WorkType" />
+                                                        <Binding Path="ContractTypeName" />
+                                                        <Binding Path="EmploymentTypeName" />
+                                                        <Binding Path="WorkTypeName" />
                                                     </MultiBinding>
                                                 </Label.Text>
                                             </Label>
@@ -131,7 +131,7 @@
                                         <Button Margin="0, 10, 0, 0" Text="Szczegóły" BackgroundColor="DodgerBlue" FontAttributes="Bold" FontFamily="SignikaNegative" TextColor="White" HorizontalOptions="Center" Clicked="DetailsButton_Clicked"/>
                                         <FlyoutBase.ContextFlyout>
                                             <MenuFlyout>
-                                                <MenuFlyoutItem Text="Edytuj ogłoszenie" Clicked="EditAdvertisementMenuItem_Clicked"/>
+                                                <MenuFlyoutItem Text="Edytuj ogłoszenie" Clicked="EditAdvertisementMenuItem_Clicked" CommandParameter="{Binding .}"/>
                                                 <MenuFlyoutSeparator/>
                                                 <MenuFlyoutSubItem Text="Zmień">
                                                     <MenuFlyoutItem Text="Zmień nazwę"/>
@@ -140,16 +140,9 @@
                                             </MenuFlyout>
                                         </FlyoutBase.ContextFlyout>
                                     </StackLayout>
-                                    <!--<Border.Shadow>
-                                <Shadow  Brush="#BBB"
-                                Offset="3, 3"
-                                Radius="5"
-                                Opacity="0.9" />
-                            </Border.Shadow>-->
                                 </Border>
                             </StackLayout>
                         </SwipeView>
-
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
                 <CollectionView.ItemsLayout>

@@ -30,6 +30,7 @@
         
         <ScrollView>
             <FlexLayout MaximumWidthRequest="1200">
+                <Button Text="Wybierz" Clicked="FilePickerButton_Clicked" />
             </FlexLayout>
         </ScrollView>
     </VerticalStackLayout>

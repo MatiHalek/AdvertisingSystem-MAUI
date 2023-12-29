@@ -21,7 +21,10 @@ namespace Vistaaa
                 fonts.AddFont("SignikaNegative-Medium.ttf", "SignikaNegative");
             }).UseMauiCommunityToolkit().UseMauiMaps().UseMauiCommunityToolkitMaps("Ak_wMJAB-SJeH0OlnHcRfEN31jFCL4bxutEaEV1L7EYTYGwSu-84TDfWXDLx0xtS");
 
+
 #if WINDOWS
+            Microsoft.Maui.Handlers.DatePickerHandler.Mapper.Add(nameof(View.HorizontalOptions), MapHorizontalOptions);
+            
             Microsoft.Maui.Handlers.SwitchHandler.Mapper.AppendToMapping("NoLabel", (handler, view) =>
             {
                     handler.PlatformView.OnContent = null;
@@ -45,5 +48,28 @@ namespace Vistaaa
 #endif
             return builder.Build();
         }
+#if WINDOWS
+        private static void MapHorizontalOptions(IViewHandler handler, IView view)
+        {
+            if (view is not View mauiView)
+            {
+                return;
+            }
+
+            if (handler.PlatformView is not Microsoft.UI.Xaml.FrameworkElement element)
+            {
+                return;
+            }
+
+            element.HorizontalAlignment = mauiView.HorizontalOptions.Alignment switch
+            {
+                LayoutAlignment.Start => Microsoft.UI.Xaml.HorizontalAlignment.Left,
+                LayoutAlignment.Center => Microsoft.UI.Xaml.HorizontalAlignment.Center,
+                LayoutAlignment.End => Microsoft.UI.Xaml.HorizontalAlignment.Right,
+                LayoutAlignment.Fill => Microsoft.UI.Xaml.HorizontalAlignment.Stretch,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+        }
+#endif
     }
 }
