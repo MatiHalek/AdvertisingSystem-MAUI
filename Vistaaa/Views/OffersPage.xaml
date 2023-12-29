@@ -24,7 +24,7 @@
         Padding="10, 20, 10, 0"
         Spacing="25">
         <SearchBar Placeholder="Wyszukaj po nazwie..." x:Name="searchBar" TextChanged="SearchBar_TextChanged" IsTextPredictionEnabled="True"/>
-        <control:MultiSelectionPicker x:Name="picker" BackgroundColor="White"/>
+        <control:MultiSelectionPicker x:Name="picker" />
         <FlexLayout Wrap="Wrap" JustifyContent="SpaceBetween">
             <HorizontalStackLayout Spacing="15" Margin="5">
                 <Label Text="Sortuj:" VerticalOptions="Center"/>
@@ -43,11 +43,31 @@
                 <Picker x:Name="advertisementsOnPagePicker"/>
             </HorizontalStackLayout>
         </FlexLayout>
-        <HorizontalStackLayout>
-            <Button Text="Dodaj" Clicked="AddButton_Clicked"/>
-            <Switch Toggled="DeleteSwitch_Toggled"/>
-            <Button Text="Usuń wszystkie (0)"/>
-        </HorizontalStackLayout>
+        <Border StrokeThickness="0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10"/>
+            </Border.StrokeShape>
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#FF2E8B57" Offset="0" />
+                    <GradientStop Color="#772E8B57" Offset="0.3" />
+                    <GradientStop Color="#DD2E8B57" Offset="0.6" />
+                    <GradientStop Color="#BB2E8B57" Offset="1.0" />
+                </LinearGradientBrush>
+            </Border.Background>
+            <VerticalStackLayout>
+                <Label Margin="10" FontFamily="SignikaNegative" Text="Narzędzia administracyjne" FontSize="17"/>
+                <FlexLayout x:Name="adminPanelFlexLayout" JustifyContent="SpaceBetween">
+                    <Button Text="Dodaj" Clicked="AddButton_Clicked" Style="{StaticResource commonButton}"/>
+                    <HorizontalStackLayout>
+                        <Switch Toggled="DeleteSwitch_Toggled"/>
+                        <Label Text="Tryb usuwania" VerticalTextAlignment="Center"/>
+                        <Button Text="Usuń wszystkie (0)" x:Name="deleteAllButton" Clicked="DeleteAllButton_Clicked" Style="{StaticResource failButton}"/>
+                    </HorizontalStackLayout>
+                </FlexLayout>
+            </VerticalStackLayout>
+
+        </Border>
         <ActivityIndicator IsRunning="True" x:Name="loading" />
         <RefreshView x:Name="refreshView" RefreshColor="#1E90FF">
             <CollectionView x:Name="AdvertisementCollectionView" SelectionMode="None"  SelectionChanged="AdvertisementCollectionView_SelectionChanged">

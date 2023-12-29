@@ -133,10 +133,13 @@ public partial class OffersPage : ContentPage
         Navigation.PushAsync(new AddOrEditAdvertisement());
     }
 
-    private async void AdvertisementCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private void AdvertisementCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        //var advertisement = AdvertisementCollectionView.SelectedItem as Advertisement;
-        //await Navigation.PushAsync(new AdvertisementPage(advertisement));
+        deleteAllButton.Text = $"Usuñ zaznaczone ({AdvertisementCollectionView.SelectedItems.Count})";
+        if(AdvertisementCollectionView.SelectedItems.Count > 0)          
+            deleteAllButton.IsEnabled = true;
+        else
+            deleteAllButton.IsEnabled = false;
     }
 
     private void AdvertisementsOnPagePicker_SelectedIndexChanged(object? sender, EventArgs e)
@@ -171,7 +174,13 @@ public partial class OffersPage : ContentPage
 
     private void DeleteSwitch_Toggled(object sender, ToggledEventArgs e)
     {
-        AdvertisementCollectionView.SelectionMode = SelectionMode.Multiple;
+        if(e.Value == true)
+            AdvertisementCollectionView.SelectionMode = SelectionMode.Multiple;
+        else
+        {
+            AdvertisementCollectionView.SelectedItems.Clear();
+            AdvertisementCollectionView.SelectionMode = SelectionMode.None;
+        }            
     }
 
     private void OnlySavedLabel_Tapped(object sender, TappedEventArgs e)
@@ -182,6 +191,18 @@ public partial class OffersPage : ContentPage
 
     private void OnlySavedCheckbox_CheckedChanged(object sender, CheckedChangedEventArgs e)
     {
+        LoadData();
+    }
+
+    private async void DeleteAllButton_Clicked(object sender, EventArgs e)
+    {
+        bool alertResult = await DisplayAlert("Usuwanie og³oszeñ", $"Czy na pewno chcesz usun¹æ wszystkie zaznaczone og³oszenia: {AdvertisementCollectionView.SelectedItems.Count}?\n\nTej operacji nie mo¿na cofn¹æ!", "Tak", "Nie");
+        if (!alertResult)
+            return;
+        foreach(Advertisement advertisement in AdvertisementCollectionView.SelectedItems.Cast<Advertisement>())
+        {
+            await Database.DeleteAdvertisementAsync(advertisement);
+        }
         LoadData();
     }
 }

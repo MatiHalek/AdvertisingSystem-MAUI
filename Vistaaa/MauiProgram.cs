@@ -2,6 +2,7 @@
 using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Maps;
 using Vistaaa.Views;
+using Vistaaa.ViewModel;
 
 namespace Vistaaa
 {
@@ -20,6 +21,15 @@ namespace Vistaaa
                 fonts.AddFont("SignikaNegative-Medium.ttf", "SignikaNegative");
             }).UseMauiCommunityToolkit().UseMauiMaps().UseMauiCommunityToolkitMaps("Ak_wMJAB-SJeH0OlnHcRfEN31jFCL4bxutEaEV1L7EYTYGwSu-84TDfWXDLx0xtS");
 
+#if WINDOWS
+            Microsoft.Maui.Handlers.SwitchHandler.Mapper.AppendToMapping("NoLabel", (handler, view) =>
+            {
+                    handler.PlatformView.OnContent = null;
+                    handler.PlatformView.OffContent = null;
+                    handler.PlatformView.MinWidth = 0;
+            });
+#endif
+
             builder.Services.AddSingleton<HomePage>();
             builder.Services.AddSingleton<OffersPage>();
             builder.Services.AddSingleton<ProfilePage>();
@@ -27,6 +37,7 @@ namespace Vistaaa
 
             builder.Services.AddTransient<LoginPage>();
             builder.Services.AddTransient<RegistrationPage>();
+            builder.Services.AddTransient<RegistrationViewModel>();
             builder.Services.AddTransient<AdvertisementPage>();
             builder.Services.AddTransient<AddOrEditAdvertisement>();
 #if DEBUG

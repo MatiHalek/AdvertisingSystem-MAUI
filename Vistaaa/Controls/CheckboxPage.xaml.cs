@@ -38,8 +38,6 @@ public partial class CheckboxPage : BasePage<string>
 
     private void Cancel_Clicked(object sender, EventArgs e)
     {
-        //List<CheckedItem> list = ItemsSource;
-        _navigationResult = "";// string.Join(",", list.Where(x => x.IsChecked).Select(x => x.Position).ToArray());
         Navigation.PopModalAsync();
     }
 }

@@ -39,7 +39,7 @@ namespace Vistaaa.Controls
             {
                 selectedItems.Add(ctrl.ItemsSource[i]);
             }
-            ctrl.Text = string.Join(", ", selectedItems);
+            ctrl.Text = string.Join(" | ", selectedItems);
         }
 
         bool IsControlLoaded = false;
@@ -48,12 +48,12 @@ namespace Vistaaa.Controls
         {
             Focused += async (e, s) =>
             {
-                if (!IsControlLoaded && DeviceInfo.Platform == DevicePlatform.WinUI)
+                /*if (!IsControlLoaded && DeviceInfo.Platform == DevicePlatform.WinUI)
                 {
                     IsControlLoaded = true;
                     Unfocus();
                     return;
-                }
+                }*/
                 if (s.IsFocused)
                 {
                     Unfocus();
@@ -71,7 +71,7 @@ namespace Vistaaa.Controls
                         {
                             selectedItems.Add(ItemsSource[i]);
                         }
-                        Text = string.Join(", ", selectedItems);
+                        Text = string.Join(" | ", selectedItems);
                     }
                 }
             };

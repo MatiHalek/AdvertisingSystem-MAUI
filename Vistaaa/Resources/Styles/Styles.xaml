@@ -73,6 +73,17 @@
         <Setter Property="TextTransform" Value="Uppercase"/>
     </Style>
 
+    <Style x:Key="gradientFooter" TargetType="StackLayout">
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush>
+                    <GradientStop Color="#BB1E90FF" Offset="0" />
+                    <GradientStop Color="#111E90FF" Offset="1" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style TargetType="IndicatorView">
         <Setter Property="IndicatorColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}"/>
         <Setter Property="SelectedIndicatorColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray100}}"/>

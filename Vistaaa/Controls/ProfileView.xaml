@@ -3,26 +3,33 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Vistaaa.Controls.ProfileView">
     <VerticalStackLayout>
-        <Grid ColumnSpacing="15" Padding="15">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="7*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Image Grid.Column="1" x:Name="profileImage" Source="user.png" WidthRequest="100" HeightRequest="100">
-                <Image.Clip>
-                    <EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50" />
-                </Image.Clip>
-            </Image>
-            <VerticalStackLayout VerticalOptions="Center" Grid.Column="2">
-                <Label FontSize="22" FontAttributes="Bold" FontFamily="SignikaNegative" CharacterSpacing="1.3" x:Name="nameAndSurnameLabel"/>
-                <Label Text="aaa"/>
-            </VerticalStackLayout>
-        </Grid>
+        <StackLayout Style="{StaticResource gradientFooter}">
+            <Grid ColumnSpacing="15" Padding="15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="7*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Image Grid.Column="1" x:Name="profileImage" Source="user.png" WidthRequest="100" HeightRequest="100">
+                    <Image.Clip>
+                        <EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50" />
+                    </Image.Clip>
+                </Image>
+                <VerticalStackLayout VerticalOptions="Center" Grid.Column="2">
+                    <Label FontSize="22" FontAttributes="Bold" FontFamily="SignikaNegative" CharacterSpacing="1.3" x:Name="nameAndSurnameLabel"/>
+                    <Label Text="aaa"/>
+                </VerticalStackLayout>
+                <Button x:Name="logoutButton" x:FieldModifier="public" Text="Wyloguj się" Style="{StaticResource failButton}" Grid.Row="1" Grid.ColumnSpan="4" HorizontalOptions="Center"/>
+            </Grid>
+        </StackLayout>
+        
         <ScrollView>
             <FlexLayout MaximumWidthRequest="1200">
-                <Button x:Name="logoutButton" x:FieldModifier="public"  Text="Wyloguj się"/>
             </FlexLayout>
         </ScrollView>
     </VerticalStackLayout>

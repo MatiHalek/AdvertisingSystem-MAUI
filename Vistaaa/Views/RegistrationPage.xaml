@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:local="clr-namespace:Vistaaa.Selectors"
-             x:Class="Vistaaa.Views.RegistrationPage" Shell.PresentationMode="ModalNotAnimated" Appearing="RegistrationPage_Appearing">
+             xmlns:viewmodel="clr-namespace:Vistaaa.ViewModel"
+             x:DataType="viewmodel:RegistrationViewModel"
+             x:Class="Vistaaa.Views.RegistrationPage" Shell.PresentationMode="ModalNotAnimated" Appearing="RegistrationPage_Appearing" x:Name="RegistrationMainPage">
     <ContentPage.Background>
         <LinearGradientBrush StartPoint="0,0"
                      EndPoint="1,1">
@@ -22,8 +24,15 @@
                 <Border Style="{StaticResource formBorder}">
                     <Label Text="Adres e-mail" Style="{StaticResource formLabel}"/>
                 </Border>
-                <Entry Keyboard="Email" PlaceholderColor="Gray" MaxLength="254" BackgroundColor="#DDD" Placeholder="Adres e-mail" TextColor="Black">
-
+                <Entry Keyboard="Email" PlaceholderColor="Gray" MaxLength="254" BackgroundColor="#DDD" Placeholder="Adres e-mail" TextColor="Black" Text="{Binding Path=BindingContext.Email.Value, Mode=TwoWay, Source={x:Reference RegistrationMainPage}}">
+                    <Entry.Behaviors>
+                        <mct:EventToCommandBehavior EventName="TextChanged" Command="{Binding Path=BindingContext.ValidateEmailCommand, Source={x:Reference RegistrationMainPage}}" />
+                    </Entry.Behaviors>
+                    <Entry.Triggers>
+                        <DataTrigger TargetType="Entry" Binding="{Binding Path=BindingContext.Email.IsValid, Source={x:Reference RegistrationMainPage}}" Value="False">
+                            <Setter Property="BackgroundColor" Value="#77FF0000" />
+                        </DataTrigger>
+                    </Entry.Triggers>
                 </Entry>
                 <Border Style="{StaticResource formBorder}">
                     <Label Text="Hasło" Style="{StaticResource formLabel}"/>
@@ -77,7 +86,7 @@
         </Border.StrokeShape>
         <VerticalStackLayout Spacing="5">
             <Label Text="Zarejestruj się" TextColor="Black" FontSize="30" FontFamily="SignikaNegative" HorizontalOptions="Center" FontAttributes="Bold"/>
-            <CarouselView MaximumWidthRequest="440" Loop="False" x:Name="carouselView" ItemTemplate="{StaticResource registrationTemplateSelector}" IndicatorView="indicatorView">
+            <CarouselView HeightRequest="550" MaximumWidthRequest="440" Loop="False" x:Name="carouselView" ItemTemplate="{StaticResource registrationTemplateSelector}" IndicatorView="indicatorView">
                 <CarouselView.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
                         <x:String>IndividualUser</x:String>
@@ -91,15 +100,10 @@
                    HorizontalOptions="Center" />
             <!--<Entry Keyboard="Email" TextColor="Black" Text="{Binding Email.Value, Mode=TwoWay}">
                 <Entry.Behaviors>
-                    <mct:EventToCommandBehavior
-EventName="TextChanged"
-Command="{Binding ValidateEmailCommand}" />
+                    <mct:EventToCommandBehavior EventName="TextChanged" Command="{Binding ValidateEmailCommand}" />
                 </Entry.Behaviors>
                 <Entry.Triggers>
-                    <DataTrigger 
-TargetType="Entry"
-Binding="{Binding Email.IsValid}"
-Value="False">
+                    <DataTrigger TargetType="Entry" Binding="{Binding Email.IsValid}" Value="False">
                         <Setter Property="BackgroundColor" Value="Red" />
                     </DataTrigger>
                 </Entry.Triggers>

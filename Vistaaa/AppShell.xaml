@@ -6,20 +6,6 @@
     xmlns:local="clr-namespace:Vistaaa"
     Shell.FlyoutBehavior="Flyout" Shell.NavBarHasShadow="True" NavigationPage.BackButtonTitle="Wstecz" BackgroundColor="SeaGreen"
     Title="Vistaaa - serwis ogłoszeniowy" Shell.TabBarUnselectedColor="#6700FFFF" Shell.TabBarForegroundColor="DodgerBlue" Shell.TabBarTitleColor="#2E8B57">
-    <!--<Shell.TitleView>
-        <Grid >
-        </Grid>
-    </Shell.TitleView>
-    <Shell.MenuBarItems>
-        <MenuBarItem Text="Pomoc">
-            <MenuFlyoutItem Text="Coś tam"/>
-            <MenuFlyoutSeparator/>
-            <MenuFlyoutSubItem Text="Wybierz..">
-                <MenuFlyoutItem Text="Vista"/>
-                <MenuFlyoutItem Text="11" />
-            </MenuFlyoutSubItem>
-        </MenuBarItem>
-    </Shell.MenuBarItems>-->
     <Shell.FlyoutBackdrop>
         <LinearGradientBrush StartPoint="0,0"
                              EndPoint="1,1">

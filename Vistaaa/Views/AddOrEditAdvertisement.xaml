@@ -36,7 +36,7 @@
                 <Image x:Name="image" WidthRequest="150"/>
             </VerticalStackLayout>
         </ScrollView>
-        <StackLayout Grid.Row="1" Padding="15">
+        <StackLayout Grid.Row="1" Padding="15" Style="{StaticResource gradientFooter}">
             <FlexLayout JustifyContent="Center">
                 <Button x:Name="submitButton" FontFamily="SignikaNegative" Margin="0, 0, 10, 0" Text="Dodaj" FlexLayout.Shrink="1" FlexLayout.Basis="350" TextColor="White" FontAttributes="Bold" FontSize="18" CharacterSpacing="1" CornerRadius="20" BackgroundColor="SeaGreen" Clicked="SubmitButton_Clicked"/>
                 <Button FontFamily="SignikaNegative" Margin="10, 0, 0, 0" Text="Anuluj" FlexLayout.Shrink="1" FlexLayout.Basis="350"  BackgroundColor="Transparent" BorderWidth="2" BorderColor="Red" CornerRadius="20" TextColor="Red" FontAttributes="Bold" FontSize="18" CharacterSpacing="1" Clicked="CancelButton_Clicked"/>
