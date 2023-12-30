@@ -39,14 +39,13 @@ public partial class OffersPage : ContentPage
         });
         refreshView.Command = RefreshCommand;
         //refreshView.IsRefreshing = true;
-        //database.CreateCompanyAsync(new Company("Vistaaa", "Najlepsza firma zajmuj¹ca siê wspania³ym systemem Windows Vista!", "Zielona", "5", "Limanowa", "34-600"));
-        //database.CreateAdvertisementAsync(new Advertisement("Programowanie w Scratchu", 1, "Programista", "Junior Developer", "Umowa o pracê", "Pe³en etat", "Praca zdalna", 10000.07m, 20000.78m, "aaa", DateTime.Now, DateTime.Now, "aaa", "aaa", "aaa"));
-        //database.CreateUserAsync(new User("Mateusz", "MarmuŸniak", new DateTime(2005, 2, 7), "mateusz.marmuzniak.poland@gmail.com", PasswordHasher.Hash("zaq1@WSX"), "123456789", "Limanowa", "Polska", "34-600", "Limanowa", "Zielona", "5", true));
     }
 
     private async void LoadData()
     {
         loading.IsRunning = true;
+        deleteAllButton.IsEnabled = false;
+        deleteAllButton.Text = "Usuñ zaznaczone (0)";
         loading.IsVisible = true;
         string searchBarText = string.Empty;
         if (searchBar.Text != null)
@@ -153,7 +152,7 @@ public partial class OffersPage : ContentPage
         LoadData();
     }
 
-    private void EditAdvertisementMenuItem_Clicked(object sender, EventArgs e)
+    private void EditAdvertisementMenuItem_Clicked(object? sender, EventArgs e)
     {
         Advertisement advertisement = new();
         if (sender is MenuFlyoutItem menuItem)
@@ -201,8 +200,48 @@ public partial class OffersPage : ContentPage
             return;
         foreach(Advertisement advertisement in AdvertisementCollectionView.SelectedItems.Cast<Advertisement>())
         {
+            List<UserAdvertisement> userAdvertisements = await Database.GetUserAdvertisements(advertisement.Id);
+            foreach(UserAdvertisement userAdvertisement in userAdvertisements)
+                await Database.DeleteUserAdvertisementAsync(userAdvertisement);
             await Database.DeleteAdvertisementAsync(advertisement);
         }
         LoadData();
+    }
+
+    private async void AdvertisementBorder_Loaded(object sender, EventArgs e)
+    {
+        if (!Preferences.ContainsKey("userId"))
+            return;
+        User currentUser = await Database.GetUserAsync(uint.Parse(Preferences.Get("userId", null) ?? ""));
+        if (!currentUser.IsAdmin)
+            return;
+        MenuFlyoutItem menuFlyoutItem = new()
+        {
+            Text = "Edytuj to og³oszenie"
+        };
+        menuFlyoutItem.Clicked += EditAdvertisementMenuItem_Clicked;
+        menuFlyoutItem.CommandParameter = (Advertisement)((Border)sender).BindingContext;
+        MenuFlyout menuFlyout = [];
+        menuFlyout.Add(menuFlyoutItem);
+        FlyoutBase.SetContextFlyout(sender as Border, menuFlyout);
+    }
+
+    private async void AdvertisementSwipeView_Loaded(object sender, EventArgs e)
+    {
+        if (!Preferences.ContainsKey("userId"))
+            return;
+        User currentUser = await Database.GetUserAsync(uint.Parse(Preferences.Get("userId", null) ?? ""));
+        if (!currentUser.IsAdmin)
+            return;
+        SwipeItems swipeItems = [];
+        SwipeItem swipeItem = new()
+        {
+            Text = "Edytuj",
+            BackgroundColor = Colors.LightGreen,
+            CommandParameter = (Advertisement)((SwipeView)sender).BindingContext,
+        };
+        swipeItem.Invoked += EditAdvertisementMenuItem_Clicked;
+        swipeItems.Add(swipeItem);
+        ((SwipeView)sender).LeftItems = swipeItems;    
     }
 }

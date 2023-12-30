@@ -193,6 +193,11 @@ namespace Vistaaa
             }
             return null;
         }
+        public async Task<List<UserAdvertisement>> GetUserAdvertisements(uint advertisementId)
+        {
+            await Init();
+            return await DatabaseHandler!.Table<UserAdvertisement>().Where(userAdvertisement => userAdvertisement.AdvertisementId == advertisementId).ToListAsync();
+        }
         public async Task<int> CreateUserAdvertisementAsync(UserAdvertisement userAdvertisement)
         {
             await Init();

@@ -15,6 +15,7 @@
                         <Label Text="Tytuł ogłoszenia" Style="{StaticResource formLabel}"/>
                     </Border>
                     <Entry Keyboard="Text" Placeholder="Tytuł ogłoszenia" x:Name="titleEntry" MaxLength="100"/>
+                    <Label x:Name="titleValidationLabel" Style="{StaticResource validationLabel}"/>
                 </VerticalStackLayout>
                 <Grid ColumnSpacing="10">
                     <Grid.ColumnDefinitions>
@@ -26,8 +27,9 @@
                             <Label Text="Kategoria ogłoszenia" Style="{StaticResource formLabel}"/>
                         </Border>
                         <Picker x:Name="categoryPicker"/>
+                        <Label x:Name="categoryValidationLabel" Style="{StaticResource validationLabel}"/>
                     </VerticalStackLayout>
-                    <Button Text="Dodaj" Grid.Column="1" Clicked="AddNewCategoryButton_Clicked" Style="{StaticResource commonButton}" Margin="0, 10, 0, 0"/>
+                    <Button Text="Dodaj" Grid.Column="1" Clicked="AddNewCategoryButton_Clicked" Style="{StaticResource commonButton}" Margin="0, 10, 0, 0" VerticalOptions="Start"/>
                 </Grid>
                 <Grid ColumnSpacing="10">
                     <Grid.ColumnDefinitions>
@@ -39,8 +41,9 @@
                             <Label Text="Firma" Style="{StaticResource formLabel}"/>
                         </Border>
                         <Picker x:Name="companyPicker"/>
+                        <Label x:Name="companyValidationLabel" Style="{StaticResource validationLabel}"/>
                     </VerticalStackLayout>
-                    <Button Text="Dodaj" Grid.Column="1" Style="{StaticResource commonButton}" Margin="0, 10, 0, 0"/>
+                    <Button Text="Dodaj" Grid.Column="1" Clicked="AddNewCompanyButton_Clicked" Style="{StaticResource commonButton}" Margin="0, 10, 0, 0" VerticalOptions="Start"/>
                 </Grid>
                 <Grid ColumnSpacing="10">
                     <Grid.ColumnDefinitions>
@@ -52,20 +55,23 @@
                             <Label Text="Data i godzina wygaśnięcia" Style="{StaticResource formLabel}"/>
                         </Border>
                         <DatePicker x:Name="expirationDatePicker"/>
+                        <Label x:Name="dateValidationLabel" Style="{StaticResource validationLabel}"/>
                     </VerticalStackLayout>
-                    <TimePicker x:Name="expirationTimePicker" Grid.Column="1"  Margin="0, 10, 0, 0"/>
+                    <TimePicker x:Name="expirationTimePicker" Grid.Column="1"  Margin="0, 10, 0, 0" VerticalOptions="Start"/>
                 </Grid>
                 <VerticalStackLayout Spacing="10">
                     <Border Style="{StaticResource formBorder}">
                         <Label Text="Nazwa stanowiska" Style="{StaticResource formLabel}"/>
                     </Border>
                     <Entry Keyboard="Text" Placeholder="Nazwa stanowiska" x:Name="positionNameEntry" MaxLength="50"/>
+                    <Label x:Name="positionNameValidationLabel" Style="{StaticResource validationLabel}"/>
                 </VerticalStackLayout>
                 <VerticalStackLayout Spacing="10">
                     <Border Style="{StaticResource formBorder}">
                         <Label Text="Poziom stanowiska" Style="{StaticResource formLabel}"/>
                     </Border>
                     <Entry Keyboard="Text" Placeholder="Poziom stanowiska" x:Name="positionLevelEntry" MaxLength="50"/>
+                    <Label x:Name="positionLevelValidationLabel" Style="{StaticResource validationLabel}"/>
                 </VerticalStackLayout>
                 <Grid ColumnSpacing="10">
                     <Grid.ColumnDefinitions>
@@ -78,18 +84,21 @@
                             <Label Text="Rodzaj umowy" Style="{StaticResource formLabel}"/>
                         </Border>
                         <Picker x:Name="contractTypePicker"/>
+                        <Label x:Name="contractTypeValidationLabel" Style="{StaticResource validationLabel}"/>
                     </VerticalStackLayout>
                     <VerticalStackLayout Spacing="10" Grid.Column="1">
                         <Border Style="{StaticResource formBorder}">
                             <Label Text="Wymiar zatrudnienia" Style="{StaticResource formLabel}"/>
                         </Border>
                         <Picker x:Name="employmentTypePicker"/>
+                        <Label x:Name="employmentTypeValidationLabel" Style="{StaticResource validationLabel}"/>
                     </VerticalStackLayout>
                     <VerticalStackLayout Spacing="10" Grid.Column="2">
                         <Border Style="{StaticResource formBorder}">
                             <Label Text="Rodzaj pracy" Style="{StaticResource formLabel}"/>
                         </Border>
                         <Picker x:Name="workTypePicker"/>
+                        <Label x:Name="workTypeValidationLabel" Style="{StaticResource validationLabel}"/>
                     </VerticalStackLayout>
                 </Grid>
                 <Grid ColumnSpacing="10">
@@ -102,6 +111,7 @@
                             <Label Text="Minimalne wynagrodzenie (zł)" Style="{StaticResource formLabel}"/>
                         </Border>
                         <Entry Keyboard="Numeric" Placeholder="Minimalne wynagrodzenie (zł)" x:Name="lowestSalaryEntry" MaxLength="9"/>
+                        <Label x:Name="salaryValidationLabel" Style="{StaticResource validationLabel}"/>
                     </VerticalStackLayout>
                     <VerticalStackLayout Spacing="10" Grid.Column="1">
                         <Border Style="{StaticResource formBorder}">
@@ -115,24 +125,28 @@
                         <Label Text="Dni i godziny pracy" Style="{StaticResource formLabel}"/>
                     </Border>
                     <Entry Keyboard="Text" Placeholder="Dni i godziny pracy" x:Name="workDaysEntry" MaxLength="100"/>
+                    <Label x:Name="workDaysValidationLabel" Style="{StaticResource validationLabel}"/>
                 </VerticalStackLayout>
                 <VerticalStackLayout Spacing="15">
                     <Border Style="{StaticResource formBorder}">
                         <Label Text="Zakres obowiązków" Style="{StaticResource formLabel}"/>
                     </Border>
                     <Editor Placeholder="Zakres obowiązków" x:Name="responsibilitiesEditor" MinimumHeightRequest="70"/>
+                    <Label x:Name="responsibilitiesValidationLabel" Style="{StaticResource validationLabel}"/>
                 </VerticalStackLayout>
                 <VerticalStackLayout Spacing="15">
                     <Border Style="{StaticResource formBorder}">
                         <Label Text="Wymagania wobec kandydata" Style="{StaticResource formLabel}"/>
                     </Border>
                     <Editor Placeholder="Wymagania wobec kandydata" x:Name="requirementsEditor" MinimumHeightRequest="70" MaxLength="1000"/>
+                    <Label x:Name="requirementsValidationLabel" Style="{StaticResource validationLabel}"/>
                 </VerticalStackLayout>
                 <VerticalStackLayout Spacing="15">
                     <Border Style="{StaticResource formBorder}">
                         <Label Text="Oferta pracodawcy" Style="{StaticResource formLabel}"/>
                     </Border>
                     <Editor Placeholder="Oferta pracodawcy" x:Name="offerEditor" MinimumHeightRequest="70" MaxLength="1000" AutoSize="TextChanges"/>
+                    <Label x:Name="offerValidationLabel" Style="{StaticResource validationLabel}"/>
                 </VerticalStackLayout>
             </VerticalStackLayout>
         </ScrollView>

@@ -73,6 +73,14 @@
         <Setter Property="TextTransform" Value="Uppercase"/>
     </Style>
 
+    <Style x:Key="validationLabel" TargetType="Label">
+        <Setter Property="TextColor" Value="Red"/>
+        <Setter Property="Margin" Value="0, 0, 0, 10"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="FontFamily" Value="SignikaNegative"/>
+        <Setter Property="IsVisible" Value="False"/>
+    </Style>
+
     <Style x:Key="gradientFooter" TargetType="StackLayout">
         <Setter Property="Background">
             <Setter.Value>

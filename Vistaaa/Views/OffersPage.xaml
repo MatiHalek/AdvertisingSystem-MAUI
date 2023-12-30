@@ -43,7 +43,7 @@
                 <Picker x:Name="advertisementsOnPagePicker"/>
             </HorizontalStackLayout>
         </FlexLayout>
-        <Border StrokeThickness="0">
+        <Border StrokeThickness="0" Padding="10">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="10"/>
             </Border.StrokeShape>
@@ -62,9 +62,10 @@
                     <HorizontalStackLayout>
                         <Switch Toggled="DeleteSwitch_Toggled"/>
                         <Label Text="Tryb usuwania" VerticalTextAlignment="Center"/>
-                        <Button Text="Usuń wszystkie (0)" x:Name="deleteAllButton" Clicked="DeleteAllButton_Clicked" Style="{StaticResource failButton}"/>
+                        <Button IsEnabled="False" x:Name="deleteAllButton" Clicked="DeleteAllButton_Clicked" Style="{StaticResource failButton}"/>
                     </HorizontalStackLayout>
                 </FlexLayout>
+                <Label Text="Edytowanie ogłoszeń jest dostępne za pośrednictwem menu kontekstowego." FontFamily="SignikaNegative"/>
             </VerticalStackLayout>
         </Border>
         <ActivityIndicator IsRunning="True" x:Name="loading" />
@@ -80,15 +81,7 @@
                 </CollectionView.EmptyView>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <SwipeView>
-                            <SwipeView.LeftItems>
-                                <SwipeItems>
-                                    <SwipeItem Text="Edytuj"
-                                        BackgroundColor="LightGreen"
-                                        CommandParameter="{Binding .}"
-                                        Invoked="EditAdvertisementMenuItem_Clicked"/>
-                                </SwipeItems>
-                            </SwipeView.LeftItems>
+                        <SwipeView Loaded="AdvertisementSwipeView_Loaded">
                             <StackLayout>
                                 <Border IsEnabled="{Binding IsUpToDate}" HeightRequest="30" Padding="10, 5" BackgroundColor="SeaGreen" StrokeThickness="0" TranslationX="-25" HorizontalOptions="End" ZIndex="999">
                                     <Border.StrokeShape>
@@ -96,7 +89,7 @@
                                     </Border.StrokeShape>
                                     <Label Text="{Binding Path=CreationDate, StringFormat='{0:d MMM yyyy}'}" TextColor="White" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
                                 </Border>
-                                <Border StrokeThickness="1" Margin="0, -20, 0, 0">
+                                <Border StrokeThickness="1" Margin="0, -20, 0, 0" Loaded="AdvertisementBorder_Loaded">
                                     <Border.Style>
                                         <Style TargetType="Border">
                                             <Setter Property="Opacity" Value="1"/>
@@ -129,16 +122,6 @@
                                             </Label>
                                         </FlexLayout>
                                         <Button Margin="0, 10, 0, 0" Text="Szczegóły" BackgroundColor="DodgerBlue" FontAttributes="Bold" FontFamily="SignikaNegative" TextColor="White" HorizontalOptions="Center" Clicked="DetailsButton_Clicked"/>
-                                        <FlyoutBase.ContextFlyout>
-                                            <MenuFlyout>
-                                                <MenuFlyoutItem Text="Edytuj ogłoszenie" Clicked="EditAdvertisementMenuItem_Clicked" CommandParameter="{Binding .}"/>
-                                                <MenuFlyoutSeparator/>
-                                                <MenuFlyoutSubItem Text="Zmień">
-                                                    <MenuFlyoutItem Text="Zmień nazwę"/>
-                                                    <MenuFlyoutItem Text="Zmień opis"/>
-                                                </MenuFlyoutSubItem>
-                                            </MenuFlyout>
-                                        </FlyoutBase.ContextFlyout>
                                     </StackLayout>
                                 </Border>
                             </StackLayout>

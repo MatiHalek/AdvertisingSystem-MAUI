@@ -11,10 +11,12 @@ public partial class RegistrationPage : ContentPage
     private readonly Database Database = new();
     private VerticalStackLayout? IndividualUserStackLayout;
     private VerticalStackLayout? CompanyStackLayout;
- 
-    public RegistrationPage()
+    public bool IsCompany { get; set; }
+
+    public RegistrationPage(bool IsCompany = false)
 	{
 		InitializeComponent();
+        this.IsCompany = IsCompany;
         BindingContext = new RegistrationViewModel();
     }
 
@@ -29,6 +31,8 @@ public partial class RegistrationPage : ContentPage
     {
         _= registrationModal.TranslateTo(0, 0, 500, Easing.SinInOut);
         await registrationModal.FadeTo(1, 500, Easing.SinInOut);
+        if(IsCompany)
+            carouselView.ScrollTo(1, -1, ScrollToPosition.End);
     }
 
     private async void RegistrationButton_Clicked(object sender, EventArgs e)
