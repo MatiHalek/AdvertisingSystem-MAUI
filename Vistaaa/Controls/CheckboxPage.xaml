@@ -3,28 +3,41 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:pages="clr-namespace:Vistaaa.Controls"
              x:Class="Vistaaa.Controls.CheckboxPage"
-             x:TypeArguments="x:String">
-    <StackLayout Padding="5">
-        <ListView x:Name="listView"
+             x:TypeArguments="x:String" >
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0"
+          EndPoint="1,1">
+                <GradientStop Color="#802E8B57"
+       Offset="0.3" />
+                <GradientStop Color="#701E90FF"
+       Offset="0.6" />
+                <GradientStop Color="#90663399"
+       Offset="1.0" />
+            </LinearGradientBrush>
+        </Grid.Background>
+        <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Margin="15" MaximumWidthRequest="500" Padding="5">
+            <ListView x:Name="listView"
                       ItemTapped="ListView_ItemTapped"
                       SeparatorVisibility="None"
                       VerticalScrollBarVisibility="Never"
                       HorizontalScrollBarVisibility="Never">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                            <Label Text="{Binding Text}" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
-                            <CheckBox IsChecked="{Binding IsChecked}" HorizontalOptions="EndAndExpand" Color="Black"/>
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <StackLayout HorizontalOptions="End" BackgroundColor="Green"
-                         Orientation="Horizontal">
-            <Button Text="Cancel" Clicked="Cancel_Clicked" HorizontalOptions="Center" VerticalOptions="End" BackgroundColor="Transparent"/>
-            <Button Text="Done" Clicked="Done_Clicked" HorizontalOptions="Center" VerticalOptions="End" BackgroundColor="Transparent"/>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                <Label Text="{Binding Text}" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                <CheckBox IsChecked="{Binding IsChecked}" HorizontalOptions="EndAndExpand" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackLayout HorizontalOptions="Center"
+                         Orientation="Horizontal" Spacing="10">
+                <Button Text="Anuluj" Clicked="Cancel_Clicked" HorizontalOptions="Center" Style="{StaticResource failButton}"/>
+                <Button Text="Zastosuj" Clicked="Done_Clicked" HorizontalOptions="Center" Style="{StaticResource successButton}"/>
+            </StackLayout>
         </StackLayout>
-    </StackLayout>
+    </Grid>
 </pages:BasePage>
