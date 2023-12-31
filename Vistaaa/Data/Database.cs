@@ -29,6 +29,46 @@ namespace Vistaaa
             await DatabaseHandler.CreateTableAsync<WorkType>();
             await DatabaseHandler.CreateTableAsync<EmploymentType>();
             await DatabaseHandler.CreateTableAsync<ContractType>();
+            await DatabaseHandler!.Table<User>().CountAsync().ContinueWith(task =>
+            {
+                if (task.Result == 0)
+                {
+                    DatabaseHandler.InsertAsync(
+                        new User
+                        {
+                            FirstName = "Mateusz",
+                            LastName = "Marmuźniak",
+                            BirthDate = new DateTime(2005, 2, 7),
+                            Email = "mateusz.marmuzniak.poland@gmail.com",
+                            Password = PasswordHasher.Hash("zaq1@WSX"),
+                            Phone = "123456789",
+                            City = "Limanowa",
+                            Country = "Polska",
+                            PostalCode = "34-600",
+                            PostalName = "Limanowa",
+                            StreetName = "Zielona",
+                            StreetNumber = "5",
+                            IsAdmin = true
+                        }
+                    );
+                }
+            });
+            await DatabaseHandler!.Table<Company>().CountAsync().ContinueWith(task =>
+            {
+                if (task.Result == 0)
+                {
+                    DatabaseHandler.InsertAsync(
+                        new Company
+                        {
+                            Name = "MH Sp. z o.o.",
+                            Description = "Znana i ceniona firma zajmująca się tworzeniem oprogramowania",
+                            Street = "Zielona",
+                            StreetNumber = "5",
+                            PostalCode = "34-600",
+                        }
+                    );
+                }
+            });
             await DatabaseHandler!.Table<WorkType>().CountAsync().ContinueWith(task =>
             {
                 if (task.Result == 0)
@@ -161,6 +201,11 @@ namespace Vistaaa
             await Init();
             return await DatabaseHandler!.Table<Company>().ToListAsync();
         }
+        public async Task<Company?> GetCompany(uint id)
+        {
+            await Init();
+            return await DatabaseHandler!.Table<Company>().Where(company => company.Id == id).FirstOrDefaultAsync();
+        }
         public async Task<int> DeleteCompanyAsync(Company company)
         {
             await Init();
@@ -182,6 +227,11 @@ namespace Vistaaa
             await DatabaseHandler!.InsertAsync(user);
             return user.Id;
         }   
+        public async Task<bool> EmailExists(string email)
+        {
+            await Init();
+            return await DatabaseHandler!.Table<User>().Where(user => user.Email == email).CountAsync() > 0;
+        }
         public async Task<User?> VerifyUserAsync(string email, string password)
         {
             await Init();
@@ -228,6 +278,21 @@ namespace Vistaaa
         {
             await Init();
             return await DatabaseHandler!.Table<WorkType>().ToListAsync();
+        }
+        public async Task<string> GetContractType(uint id)
+        {
+            await Init();
+            return (await DatabaseHandler!.Table<ContractType>().Where(contractType => contractType.ContractTypeId == id).FirstOrDefaultAsync())?.Name ?? "";
+        }
+        public async Task<string> GetEmploymentType(uint id)
+        {
+            await Init();
+            return (await DatabaseHandler!.Table<EmploymentType>().Where(employmentType => employmentType.EmploymentTypeId == id).FirstOrDefaultAsync())?.Name ?? "";
+        }
+        public async Task<string> GetWorkType(uint id)
+        {
+            await Init();
+            return (await DatabaseHandler!.Table<WorkType>().Where(workType => workType.WorkTypeId == id).FirstOrDefaultAsync())?.Name ?? "";
         }
         public async ValueTask DisposeAsync()
         {

@@ -161,58 +161,62 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <VerticalStackLayout Spacing="20">
-                    <Label FontFamily="SignikaNegative" Text="Jesteśmy dostępni na systemach:" FontAttributes="Bold" FontSize="28" TextColor="DodgerBlue"/>
+                    <Label FontFamily="SignikaNegative" Text="Jesteśmy dostępni na systemach:" FontAttributes="Bold" FontSize="{OnIdiom 26, Phone=20}" TextColor="DodgerBlue"/>
                     <VerticalStackLayout Spacing="10">
                         <Label LineBreakMode="WordWrap">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontFamily="FAB" FontSize="25" Text="&#xf17a; "/>
-                                    <Span FontFamily="SignikaNegative" FontSize="20" Text="Windows 10 21H2 i nowszych, Windows 11"/>
+                                    <Span FontFamily="FAB" FontSize="{OnIdiom 25, Phone=21}" Text="&#xf17a; "/>
+                                    <Span FontFamily="SignikaNegative" FontSize="{OnIdiom 20, Phone=17}" Text="Windows 10 21H2 i nowszych, Windows 11"/>
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
                         <Label LineBreakMode="WordWrap">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontFamily="FAB" FontSize="25" Text="&#xf179; "/>
-                                    <Span FontFamily="SignikaNegative" FontSize="20" Text="macOS 10.15 Catalina i nowszych"/>
+                                    <Span FontFamily="FAB" FontSize="{OnIdiom 25, Phone=21}" Text="&#xf179; "/>
+                                    <Span FontFamily="SignikaNegative" FontSize="{OnIdiom 20, Phone=17}" Text="macOS 10.15 Catalina i nowszych"/>
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
                         <Label LineBreakMode="WordWrap">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontFamily="FAB" FontSize="25" Text="&#xf179; "/>
-                                    <Span FontFamily="SignikaNegative" FontSize="20" Text="iOS 10 i nowszych"/>
+                                    <Span FontFamily="FAB" FontSize="{OnIdiom 25, Phone=21}" Text="&#xf179; "/>
+                                    <Span FontFamily="SignikaNegative" FontSize="{OnIdiom 20, Phone=17}" Text="iOS 10 i nowszych"/>
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
                         <Label LineBreakMode="WordWrap">
                             <Label.FormattedText>
                                 <FormattedString>
-                                    <Span FontFamily="FAB" FontSize="25" Text="&#xf17b; "/>
-                                    <Span FontFamily="SignikaNegative" FontSize="20" Text="Android 5.0 Lollipop i nowszych"/>
+                                    <Span FontFamily="FAB" FontSize="{OnIdiom 25, Phone=21}" Text="&#xf17b; "/>
+                                    <Span FontFamily="SignikaNegative" FontSize="{OnIdiom 20, Phone=17}" Text="Android 5.0 Lollipop i nowszych"/>
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
                     </VerticalStackLayout>
                 </VerticalStackLayout>
                 <AbsoluteLayout Grid.Column="1">
-                    <Image HeightRequest="200" Source="employer.jpg" HorizontalOptions="Center" ZIndex="2">
+                    <Image HeightRequest="{OnIdiom 200, Phone=100}" Source="employer.jpg" HorizontalOptions="Center" ZIndex="2">
                         <Image.Clip>
-                            <EllipseGeometry Center="100, 100"
-                             RadiusX="80"
-                             RadiusY="80" />
+                            <EllipseGeometry
+                             RadiusX="{OnIdiom 80, Phone=40}"
+                             RadiusY="{OnIdiom 80, Phone=40}" >
+                                <EllipseGeometry.Center>
+                                    <OnIdiom Default="100,100" Phone="50,50"/>
+                                </EllipseGeometry.Center>
+                            </EllipseGeometry>
                         </Image.Clip>
                     </Image>
-                    <Ellipse Margin="20" HeightRequest="160" Fill="SeaGreen" WidthRequest="160" HorizontalOptions="Center" VerticalOptions="Center" >
+                    <Ellipse Margin="{OnIdiom 20, Phone=10}" HeightRequest="{OnIdiom 160, Phone=80}" Fill="SeaGreen" WidthRequest="{OnIdiom 160, Phone=80}" HorizontalOptions="Center" VerticalOptions="Center" >
                         <Ellipse.Shadow>
                             <Shadow Brush="#555" Offset="7, 7" Opacity="0.6" />
                         </Ellipse.Shadow>
                     </Ellipse>
                 </AbsoluteLayout>
                 <VerticalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Spacing="10">
-                    <Label FontFamily="SignikaNegative" Text="Znajdź dla siebie wymarzoną pracę już teraz!" FontAttributes="Bold" FontSize="28" TextColor="#cc66ff" TextTransform="Uppercase"/>
+                    <Label FontFamily="SignikaNegative" Text="Znajdź dla siebie wymarzoną pracę już teraz!" FontAttributes="Bold" FontSize="{OnIdiom 28, Phone=20}" TextColor="#cc66ff" TextTransform="Uppercase"/>
                     <Border Stroke="Gray" StrokeThickness="1">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="45"/>
@@ -222,12 +226,12 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <Label FontFamily="SignikaNegative"  FontSize="25" Padding="15" TextColor="Gray" x:Name="searchAnimationLabel" LineBreakMode="MiddleTruncation"/>
+                            <Label FontFamily="SignikaNegative"  FontSize="{OnIdiom 25, Phone=18}" Padding="15" TextColor="Gray" x:Name="searchAnimationLabel" LineBreakMode="MiddleTruncation"/>
                             <Border Grid.Column="1" StrokeThickness="0">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="45"/>
                                 </Border.StrokeShape>
-                                <Button Clicked="Button_Clicked" FontFamily="SignikaNegative" FontAttributes="Bold" BackgroundColor="SeaGreen" TextColor="White" Text="Wyszukaj" FontSize="25" Padding="25, 0"/>
+                                <Button Clicked="Button_Clicked" FontFamily="SignikaNegative" FontAttributes="Bold" BackgroundColor="SeaGreen" TextColor="White" Text="Wyszukaj" FontSize="{OnIdiom 25, Phone=18}" Padding="25, 0"></Button>
                             </Border>
                         </Grid>
                     </Border>

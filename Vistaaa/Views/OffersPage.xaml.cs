@@ -3,8 +3,19 @@ using Vistaaa.Models;
 
 namespace Vistaaa.Views;
 
+[QueryProperty(nameof(Category), "Category")]
 public partial class OffersPage : ContentPage
 {
+    string category = "";
+    public string Category
+    {
+        get => category;
+        set
+        {
+            category = value;
+            OnPropertyChanged();
+        }
+    }
     private readonly Database Database = new();
     uint ADVERTISEMENTS_PER_PAGE = 10;
     uint currentPage = 1;
@@ -38,12 +49,30 @@ public partial class OffersPage : ContentPage
             refreshView.IsRefreshing = false;
         });
         refreshView.Command = RefreshCommand;
-        //refreshView.IsRefreshing = true;
     }
 
     private async void LoadData()
     {
         loading.IsRunning = true;
+        if (Preferences.ContainsKey("userId"))
+        {
+            User currentUser = await Database.GetUserAsync(uint.Parse(Preferences.Get("userId", null) ?? ""));
+            if (currentUser.IsAdmin)
+            {
+                adminBorder.IsVisible = true;
+                adminBorder.IsEnabled = true;
+            }
+            else
+            {
+                adminBorder.IsVisible = false;
+                adminBorder.IsEnabled = false;
+            }
+        }
+        else
+        {
+            adminBorder.IsVisible = false;
+            adminBorder.IsEnabled = false;
+        }
         deleteAllButton.IsEnabled = false;
         deleteAllButton.Text = "Usuñ zaznaczone (0)";
         loading.IsVisible = true;
@@ -179,7 +208,8 @@ public partial class OffersPage : ContentPage
         {
             AdvertisementCollectionView.SelectedItems.Clear();
             AdvertisementCollectionView.SelectionMode = SelectionMode.None;
-        }            
+        }
+        LoadData();
     }
 
     private void OnlySavedLabel_Tapped(object sender, TappedEventArgs e)
@@ -188,10 +218,7 @@ public partial class OffersPage : ContentPage
             onlySavedCheckbox.IsChecked = !onlySavedCheckbox.IsChecked;
     }
 
-    private void OnlySavedCheckbox_CheckedChanged(object sender, CheckedChangedEventArgs e)
-    {
-        LoadData();
-    }
+    private void OnlySavedCheckbox_CheckedChanged(object sender, CheckedChangedEventArgs e) => LoadData();
 
     private async void DeleteAllButton_Clicked(object sender, EventArgs e)
     {
@@ -205,6 +232,7 @@ public partial class OffersPage : ContentPage
                 await Database.DeleteUserAdvertisementAsync(userAdvertisement);
             await Database.DeleteAdvertisementAsync(advertisement);
         }
+        AdvertisementCollectionView.SelectedItems.Clear();
         LoadData();
     }
 
@@ -219,6 +247,13 @@ public partial class OffersPage : ContentPage
         {
             Text = "Edytuj to og³oszenie"
         };
+        FontImageSource fontImageSource = new()
+        {
+            FontFamily = "FAS",
+            Glyph = "\uf044",
+            Size = 20,
+        };
+        menuFlyoutItem.IconImageSource = fontImageSource;
         menuFlyoutItem.Clicked += EditAdvertisementMenuItem_Clicked;
         menuFlyoutItem.CommandParameter = (Advertisement)((Border)sender).BindingContext;
         MenuFlyout menuFlyout = [];
@@ -237,9 +272,16 @@ public partial class OffersPage : ContentPage
         SwipeItem swipeItem = new()
         {
             Text = "Edytuj",
-            BackgroundColor = Colors.LightGreen,
+            BackgroundColor = Color.FromArgb("#5585aa"),
             CommandParameter = (Advertisement)((SwipeView)sender).BindingContext,
         };
+        FontImageSource fontImageSource = new()
+        {
+            FontFamily = "FAS",
+            Glyph = "\uf044",
+            Size = 16,
+        };
+        swipeItem.IconImageSource = fontImageSource;
         swipeItem.Invoked += EditAdvertisementMenuItem_Clicked;
         swipeItems.Add(swipeItem);
         ((SwipeView)sender).LeftItems = swipeItems;    

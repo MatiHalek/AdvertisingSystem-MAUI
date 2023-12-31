@@ -17,21 +17,86 @@ public partial class AdvertisementPage : ContentPage
 	{
 		InitializeComponent();
 		Advertisement = advertisement;
-        advertisementTitle.Text = Advertisement?.Title;
-		advertisementId.Text = " (#" + Advertisement?.Id.ToString().PadLeft(7, '0') + ")";
-		advertisementCategory.Text = Advertisement?.CategoryName;
-		advertisementDateAdded.Text = "Dodano " + Advertisement?.CreationDate.ToString("d MMM yyyy H:mm");
-		advertisementDateExpire.Text = "Wa¿ne do " + Advertisement?.ExpirationDate.ToString("d MMM yyyy H:mm");
-		advertisementEarnings.Text = (Advertisement?.LowestSalary is not null ? Advertisement?.LowestSalary?.ToString("N2") + " z³ - " : "") + Advertisement?.HighestSalary.ToString("N2") + " z³ / mies.";
-		map.Pins.Add(new Pin()
-		{
-			Location = new Location(49.699936, 20.417650),
-			Label = Advertisement?.CompanyName ?? "",
-			Address = "ul. Zielona 1, 00-000 Warszawa"
-		});
-		map.MoveToRegion(MapSpan.FromCenterAndRadius(new Location(49.699936, 20.417650), Distance.FromKilometers(10)));
-		
+		GetAdvertisementData();
 	}
+	private async void GetAdvertisementData()
+	{
+        advertisementTitle.Text = Advertisement?.Title;
+        advertisementId.Text = " (#" + Advertisement?.Id.ToString().PadLeft(7, '0') + ")";
+        advertisementCategory.Text = Advertisement?.CategoryName;
+        advertisementDateAdded.Text = "Dodano " + Advertisement?.CreationDate.ToString("d MMM yyyy H:mm");
+        advertisementDateExpire.Text = "Wa¿ne do " + Advertisement?.ExpirationDate.ToString("d MMM yyyy H:mm");
+        advertisementEarnings.Text = (Advertisement?.LowestSalary is not null ? Advertisement?.LowestSalary?.ToString("N2") + " z³ - " : "") + Advertisement?.HighestSalary.ToString("N2") + " z³ / mies.";
+		Company? company = await Database.GetCompany(Advertisement?.CompanyId ?? 0);
+        map.Pins.Add(new Pin()
+        {
+            Location = new Location(49.699936, 20.417650),
+            Label = Advertisement?.CompanyName ?? "",
+            Address = $"ul. {company?.Street} {company?.StreetNumber}, {company?.PostalCode} {company?.City}"
+        });
+        map.MoveToRegion(MapSpan.FromCenterAndRadius(new Location(49.699936, 20.417650), Distance.FromKilometers(10)));
+        positionNameLabel.Text = Advertisement?.PositionName;
+        positionLevelLabel.Text = Advertisement?.PositionLevel;
+		contractTypeLabel.Text = await Database.GetContractType(Advertisement?.ContractType ?? 0);
+		employmentTypeLabel.Text = await Database.GetEmploymentType(Advertisement?.EmploymentType ?? 0);
+		workTypeLabel.Text = "Praca " + (await Database.GetWorkType(Advertisement?.WorkType ?? 0)).ToLower();
+        workHoursLabel.Text = "Godziny pracy:\n" + Advertisement?.WorkDays;
+        string[] separator = ["\r\n", "\r", "\n"];
+        List<string>? responsibilities = Advertisement?.Responsibilities.Split(separator,
+    StringSplitOptions.None).ToList();
+		if(responsibilities is not null)
+			for(int i = 0; i < responsibilities.Count; i++)
+			{
+				Grid grid = [];
+				grid.ColumnSpacing = 8;
+				grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+				grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Star });
+				Label iconLabel = new() { Text = "\uf058;", FontSize = 18, TextColor = Colors.LawnGreen, FontFamily = "FAS" };
+				Grid.SetRow(iconLabel, i);
+                grid.Children.Add(iconLabel);
+				Label textLabel = new() { Text = responsibilities[i], FontSize = 16, TextColor = Colors.DarkBlue, FontFamily = "Franklin Gothic", FontAttributes = FontAttributes.Bold};
+				Grid.SetColumn(textLabel, 1);
+				Grid.SetRow(textLabel, i);
+				grid.Children.Add(textLabel);
+				responsibilitiesStackLayout.Children.Add(grid);
+			}
+		List<string>? requirements = Advertisement?.Requirements.Split(separator,
+    StringSplitOptions.None).ToList();
+		if(requirements is not null)
+			for(int i = 0; i < requirements.Count; i++)
+			{
+				Grid grid = [];
+				grid.ColumnSpacing = 8;
+				grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+				grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Star });
+				Label iconLabel = new() { Text = "\uf058;", FontSize = 18, TextColor = Colors.LawnGreen, FontFamily = "FAS" };
+				Grid.SetRow(iconLabel, i);
+				grid.Children.Add(iconLabel);
+				Label textLabel = new() { Text = requirements[i], FontSize = 16, TextColor = Colors.DarkBlue, FontFamily = "Franklin Gothic", FontAttributes = FontAttributes.Bold};
+				Grid.SetColumn(textLabel, 1);
+				Grid.SetRow(textLabel, i);
+				grid.Children.Add(textLabel);
+				requirementsStackLayout.Children.Add(grid);
+			}
+		List<string>? benefits = Advertisement?.Offer.Split(separator,
+    StringSplitOptions.None).ToList();
+		if(benefits is not null)
+			for(int i = 0; i < benefits.Count; i++)
+			{
+				Grid grid = [];
+				grid.ColumnSpacing = 8;
+				grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+				grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Star });
+				Label iconLabel = new(){ Text = "\uf058;", FontSize = 18, TextColor = Colors.LawnGreen, FontFamily = "FAS" };
+				Grid.SetRow(iconLabel, i);
+				grid.Children.Add(iconLabel);
+				Label label = new() { Text = benefits[i], FontSize = 16, TextColor = Colors.DarkBlue, FontFamily = "Franklin Gothic", FontAttributes = FontAttributes.Bold};
+				Grid.SetColumn(label, 1);
+				Grid.SetRow(label, i);
+				grid.Children.Add(label);
+				offerStackLayout.Children.Add(grid);
+			}
+    }
 	private async void CheckIfSaved()
 	{
 		if(Advertisement?.ExpirationDate < DateTime.Now)

@@ -1,3 +1,4 @@
+using Vistaaa.Classes;
 using Vistaaa.Models;
 
 namespace Vistaaa.Views;
@@ -33,7 +34,7 @@ public partial class LoginPage : ContentPage
         }
         else
         {
-            await DisplayAlert("Error", "Invalid username or password!", "OK");
+            await DisplayAlert("B³¹d logowania", "Niepoprawny email lub has³o", "OK");
         }
     }
 }

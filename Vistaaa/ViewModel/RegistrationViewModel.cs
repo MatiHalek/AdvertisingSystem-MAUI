@@ -17,16 +17,14 @@ namespace Vistaaa.ViewModel
 
         public RegistrationViewModel()
         {
-            Email.Validations.Add(new IsNotNullOrEmptyRule<string>
-            {
-                ValidationMessage = "A username is required."
-            });
+            Email.Validations.Add(new EmailExistsRule<string>());
+            Email.Validations.Add(new EmailRule<string>());
         }
         [RelayCommand]
         void ValidateEmail()
         {
             Email.Validate();
-            Debug.WriteLine("test" + Email.Value);
+            Debug.WriteLine("test" + Email.FirstError);
         }
     }
 }

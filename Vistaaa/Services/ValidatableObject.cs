@@ -11,21 +11,22 @@ namespace Vistaaa.Classes
     {
         private IEnumerable<string> _errors;
         private bool _isValid;
-        private T? _value;
+        private T _value = default!;
         public List<IValidationRule<T>> Validations { get; } = [];
         public IEnumerable<string> Errors
         {
             get => _errors;
             private set => SetProperty(ref _errors, value);
         }
+        public string? FirstError => Errors.FirstOrDefault();    
         public bool IsValid
         {
             get => _isValid;
             private set => SetProperty(ref _isValid, value);
         }
-        public T? Value
+        public T Value
         {
-            get => _value ?? default;
+            get => _value;
             set => SetProperty(ref _value, value);
         }
         public ValidatableObject()
@@ -36,7 +37,7 @@ namespace Vistaaa.Classes
         public bool Validate()
         {
             Errors = Validations
-                ?.Where(v => !v.Check(Value ?? default))
+                ?.Where(v => !v.Check(Value))
                 ?.Select(v => v.ValidationMessage)
                 ?.ToArray()
                 ?? Enumerable.Empty<string>();

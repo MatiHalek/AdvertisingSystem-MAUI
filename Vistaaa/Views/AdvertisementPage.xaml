@@ -21,16 +21,16 @@
                     </Border>
                 </Grid>
                 <VerticalStackLayout MaximumWidthRequest="1200" Padding="15" TranslationY="-25">
-                    <Border StrokeThickness="0" BackgroundColor="#1E90FF" Padding="15" >
+                    <Border StrokeThickness="0" BackgroundColor="#5585aa" Padding="15" >
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="15"/>
                         </Border.StrokeShape>
                         <VerticalStackLayout Spacing="10">
-                            <Label LineBreakMode="WordWrap">
+                            <Label LineBreakMode="WordWrap" >
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span FontFamily="SignikaNegative" FontAttributes="Bold" FontSize="25" x:Name="advertisementTitle"/>
-                                        <Span x:Name="advertisementId"/>
+                                        <Span FontFamily="SignikaNegative" TextColor="White" FontAttributes="Bold" FontSize="25" x:Name="advertisementTitle"/>
+                                        <Span x:Name="advertisementId" TextColor="White"/>
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -39,16 +39,16 @@
                                 <Label>
                                     <Label.FormattedText>
                                         <FormattedString>
-                                            <Span FontFamily="FAS" Text="&#xf271; " FontAttributes="Bold" FontSize="20"/>
-                                            <Span FontSize="15" x:Name="advertisementDateAdded"/>
+                                            <Span FontFamily="FAS" Text="&#xf271; " TextColor="White" FontAttributes="Bold" FontSize="20"/>
+                                            <Span FontSize="15" x:Name="advertisementDateAdded" TextColor="White"/>
                                         </FormattedString>
                                     </Label.FormattedText>
                                 </Label>
                                 <Label>
                                     <Label.FormattedText>
                                         <FormattedString>
-                                            <Span FontFamily="FAS" Text="&#xf783; " FontAttributes="Bold" FontSize="20"/>
-                                            <Span FontSize="15" x:Name="advertisementDateExpire"/>
+                                            <Span FontFamily="FAS" TextColor="White" Text="&#xf783; " FontAttributes="Bold" FontSize="20"/>
+                                            <Span FontSize="15" TextColor="White" x:Name="advertisementDateExpire"/>
                                         </FormattedString>
                                     </Label.FormattedText>
                                 </Label>
@@ -68,20 +68,64 @@
                                 <Label VerticalTextAlignment="Center">
                                     <Label.FormattedText>
                                         <FormattedString>
-                                            <Span FontFamily="FAS" Text="&#xf81d; " FontAttributes="Bold" FontSize="30"/>
-                                            <Span FontFamily="SignikaNegative" FontAttributes="Bold" FontSize="26" x:Name="advertisementEarnings"/>
+                                            <Span FontFamily="FAS" TextColor="White" Text="&#xf81d; " FontAttributes="Bold" FontSize="30"/>
+                                            <Span FontFamily="SignikaNegative" TextColor="White" FontAttributes="Bold" FontSize="26" x:Name="advertisementEarnings"/>
                                         </FormattedString>
                                     </Label.FormattedText>
                                 </Label>
                             </Border>
                         </VerticalStackLayout>
                     </Border>
-                    <Border StrokeThickness="0" BackgroundColor="White" Margin="0, 20, 0, 0">
+                    <Border StrokeThickness="0" BackgroundColor="#5585aa" Margin="0, 20, 0, 0">
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="15"/>
                         </Border.StrokeShape>
                         <VerticalStackLayout Padding="15" Spacing="10">
-                            <Label FontFamily="SignikaNegative" FontAttributes="Bold" FontSize="20" Text="Opis"/>
+                            <Label TextColor="White" FontFamily="SignikaNegative" FontAttributes="Bold" FontSize="20" Text="Podstawowe informacje"/>
+                            <Grid RowSpacing="15" ColumnSpacing="8">
+                                <Grid.RowDefinitions>
+                                    <OnIdiom Default="Auto,Auto,Auto" Phone="Auto,Auto,Auto,Auto,Auto,Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <OnIdiom Default="Auto,*,Auto,*" Phone="Auto,*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label FontFamily="FAS" Text="&#xf0b1;" FontSize="20" TextColor="White"/>
+                                <Label FontFamily="FAS" Text="&#xf012;" Grid.Column="{OnIdiom 2, Phone=0}" Grid.Row="{OnIdiom 0, Phone=1}" FontSize="20" TextColor="White"/>
+                                <Label FontFamily="FAS" Text="&#xf573;" Grid.Row="{OnIdiom 1, Phone=2}" FontSize="20" TextColor="White"/>
+                                <Label FontFamily="FAS" Text="&#xf200;" Grid.Column="{OnIdiom 2, Phone=0}" Grid.Row="{OnIdiom 1, Phone=3}" FontSize="20" TextColor="White"/>
+                                <Label FontFamily="FAS" Text="&#xf1ad;" Grid.Row="{OnIdiom 2, Phone=4}" FontSize="20" TextColor="White"/>
+                                <Label FontFamily="FAS" Text="&#xf017;" Grid.Column="{OnIdiom 2, Phone=0}" Grid.Row="{OnIdiom 2, Phone=5}" FontSize="20" TextColor="White"/>
+                                <Label Grid.Column="1" Style="{StaticResource infoLabel}" x:Name="positionNameLabel"/>
+                                <Label Grid.Column="{OnIdiom 3, Phone=1}" Grid.Row="{OnIdiom 0, Phone=1}" Style="{StaticResource infoLabel}" x:Name="positionLevelLabel"/>
+                                <Label Grid.Column="1" Grid.Row="{OnIdiom 1, Phone=2}" Style="{StaticResource infoLabel}" x:Name="contractTypeLabel"/>
+                                <Label Grid.Column="{OnIdiom 3, Phone=1}" Grid.Row="{OnIdiom 1, Phone=3}" Style="{StaticResource infoLabel}" x:Name="employmentTypeLabel"/>
+                                <Label Grid.Column="1" Grid.Row="{OnIdiom 2, Phone=4}" Style="{StaticResource infoLabel}" x:Name="workTypeLabel"/>
+                                <Label Grid.Column="{OnIdiom 3, Phone=1}" Grid.Row="{OnIdiom 2, Phone=5}" Style="{StaticResource infoLabel}" x:Name="workHoursLabel"/>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border StrokeThickness="0" BackgroundColor="#5585aa" Margin="0, 20, 0, 0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="15"/>
+                        </Border.StrokeShape>
+                        <VerticalStackLayout Padding="15" Spacing="10" x:Name="responsibilitiesStackLayout">
+                            <Label TextColor="White" FontFamily="SignikaNegative" FontAttributes="Bold" FontSize="20" Text="Zakres obowiązków"/>
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border StrokeThickness="0" BackgroundColor="#5585aa" Margin="0, 20, 0, 0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="15"/>
+                        </Border.StrokeShape>
+                        <VerticalStackLayout Padding="15" Spacing="10" x:Name="requirementsStackLayout">
+                            <Label TextColor="White" FontFamily="SignikaNegative" FontAttributes="Bold" FontSize="20" Text="Wymagania wobec kandydata"/>
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border StrokeThickness="0" BackgroundColor="#5585aa" Margin="0, 20, 0, 0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="15"/>
+                        </Border.StrokeShape>
+                        <VerticalStackLayout Padding="15" Spacing="10" x:Name="offerStackLayout">
+                            <Label TextColor="White" FontFamily="SignikaNegative" FontAttributes="Bold" FontSize="20" Text="Co oferujemy?"/>
                         </VerticalStackLayout>
                     </Border>
                 </VerticalStackLayout>

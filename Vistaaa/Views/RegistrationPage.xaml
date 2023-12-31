@@ -34,6 +34,13 @@
                         </DataTrigger>
                     </Entry.Triggers>
                 </Entry>
+                <Label Text="{Binding Path=BindingContext.Email.FirstError, Source={x:Reference RegistrationMainPage}}" Style="{StaticResource validationLabel}" IsVisible="True">
+                    <Label.Triggers>
+                        <Trigger TargetType="Label" Property="Text"  Value="{x:Null}">
+                            <Setter Property="IsVisible" Value="False"/>
+                        </Trigger>
+                    </Label.Triggers>
+                </Label>
                 <Border Style="{StaticResource formBorder}">
                     <Label Text="Hasło" Style="{StaticResource formLabel}"/>
                 </Border>
@@ -47,7 +54,7 @@
                 </Border>
                 <DatePicker TextColor="Black" BackgroundColor="#DDD" x:Name="birthDatePicker" HorizontalOptions="FillAndExpand"/>
                 <HorizontalStackLayout>
-                    <CheckBox Color="Green"/>
+                    <CheckBox Color="LightGreen"/>
                     <Label Text="Akceptuję regulamin serwisu Vistaaa." TextColor="Black" VerticalTextAlignment="Center"/>
                 </HorizontalStackLayout>
                 

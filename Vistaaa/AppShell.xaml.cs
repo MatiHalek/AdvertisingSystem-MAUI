@@ -1,4 +1,6 @@
-﻿namespace Vistaaa
+﻿using Vistaaa.Views;
+
+namespace Vistaaa
 {
     public partial class AppShell : Shell
     {
@@ -8,7 +10,7 @@
         public AppShell()
         {
             InitializeComponent();
-            BindingContext = this;            
+            BindingContext = this;
         }
     }
 }

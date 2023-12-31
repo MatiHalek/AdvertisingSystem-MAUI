@@ -85,7 +85,7 @@ public partial class HomePage : ContentPage
     private void Button_Clicked(object sender, EventArgs e)
     {
 
-        Shell.Current.GoToAsync($"//offers?category=aaa");
+        Shell.Current.GoToAsync($"//offers?Category=aaa");
        
     }
 }

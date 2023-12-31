@@ -43,26 +43,32 @@
                 <Picker x:Name="advertisementsOnPagePicker"/>
             </HorizontalStackLayout>
         </FlexLayout>
-        <Border StrokeThickness="0" Padding="10">
+        <Border StrokeThickness="0" Padding="10" x:Name="adminBorder" IsEnabled="False" IsVisible="False">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="10"/>
             </Border.StrokeShape>
             <Border.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="#FF2E8B57" Offset="0" />
-                    <GradientStop Color="#772E8B57" Offset="0.3" />
-                    <GradientStop Color="#DD2E8B57" Offset="0.6" />
-                    <GradientStop Color="#BB2E8B57" Offset="1.0" />
+                    <GradientStop Color="#882E8B57" Offset="0" />
+                    <GradientStop Color="#552E8B57" Offset="0.3" />
+                    <GradientStop Color="#772E8B57" Offset="0.6" />
+                    <GradientStop Color="#662E8B57" Offset="1.0" />
                 </LinearGradientBrush>
             </Border.Background>
-            <VerticalStackLayout>
-                <Label Margin="10" FontFamily="SignikaNegative" Text="Narzędzia administracyjne" FontSize="17"/>
+            <VerticalStackLayout Spacing="5">
+                <Label Margin="5" FontFamily="SignikaNegative" Text="Narzędzia administracyjne" FontSize="18" FontAttributes="Bold"/>
                 <FlexLayout x:Name="adminPanelFlexLayout" JustifyContent="SpaceBetween">
-                    <Button Text="Dodaj" Clicked="AddButton_Clicked" Style="{StaticResource commonButton}"/>
+                    <Button Text="Dodaj" Clicked="AddButton_Clicked" Style="{StaticResource commonButton}" FontSize="14"/>
                     <HorizontalStackLayout>
-                        <Switch Toggled="DeleteSwitch_Toggled"/>
-                        <Label Text="Tryb usuwania" VerticalTextAlignment="Center"/>
-                        <Button IsEnabled="False" x:Name="deleteAllButton" Clicked="DeleteAllButton_Clicked" Style="{StaticResource failButton}"/>
+                        <Label FontFamily="FAS" Text="&#xf1f8;" VerticalTextAlignment="Center" Margin="0, 0, 5, 0" TextColor="OrangeRed"/>
+                        <Switch Toggled="DeleteSwitch_Toggled" OnColor="Green"/>
+                        <Button IsEnabled="False" x:Name="deleteAllButton" Clicked="DeleteAllButton_Clicked" Style="{StaticResource failButton}" FontSize="14">
+                            <Button.Triggers>
+                                <Trigger TargetType="Button" Property="IsEnabled"  Value="False">
+                                    <Setter Property="Opacity" Value="0.5"/>
+                                </Trigger>
+                            </Button.Triggers>
+                        </Button>
                     </HorizontalStackLayout>
                 </FlexLayout>
                 <Label Text="Edytowanie ogłoszeń jest dostępne za pośrednictwem menu kontekstowego." FontFamily="SignikaNegative"/>

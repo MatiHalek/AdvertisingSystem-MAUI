@@ -99,20 +99,23 @@ public partial class AddOrEditAdvertisement : ContentPage
         {
             salaryValidationLabel.Text = "Podaj poprawn¹ wartoœæ najni¿szego wynagrodzenia";
             salaryValidationLabel.IsVisible = true;
+            success = false;
         }
         else if(!decimal.TryParse(highestSalaryEntry.Text, out _) || decimal.Parse(highestSalaryEntry.Text) < 0.01m || decimal.Parse(highestSalaryEntry.Text) > 999999.99m || highestSalaryEntry.Text.ToString().Replace(",", ".").TrimEnd('0').SkipWhile(c => c != '.').Skip(1).Count() > 2)
         {
             salaryValidationLabel.Text = "Podaj poprawn¹ wartoœæ najwy¿szego wynagrodzenia";
             salaryValidationLabel.IsVisible = true;
+            success = false;
         }
-        else if(decimal.Parse(lowestSalaryEntry.Text) >= decimal.Parse(highestSalaryEntry.Text))
+        else if(!string.IsNullOrWhiteSpace(lowestSalaryEntry.Text) && decimal.Parse(lowestSalaryEntry.Text) >= decimal.Parse(highestSalaryEntry.Text))
         {
             salaryValidationLabel.Text = "Wartoœæ najwy¿szego wynagrodzenia powinna byæ wiêksza od wartoœci najni¿szego wynagrodzenia";
             salaryValidationLabel.IsVisible = true;
+            success = false;
         }
         else
             salaryValidationLabel.IsVisible = false;
-        if (string.IsNullOrWhiteSpace(workDaysValidationLabel.Text))
+        if (string.IsNullOrWhiteSpace(workDaysEntry.Text))
         {
             workDaysValidationLabel.Text = "Podaj dni oraz godziny pracy";
             workDaysValidationLabel.IsVisible = true;
@@ -191,7 +194,7 @@ public partial class AddOrEditAdvertisement : ContentPage
             ((ContractType)contractTypePicker.SelectedItem).ContractTypeId,
             ((EmploymentType)employmentTypePicker.SelectedItem).EmploymentTypeId,
             ((WorkType)workTypePicker.SelectedItem).WorkTypeId,
-            decimal.Parse(lowestSalaryEntry.Text),
+            (!string.IsNullOrWhiteSpace(lowestSalaryEntry.Text)) ? decimal.Parse(lowestSalaryEntry.Text) : null,
             decimal.Parse(highestSalaryEntry.Text),
             workDaysEntry.Text,
             DateTime.Now,
@@ -210,7 +213,7 @@ public partial class AddOrEditAdvertisement : ContentPage
             Advertisement.ContractType = ((ContractType)contractTypePicker.SelectedItem).ContractTypeId;
             Advertisement.EmploymentType = ((EmploymentType)employmentTypePicker.SelectedItem).EmploymentTypeId;
             Advertisement.WorkType = ((WorkType)workTypePicker.SelectedItem).WorkTypeId;
-            Advertisement.LowestSalary = decimal.Parse(lowestSalaryEntry.Text);
+            Advertisement.LowestSalary = (!string.IsNullOrWhiteSpace(lowestSalaryEntry.Text)) ? decimal.Parse(lowestSalaryEntry.Text) : null;
             Advertisement.HighestSalary = decimal.Parse(highestSalaryEntry.Text);
             Advertisement.WorkDays = workDaysEntry.Text;
             Advertisement.ExpirationDate = expirationDatePicker.Date.Add(expirationTimePicker.Time);
@@ -230,14 +233,14 @@ public partial class AddOrEditAdvertisement : ContentPage
     private async void AddNewCategoryButton_Clicked(object sender, EventArgs e)
     {
         string promptResult = await DisplayPromptAsync("Dodaj now¹ kategoriê", "WprowadŸ nazwê nowej kategorii:", "Dodaj", "Anuluj", "Nazwa kategorii", 100, Keyboard.Text, "Nowa kategoria");
-        //if(string.IsNullOrEmpty(promptResult))
-            //return;
+        if(promptResult == null)
+            return;
         if(string.IsNullOrWhiteSpace(promptResult))
         {
             await DisplayAlert("B³¹d dodawania kategorii", "Nazwa kategorii nie mo¿e byæ pusta!", "OK");
             return;
         }
-        if((await Task.Run(Database.GetCategories)).Any(category => category.Name.ToLower() == promptResult.Trim().ToLower()))
+        if((await Task.Run(Database.GetCategories)).Any(category => category.Name.Equals(promptResult.Trim(), StringComparison.CurrentCultureIgnoreCase)))
         {
             await DisplayAlert("B³¹d dodawania kategorii", "Taka kategoria ju¿ istnieje!", "OK");
             return;
