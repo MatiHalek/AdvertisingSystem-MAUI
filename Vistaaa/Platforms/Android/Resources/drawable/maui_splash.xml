@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" android:opacity="opaque">
+	<item android:drawable="@color/maui_splash_color" />
+	<item
+		android:width="108dp"
+		android:height="108dp"
+		android:gravity="center">
+		<bitmap
+			android:gravity="fill"
+			android:src="@drawable/vistaaa_splash_screen"
+			android:mipMap="true"/>
+	</item>
+</layer-list>
