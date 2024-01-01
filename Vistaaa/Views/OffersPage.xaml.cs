@@ -22,22 +22,20 @@ public partial class OffersPage : ContentPage
     public List<Advertisement>? AdvertisementList { get; set; }
     protected override void OnAppearing()
     {
-        base.OnAppearing();        
+        base.OnAppearing();   
         if(Preferences.ContainsKey("userId"))
             onlySavedStackLayout.IsEnabled = true;
         else
         {
             onlySavedStackLayout.IsEnabled = false;
             onlySavedCheckbox.IsChecked = false;
-        }   
+        } 
         LoadData();        
     }
     public OffersPage()
     {
         InitializeComponent();
-        picker.ItemsSource = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6"];
-        picker.SelectedIndices = [2, 4, 5];
-        advertisementsOnPagePicker.ItemsSource = new List<uint> { 10, 20, 40, 100 };
+        advertisementsOnPagePicker.ItemsSource = new List<uint> { 6, 12, 30, 90 };
         advertisementsOnPagePicker.SelectedIndex = 0;
         advertisementsOnPagePicker.SelectedIndexChanged += AdvertisementsOnPagePicker_SelectedIndexChanged;
         sortTypePicker.ItemsSource = new List<Tuple<string, SortBy>> { new("Od najnowszych", SortBy.Date), new("Od najlepiej p³atnych", SortBy.Salary) };
@@ -54,6 +52,7 @@ public partial class OffersPage : ContentPage
     private async void LoadData()
     {
         loading.IsRunning = true;
+        loading.IsVisible = true;
         if (Preferences.ContainsKey("userId"))
         {
             User currentUser = await Database.GetUserAsync(uint.Parse(Preferences.Get("userId", null) ?? ""));
@@ -75,14 +74,43 @@ public partial class OffersPage : ContentPage
         }
         deleteAllButton.IsEnabled = false;
         deleteAllButton.Text = "Usuñ zaznaczone (0)";
-        loading.IsVisible = true;
+        List<string>? previousItemsSource = picker.ItemsSource;
+        List<string> categoryNames = [];
+        foreach (Category category in await Database.GetCategories())
+            categoryNames.Add(category.Name);
+        picker.ItemsSource = categoryNames;
+        if(!string.IsNullOrEmpty(category) && HomePage.Navigated)
+        {
+            HomePage.Navigated = false;
+            picker.Text = Category;
+            picker.SelectedIndices = [categoryNames.IndexOf(category)];
+            Category = "";
+        }
+        else
+        {
+            List<int> selectedIndices = [];
+            if (previousItemsSource is not null)
+            {
+                List<int> previousSelectedIndices = picker.SelectedIndices;
+                for (int i = 0; i < categoryNames.Count; i++)
+                    if (previousItemsSource.Contains(categoryNames[i]) && previousSelectedIndices.Contains(previousItemsSource.IndexOf(categoryNames[i])))
+                        selectedIndices.Add(i);
+            }
+            else
+                for (int i = 0; i < categoryNames.Count; i++)
+                    selectedIndices.Add(i);
+            picker.SelectedIndices = selectedIndices;
+        }        
         string searchBarText = string.Empty;
         if (searchBar.Text != null)
             searchBarText = searchBar.Text;
-        int advertisementCount = (await Database.GetAdvertisementsAsync(searchBarText.Trim(), ((Tuple<string, SortBy>)sortTypePicker.SelectedItem).Item2, onlySavedCheckbox.IsChecked)).Count;
+        List<string> categories = [];    
+        foreach (int i in picker.SelectedIndices)
+            categories.Add(categoryNames[i]);
+        int advertisementCount = (await Database.GetAdvertisementsAsync(searchBarText.Trim(), ((Tuple<string, SortBy>)sortTypePicker.SelectedItem).Item2, onlySavedCheckbox.IsChecked, categories)).Count;
         if (ADVERTISEMENTS_PER_PAGE * currentPage == advertisementCount + ADVERTISEMENTS_PER_PAGE)
             currentPage--;
-        AdvertisementList = await Database.GetAdvertisementsAsync(currentPage, ADVERTISEMENTS_PER_PAGE, searchBarText.Trim(), ((Tuple<string, SortBy>)sortTypePicker.SelectedItem).Item2, onlySavedCheckbox.IsChecked);
+        AdvertisementList = await Database.GetAdvertisementsAsync(currentPage, ADVERTISEMENTS_PER_PAGE, searchBarText.Trim(), ((Tuple<string, SortBy>)sortTypePicker.SelectedItem).Item2, onlySavedCheckbox.IsChecked, categories);
         AdvertisementCollectionView.ItemsSource = AdvertisementList;
         pageButtons.Children.Clear();
         if (AdvertisementList.Count > 0)
@@ -285,5 +313,11 @@ public partial class OffersPage : ContentPage
         swipeItem.Invoked += EditAdvertisementMenuItem_Clicked;
         swipeItems.Add(swipeItem);
         ((SwipeView)sender).LeftItems = swipeItems;    
+    }
+
+    private void CategoryPicker_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (!string.IsNullOrEmpty(picker.Text))
+            LoadData();
     }
 }

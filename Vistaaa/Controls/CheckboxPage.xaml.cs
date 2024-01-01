@@ -33,7 +33,10 @@ public partial class CheckboxPage : BasePage<string>
     {
         List<CheckedItem> list = (List<CheckedItem>)listView.ItemsSource;
         _navigationResult = string.Join(",", list.Where(x => x.IsChecked).Select(x => x.Position).ToArray());
-        Navigation.PopModalAsync();
+        if(string.IsNullOrEmpty(_navigationResult))
+            Application.Current?.MainPage?.DisplayAlert("B³¹d filtrowania", "Proszê wybraæ co najmniej jedn¹ kategoriê!", "OK"); 
+        else
+            Navigation.PopModalAsync();
     }
 
     private void Cancel_Clicked(object sender, EventArgs e)

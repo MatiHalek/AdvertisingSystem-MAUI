@@ -4,12 +4,14 @@ namespace Vistaaa.Views;
 
 public partial class HomePage : ContentPage
 {
+    public static bool Navigated { get; set; } = false;
     private readonly Database Database = new();
     int number = 6549;
     readonly Random r = new();
-    readonly List<string> CategoryList = [];
-    readonly string stringList = "";
+    List<string> CategoryList = [];
+    string stringList = "";
     int iterator = 0;
+    int currentCategory = 0;
     public HomePage()
 	{
 		InitializeComponent();
@@ -17,13 +19,17 @@ public partial class HomePage : ContentPage
         myTimer.Elapsed += new ElapsedEventHandler(IncreaseOffers);
         myTimer.Interval = 3000;  
         myTimer.Enabled = true;
-
-        CategoryList = Task.Run(Database.GetCategories).Result.Select(item => item.Name.ToLower()).ToList();
-        stringList = string.Join(';', CategoryList);
+        UpdateCategories();
         IDispatcherTimer searchTimer = Dispatcher.CreateTimer();
         searchTimer.Tick += SearchTimer_Tick;
         searchTimer.Interval = TimeSpan.FromMilliseconds(800);
         searchTimer.Start();
+    }
+
+    public void UpdateCategories()
+    {
+        CategoryList = Task.Run(Database.GetCategories).Result.Select(item => item.Name).ToList();
+        stringList = string.Join(';', CategoryList);
     }
 
     private void SearchTimer_Tick(object? sender, EventArgs e)
@@ -32,16 +38,18 @@ public partial class HomePage : ContentPage
         {
             MainThread.BeginInvokeOnMainThread(() => searchAnimationLabel.Text = string.Empty);
             iterator = 0;
-
+            UpdateCategories();
+            currentCategory = 0;
             return;
         }
         if (stringList[iterator] == ';')
         {
             MainThread.BeginInvokeOnMainThread(() => searchAnimationLabel.Text = string.Empty);
             iterator++;
+            currentCategory++;
             return;
         }
-        MainThread.BeginInvokeOnMainThread(() => searchAnimationLabel.Text += stringList[iterator]);
+        MainThread.BeginInvokeOnMainThread(() => searchAnimationLabel.Text += stringList[iterator].ToString().ToLower());
         iterator++;
     }
 
@@ -84,8 +92,7 @@ public partial class HomePage : ContentPage
 
     private void Button_Clicked(object sender, EventArgs e)
     {
-
-        Shell.Current.GoToAsync($"//offers?Category=aaa");
-       
+        Navigated = true;
+        Shell.Current.GoToAsync($"//offers?Category={CategoryList[currentCategory]}");       
     }
 }

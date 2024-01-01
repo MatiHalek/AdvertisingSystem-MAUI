@@ -23,8 +23,10 @@
     <StackLayout MaximumWidthRequest="1200"
         Padding="10, 20, 10, 0"
         Spacing="25">
-        <SearchBar Placeholder="Wyszukaj po nazwie..." x:Name="searchBar" TextChanged="SearchBar_TextChanged" IsTextPredictionEnabled="True"/>
-        <control:MultiSelectionPicker x:Name="picker" />
+        <Grid ColumnDefinitions="1.8*,*" ColumnSpacing="5">
+            <SearchBar Placeholder="Wyszukaj po nazwie..." x:Name="searchBar" TextChanged="SearchBar_TextChanged" IsTextPredictionEnabled="True"/>
+            <control:MultiSelectionPicker x:Name="picker" Grid.Column="1" TextChanged="CategoryPicker_TextChanged"/>
+        </Grid>
         <FlexLayout Wrap="Wrap" JustifyContent="SpaceBetween">
             <HorizontalStackLayout Spacing="15" Margin="5">
                 <Label Text="Sortuj:" VerticalOptions="Center"/>

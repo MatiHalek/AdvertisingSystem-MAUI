@@ -39,21 +39,16 @@ namespace Vistaaa.Controls
             {
                 selectedItems.Add(ctrl.ItemsSource[i]);
             }
-            ctrl.Text = string.Join(" | ", selectedItems);
+            if(ctrl.ItemsSource.Count == ctrl.SelectedIndices.Count)
+                ctrl.Text = "Wszystkie kategorie";
+            else
+                ctrl.Text = string.Join(" | ", selectedItems);
         }
-
-        //bool IsControlLoaded = false;
 
         public MultiSelectionPicker()
         {
             Focused += async (e, s) =>
             {
-                /*if (!IsControlLoaded && DeviceInfo.Platform == DevicePlatform.WinUI)
-                {
-                    IsControlLoaded = true;
-                    Unfocus();
-                    return;
-                }*/
                 if (s.IsFocused)
                 {
                     Unfocus();
@@ -71,7 +66,10 @@ namespace Vistaaa.Controls
                         {
                             selectedItems.Add(ItemsSource[i]);
                         }
-                        Text = string.Join(" | ", selectedItems);
+                        if (ItemsSource.Count == SelectedIndices.Count)
+                            Text = "Wszystkie kategorie";
+                        else
+                            Text = string.Join(" | ", selectedItems);
                     }
                 }
             };
@@ -107,7 +105,6 @@ namespace Vistaaa.Controls
             {
                 PageDisappearing?.Invoke(_navigationResult);
             }
-
             if (PageDisappearing != null)
             {
                 foreach (var @delegate in PageDisappearing.GetInvocationList())

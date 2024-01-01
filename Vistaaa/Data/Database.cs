@@ -128,11 +128,22 @@ namespace Vistaaa
             await Init();
             return await DatabaseHandler!.InsertAsync(advertisement);
         }
-        public async Task<List<Advertisement>> GetAdvertisementsAsync(string? search = null, SortBy sortBy = SortBy.Date, bool savedOnly = false)
+        public async Task<List<Advertisement>> GetAdvertisementsAsync(string? search = null, SortBy sortBy = SortBy.Date, bool savedOnly = false, List<string>? categories = null)
         {
             await Init();
             DateTime currentTime = DateTime.Now;
             List<Advertisement> allAdvertisements = await DatabaseHandler!.Table<Advertisement>().ToListAsync();
+            if (categories is not null)
+            {
+                List<Category> categoriesList = await GetCategories();
+                List<uint> categoriesIds = [];
+                foreach (string category in categories)
+                    categoriesIds.Add(categoriesList.Where(item => item.Name == category).FirstOrDefault()!.Id);
+                allAdvertisements =
+                [
+                    .. allAdvertisements.Where(advertisement => categoriesIds.Any(categoryId => advertisement.CategoryId == categoryId)),
+                ];
+            }
             if (savedOnly)
             {
                 uint userId = uint.Parse(Preferences.Get("userId", null) ?? "");
@@ -166,9 +177,9 @@ namespace Vistaaa
             advertisements.AddRange(allAdvertisements.Where(advertisement => advertisement.ExpirationDate < currentTime).OrderByDescending(advertisement => advertisement.CreationDate));   
             return advertisements;
         }
-        public async Task<List<Advertisement>> GetAdvertisementsAsync(uint pageNumber, uint advertisementsOnPage, string? search = null, SortBy sortBy = SortBy.Date, bool savedOnly = false)
+        public async Task<List<Advertisement>> GetAdvertisementsAsync(uint pageNumber, uint advertisementsOnPage, string? search = null, SortBy sortBy = SortBy.Date, bool savedOnly = false, List<string>? categories = null)
         {
-            var advertisements = await GetAdvertisementsAsync(search, sortBy, savedOnly);
+            var advertisements = await GetAdvertisementsAsync(search, sortBy, savedOnly, categories);
             return advertisements.Skip((int)((pageNumber - 1) * advertisementsOnPage)).Take((int)advertisementsOnPage).ToList();
         }
         public async Task<List<Category>> GetCategories()

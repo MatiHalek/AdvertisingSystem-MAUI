@@ -53,7 +53,7 @@
 		<MauiIcon Include="Resources\AppIcon\vistaaa_icon.png" BaseSize="128,128" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\vistaaa_splash_screen.png" BaseSize="400,400" Resize="False" Color="#2E8B57" />
+		<MauiSplashScreen Include="Resources\Splash\vistaaa_splash_screen.png" BaseSize="400,400" Color="#2E8B57" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
