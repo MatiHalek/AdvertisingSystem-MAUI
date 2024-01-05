@@ -27,10 +27,14 @@ public partial class ProfilePage : ContentPage
                 profilePage.Remove(ProfileView);
             form.IsVisible = false;
             Database database = new();
-            ProfileView = new ProfileView(await database.GetUserAsync(uint.Parse(Preferences.Get("userId", null) ?? "")));
+            if (Preferences.Get("userType", null) == "Company")
+                ProfileView = new ProfileView(await database.GetCompany(uint.Parse(Preferences.Get("userId", null) ?? "")) ?? new Company());
+            else
+                ProfileView = new ProfileView(await database.GetUserAsync(uint.Parse(Preferences.Get("userId", null) ?? "")));
             ProfileView.logoutButton.Clicked += (object? sender, EventArgs e) =>
             {
                 Preferences.Set("userId", null);
+                Preferences.Set("userType", null);
                 profilePage.Remove(ProfileView);
                 form.IsVisible = true;
             };  

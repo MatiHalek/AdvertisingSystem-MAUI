@@ -26,9 +26,22 @@ namespace Vistaaa
             await DatabaseHandler.CreateTableAsync<Category>();
             await DatabaseHandler.CreateTableAsync<User>();
             await DatabaseHandler.CreateTableAsync<UserAdvertisement>();
+            await DatabaseHandler.CreateTableAsync<AdvertisementApplying>();
             await DatabaseHandler.CreateTableAsync<WorkType>();
             await DatabaseHandler.CreateTableAsync<EmploymentType>();
             await DatabaseHandler.CreateTableAsync<ContractType>();
+            await DatabaseHandler!.Table<Category>().CountAsync().ContinueWith(task =>
+            {
+                if(task.Result == 0)
+                {
+                    DatabaseHandler.InsertAsync(
+                        new Category
+                        {
+                            Name = "Programowanie"
+                        }
+                    );
+                }
+            });
             await DatabaseHandler!.Table<User>().CountAsync().ContinueWith(task =>
             {
                 if (task.Result == 0)
@@ -39,7 +52,7 @@ namespace Vistaaa
                             FirstName = "Mateusz",
                             LastName = "Marmuźniak",
                             BirthDate = new DateTime(2005, 2, 7),
-                            Email = "mateusz.marmuzniak.poland@gmail.com",
+                            Email = "admin@gmail.com",
                             Password = PasswordHasher.Hash("zaq1@WSX"),
                             Phone = "123456789",
                             City = "Limanowa",
@@ -60,9 +73,11 @@ namespace Vistaaa
                     DatabaseHandler.InsertAsync(
                         new Company
                         {
+                            Email = "company@gmail.com",
+                            Password = PasswordHasher.Hash("zaq1@WSX"),
                             Name = "MH Sp. z o.o.",
                             Description = "Znana i ceniona firma zajmująca się tworzeniem oprogramowania",
-                            Street = "Zielona",
+                            StreetName = "Zielona",
                             StreetNumber = "5",
                             PostalCode = "34-600",
                         }
@@ -128,11 +143,18 @@ namespace Vistaaa
             await Init();
             return await DatabaseHandler!.InsertAsync(advertisement);
         }
-        public async Task<List<Advertisement>> GetAdvertisementsAsync(string? search = null, SortBy sortBy = SortBy.Date, bool savedOnly = false, List<string>? categories = null)
+        public async Task<List<Advertisement>> GetAdvertisementsAsync(string? search = null, SortBy sortBy = SortBy.Date, bool savedOnly = false, List<string>? categories = null, uint? companyId = null)
         {
             await Init();
             DateTime currentTime = DateTime.Now;
             List<Advertisement> allAdvertisements = await DatabaseHandler!.Table<Advertisement>().ToListAsync();
+            if(companyId is not null)
+            {
+                allAdvertisements =
+                [
+                    .. allAdvertisements.Where(advertisement => advertisement.CompanyId == companyId),
+                ];  
+            }
             if (categories is not null)
             {
                 List<Category> categoriesList = await GetCategories();
@@ -177,9 +199,9 @@ namespace Vistaaa
             advertisements.AddRange(allAdvertisements.Where(advertisement => advertisement.ExpirationDate < currentTime).OrderByDescending(advertisement => advertisement.CreationDate));   
             return advertisements;
         }
-        public async Task<List<Advertisement>> GetAdvertisementsAsync(uint pageNumber, uint advertisementsOnPage, string? search = null, SortBy sortBy = SortBy.Date, bool savedOnly = false, List<string>? categories = null)
+        public async Task<List<Advertisement>> GetAdvertisementsAsync(uint pageNumber, uint advertisementsOnPage, string? search = null, SortBy sortBy = SortBy.Date, bool savedOnly = false, List<string>? categories = null, uint? companyId = null)
         {
-            var advertisements = await GetAdvertisementsAsync(search, sortBy, savedOnly, categories);
+            var advertisements = await GetAdvertisementsAsync(search, sortBy, savedOnly, categories, companyId);
             return advertisements.Skip((int)((pageNumber - 1) * advertisementsOnPage)).Take((int)advertisementsOnPage).ToList();
         }
         public async Task<List<Category>> GetCategories()
@@ -202,10 +224,11 @@ namespace Vistaaa
             await Init();
             return await DatabaseHandler!.UpdateAsync(advertisement);
         }
-        public async Task<int> CreateCompanyAsync(Company company)
+        public async Task<uint> CreateCompanyAsync(Company company)
         {
             await Init();
-            return await DatabaseHandler!.InsertAsync(company);
+            await DatabaseHandler!.InsertAsync(company);
+            return company.Id;
         }
         public async Task<List<Company>> GetCompanies()
         {
@@ -227,6 +250,22 @@ namespace Vistaaa
             await Init();
             return await DatabaseHandler!.UpdateAsync(company);
         }
+        public async Task<bool> CompanyNameExists(string name)
+        {
+            await Init();
+            return await DatabaseHandler!.Table<Company>().Where(company => company.Name == name).CountAsync() > 0;
+        }
+        public async Task<Company?> VerifyCompanyAsync(string email, string password)
+        {
+            await Init();
+            Company? company = await DatabaseHandler!.Table<Company>().Where(u => u.Email == email).FirstOrDefaultAsync();
+            if (company is not null)
+            {
+                if (PasswordHasher.Verify(password, company.Password))
+                    return company;
+            }
+            return null;
+        }
         public async Task<User> GetUserAsync(uint id)
         {
             await Init();
@@ -238,10 +277,19 @@ namespace Vistaaa
             await DatabaseHandler!.InsertAsync(user);
             return user.Id;
         }   
+        public async Task<int> UpdateUser(User user)
+        {
+            await Init();
+            return await DatabaseHandler!.UpdateAsync(user);
+        }
         public async Task<bool> EmailExists(string email)
         {
             await Init();
-            return await DatabaseHandler!.Table<User>().Where(user => user.Email == email).CountAsync() > 0;
+            if(await DatabaseHandler!.Table<User>().Where(user => user.Email == email).CountAsync() > 0)
+                return true;
+            else if(await DatabaseHandler!.Table<Company>().Where(company => company.Email == email).CountAsync() > 0)
+                return true;
+            return false;
         }
         public async Task<User?> VerifyUserAsync(string email, string password)
         {
@@ -274,6 +322,22 @@ namespace Vistaaa
         {
             await Init();
             return await DatabaseHandler!.DeleteAsync(userAdvertisement);
+        }
+        public async Task<int> CreateApplyingAdvertisement(AdvertisementApplying advertisementApplying)
+        {
+            await Init();
+            return await DatabaseHandler!.InsertAsync(advertisementApplying);
+        }
+        public async Task<AdvertisementApplying?> CheckIfApplyingAdvertisementExists(uint userId, uint advertisementId)
+        {
+            await Init();
+            AdvertisementApplying advertisementApplying = await DatabaseHandler!.Table<AdvertisementApplying>().Where(item => item.UserId == userId && item.AdvertisementId == advertisementId).FirstOrDefaultAsync();
+            return advertisementApplying;
+        }
+        public async Task<List<AdvertisementApplying>> GetApplyingAdvertisements()
+        {
+            await Init();
+            return await DatabaseHandler!.Table<AdvertisementApplying>().ToListAsync();
         }
         public async Task<List<ContractType>> GetContractTypes()
         {

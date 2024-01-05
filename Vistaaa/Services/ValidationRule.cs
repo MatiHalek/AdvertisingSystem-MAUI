@@ -14,7 +14,7 @@ namespace Vistaaa.Classes
     }
     public class IsNotNullOrEmptyRule<T> : IValidationRule<T>
     {
-        public string ValidationMessage { get; set; } = "";
+        public string ValidationMessage { get; set; } = "Należy uzupełnić to pole.";
 
         public bool Check(T value) =>
             value is string str && !string.IsNullOrWhiteSpace(str);
@@ -27,6 +27,14 @@ namespace Vistaaa.Classes
         public bool Check(T value) =>
             value is string str && !Task.Run(() => Database.EmailExists(str)).Result;           
     }
+    public class CompanyNameExistsRule<T> : IValidationRule<T>
+    {
+        public string ValidationMessage { get; set; } = "Firma o takiej nazwie już istnieje";
+        private readonly Database Database = new();
+
+        public bool Check(T value) =>
+            value is string str && !Task.Run(() => Database.CompanyNameExists(str)).Result;
+    }
     public partial class EmailRule<T> : IValidationRule<T>
     {
         private readonly Regex _regex = EmailRegex();
@@ -35,7 +43,7 @@ namespace Vistaaa.Classes
 
         public bool Check(T value) =>
             value is string str && _regex.IsMatch(str);
-        [GeneratedRegex(@"^([w.-]+)@([w-]+)((.(w){2,3})+)$")]
+        [GeneratedRegex(@"^([\w.-]+)@([\w-]+)((.(\w){2,3})+)$")]
         private static partial Regex EmailRegex();
     }
     public partial class  PasswordRule<T> : IValidationRule<T>
@@ -46,7 +54,26 @@ namespace Vistaaa.Classes
 
         public bool Check(T value) =>
             value is string str && _regex.IsMatch(str);
-        [GeneratedRegex(@"^(?=.*[\\p{L}])(?=.*\\d)(?=.*[!@#$%^&*()])[\\p{L}\\d!@#$%^&*()]{8,255}$")]
+        [GeneratedRegex(@"^(?=.*[\p{L}])(?=.*\d)(?=.*[!@#$%^&*()])[\p{L}\d!@#$%^&*()]{8,255}$")]
         private static partial Regex PasswordRegex();
     }
+    public partial class PostalCodeRule<T> : IValidationRule<T>
+    {
+        private readonly Regex _regex = PostalCodeRegex();
+
+        public string ValidationMessage { get; set; } = "Proszę wpisać poprawny kod pocztowy";
+
+        public bool Check(T value) =>
+            value is string str && _regex.IsMatch(str);
+        [GeneratedRegex(@"^[0-9]{2}-[0-9]{3}$")]
+        private static partial Regex PostalCodeRegex();
+    }
+    public partial class DateRule<T> : IValidationRule<T>
+    {
+        public string ValidationMessage { get; set; } = "Aby założyć konto, musisz mieć ukończone co najmniej 18 lat.";
+
+        public bool Check(T value) =>
+            value is DateTime str && DateTime.Today.AddYears(-18) >= str;
+    }
+
 }

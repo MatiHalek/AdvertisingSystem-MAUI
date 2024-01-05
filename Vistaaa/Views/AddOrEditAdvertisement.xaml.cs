@@ -8,13 +8,15 @@ public partial class AddOrEditAdvertisement : ContentPage
 {
 	private readonly Database Database = new();
     public Advertisement? Advertisement{ get; set; }
+    private uint? CompanyId { get; set; }
 
-    public AddOrEditAdvertisement()
+    public AddOrEditAdvertisement(uint? companyId = null)
 	{
 		InitializeComponent();
+        CompanyId = companyId;
         FillPickers();
 	}
-    public AddOrEditAdvertisement(Advertisement advertisement) : this()
+    public AddOrEditAdvertisement(Advertisement advertisement, uint? companyId = null) : this(companyId)
     {
         addOrEditAdvertisementContentPage.Title = "Edytuj og≥oszenie";
         submitButton.Text = "Zatwierdü zmiany";
@@ -153,7 +155,18 @@ public partial class AddOrEditAdvertisement : ContentPage
     private async void FillPickers()
     {
         categoryPicker.ItemsSource = await Task.Run(Database.GetCategories);
-        companyPicker.ItemsSource = await Task.Run(Database.GetCompanies);
+        if (CompanyId is not null)
+        {
+            companyPicker.ItemsSource = new List<Company>
+            {
+                (await Database.GetCompany((uint)CompanyId))!
+            };
+            companyPicker.SelectedIndex = 0;
+            addNewCompanyButton.IsVisible = false;
+            addNewCompanyButton.IsEnabled = false;
+        }           
+        else
+            companyPicker.ItemsSource = await Task.Run(Database.GetCompanies);
         workTypePicker.ItemsSource = await Task.Run(Database.GetWorkTypes);
         employmentTypePicker.ItemsSource = await Task.Run(Database.GetEmploymentTypes);
         contractTypePicker.ItemsSource = await Task.Run(Database.GetContractTypes);

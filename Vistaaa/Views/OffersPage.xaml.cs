@@ -23,7 +23,7 @@ public partial class OffersPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();   
-        if(Preferences.ContainsKey("userId"))
+        if(Preferences.ContainsKey("userId") && Preferences.Get("userType", "") == "IndividualUser")
             onlySavedStackLayout.IsEnabled = true;
         else
         {
@@ -56,7 +56,7 @@ public partial class OffersPage : ContentPage
         if (Preferences.ContainsKey("userId"))
         {
             User currentUser = await Database.GetUserAsync(uint.Parse(Preferences.Get("userId", null) ?? ""));
-            if (currentUser.IsAdmin)
+            if (currentUser.IsAdmin || Preferences.Get("userType", "") == "Company")
             {
                 adminBorder.IsVisible = true;
                 adminBorder.IsEnabled = true;
@@ -107,10 +107,11 @@ public partial class OffersPage : ContentPage
         List<string> categories = [];    
         foreach (int i in picker.SelectedIndices)
             categories.Add(categoryNames[i]);
-        int advertisementCount = (await Database.GetAdvertisementsAsync(searchBarText.Trim(), ((Tuple<string, SortBy>)sortTypePicker.SelectedItem).Item2, onlySavedCheckbox.IsChecked, categories)).Count;
+        uint? companyId = (Preferences.ContainsKey("userId") && Preferences.Get("userType", "") == "Company") ? uint.Parse(Preferences.Get("userId", null) ?? "") : null;
+        int advertisementCount = (await Database.GetAdvertisementsAsync(searchBarText.Trim(), ((Tuple<string, SortBy>)sortTypePicker.SelectedItem).Item2, onlySavedCheckbox.IsChecked, categories, companyId)).Count;
         if (ADVERTISEMENTS_PER_PAGE * currentPage == advertisementCount + ADVERTISEMENTS_PER_PAGE)
             currentPage--;
-        AdvertisementList = await Database.GetAdvertisementsAsync(currentPage, ADVERTISEMENTS_PER_PAGE, searchBarText.Trim(), ((Tuple<string, SortBy>)sortTypePicker.SelectedItem).Item2, onlySavedCheckbox.IsChecked, categories);
+        AdvertisementList = await Database.GetAdvertisementsAsync(currentPage, ADVERTISEMENTS_PER_PAGE, searchBarText.Trim(), ((Tuple<string, SortBy>)sortTypePicker.SelectedItem).Item2, onlySavedCheckbox.IsChecked, categories, companyId);
         AdvertisementCollectionView.ItemsSource = AdvertisementList;
         pageButtons.Children.Clear();
         if (AdvertisementList.Count > 0)
@@ -186,7 +187,7 @@ public partial class OffersPage : ContentPage
 
     private void AddButton_Clicked(object sender, EventArgs e)
     {
-        Navigation.PushAsync(new AddOrEditAdvertisement());
+        Navigation.PushAsync(new AddOrEditAdvertisement((Preferences.ContainsKey("userId") && Preferences.Get("userType", "") == "Company") ? uint.Parse(Preferences.Get("userId", null) ?? "") : null));
     }
 
     private void AdvertisementCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -216,7 +217,7 @@ public partial class OffersPage : ContentPage
             advertisement = (Advertisement)menuItem.CommandParameter;
         if (sender is SwipeItem swipeItem)
             advertisement = (Advertisement)swipeItem.CommandParameter;
-        Navigation.PushAsync(new AddOrEditAdvertisement(advertisement));
+        Navigation.PushAsync(new AddOrEditAdvertisement(advertisement, (Preferences.ContainsKey("userId") && Preferences.Get("userType", "") == "Company") ? uint.Parse(Preferences.Get("userId", null) ?? "") : null));
     }
 
     private void DetailsButton_Clicked(object sender, EventArgs e)
@@ -269,7 +270,7 @@ public partial class OffersPage : ContentPage
         if (!Preferences.ContainsKey("userId"))
             return;
         User currentUser = await Database.GetUserAsync(uint.Parse(Preferences.Get("userId", null) ?? ""));
-        if (!currentUser.IsAdmin)
+        if (!currentUser.IsAdmin && Preferences.Get("userType", "") != "Company")
             return;
         MenuFlyoutItem menuFlyoutItem = new()
         {

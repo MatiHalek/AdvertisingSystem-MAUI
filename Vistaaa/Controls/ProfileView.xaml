@@ -4,12 +4,12 @@
              x:Class="Vistaaa.Controls.ProfileView">
     <VerticalStackLayout>
         <StackLayout Style="{StaticResource gradientFooter}">
-            <Grid ColumnSpacing="15" Padding="15">
+            <Grid ColumnSpacing="15" RowSpacing="35" Padding="15">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="7*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -17,21 +17,68 @@
                 </Grid.RowDefinitions>
                 <Image Grid.Column="1" x:Name="profileImage" Source="user.png" WidthRequest="100" HeightRequest="100">
                     <Image.Clip>
-                        <EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50" />
+                        <EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50"  />
                     </Image.Clip>
                 </Image>
+                <Button Text="&#xf14b;" Clicked="FilePickerButton_Clicked" Grid.Column="1" VerticalOptions="End" HorizontalOptions="End" FontFamily="FAS" CornerRadius="50" FontSize="20" TextColor="Wheat" TranslationX="10" TranslationY="10" />
                 <VerticalStackLayout VerticalOptions="Center" Grid.Column="2">
                     <Label FontSize="22" FontAttributes="Bold" FontFamily="SignikaNegative" CharacterSpacing="1.3" x:Name="nameAndSurnameLabel"/>
-                    <Label Text="aaa"/>
+                    <Label x:Name="emailLabel"/>
                 </VerticalStackLayout>
-                <Button x:Name="logoutButton" x:FieldModifier="public" Text="Wyloguj się" Style="{StaticResource failButton}" Grid.Row="1" Grid.ColumnSpan="4" HorizontalOptions="Center"/>
+                <HorizontalStackLayout Grid.Row="1" Grid.ColumnSpan="4" HorizontalOptions="Center" Spacing="10">
+                    <Button x:Name="logoutButton" x:FieldModifier="public" Text="Wyloguj się" Style="{StaticResource failButton}"/>
+                    <Button Style="{StaticResource commonButton}" Text="Edytuj dane" Grid.Column="3" VerticalOptions="Center" x:Name="editUserDataButton" Clicked="EditUserDataButton_Clicked"/>
+                </HorizontalStackLayout>
             </Grid>
         </StackLayout>
-        
         <ScrollView>
-            <FlexLayout MaximumWidthRequest="1200">
-                <Button Text="Wybierz" Clicked="FilePickerButton_Clicked" />
-            </FlexLayout>
+            <VerticalStackLayout MaximumWidthRequest="1200">
+                <Label FontFamily="SignikaNegative" Text="Aplikacje" FontSize="20" TextColor="Gray" FontAttributes="Bold" HorizontalOptions="Center" Padding="15"/>
+                <Grid Grid.Row="1" ColumnSpacing="0" RowSpacing="0" Margin="0" Padding="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label BackgroundColor="DodgerBlue" TextColor="DarkBlue" Text="Id" FontSize="15" Padding="5" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
+                    <BoxView WidthRequest="1" Color="White" Grid.Column="1"/>
+                    <Label BackgroundColor="DodgerBlue" TextColor="DarkBlue" Text="UserId" FontSize="15" Grid.Column="2" Padding="5" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
+                    <BoxView WidthRequest="1" Color="White" Grid.Column="3"/>
+                    <Label BackgroundColor="DodgerBlue" TextColor="DarkBlue" Text="AdvertisementId" FontSize="15" Grid.Column="4" Padding="5" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
+                    <BoxView BackgroundColor="DodgerBlue" WidthRequest="1" Color="White" Grid.Column="5"/>
+                    <Label Text="Details" BackgroundColor="DodgerBlue" TextColor="DarkBlue" FontSize="15" Grid.Column="6" Padding="5" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
+                </Grid>
+                <ListView Grid.Row="2" x:Name="ListView" HasUnevenRows="True" SeparatorVisibility="None" Margin="0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid ColumnSpacing="0" RowSpacing="0" Margin="0" Padding="0" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="1"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="1"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="1"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding Id}" FontSize="17" Padding="5" VerticalTextAlignment="Center"/>
+                                    <BoxView WidthRequest="1" Color="DodgerBlue" Grid.Column="1"/>
+                                    <Label Text="{Binding UserId}" FontSize="17" Grid.Column="2" Padding="5" VerticalTextAlignment="Center"/>
+                                    <BoxView WidthRequest="1" Color="DodgerBlue" Grid.Column="3"/>
+                                    <Label Text="{Binding AdvertisementId}" FontSize="17" Grid.Column="4" Padding="5" VerticalTextAlignment="Center"/>
+                                    <BoxView WidthRequest="1" Color="DodgerBlue" Grid.Column="5"/>
+                                    <Button Text="Szczegóły" TextTransform="None" HeightRequest="45" VerticalOptions="Center" Grid.Column="6" CommandParameter="{Binding .}" Clicked="Button_Clicked"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </VerticalStackLayout>
         </ScrollView>
     </VerticalStackLayout>
 </ContentView>

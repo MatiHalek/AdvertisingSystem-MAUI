@@ -125,6 +125,8 @@ namespace Vistaaa.Models
         public string Offer { get; set; } = "";
         [ManyToMany(typeof(UserAdvertisement))]
         public List<User>? Users { get; set; }
+        [ManyToMany(typeof(AdvertisementApplying))]
+        public List<User>? AppliedUsers { get; set; }
 
         public Advertisement(string title, uint companyId, uint categoryId, string positionName, string positionLevel, uint contractType, uint employmentType, uint workType, decimal? lowestSalary, decimal highestSalary, string workDays, DateTime creationDate, DateTime expirationDate, string responsibilities, string requirements, string offer)
         {

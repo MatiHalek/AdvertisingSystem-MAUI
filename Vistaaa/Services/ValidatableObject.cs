@@ -10,6 +10,7 @@ namespace Vistaaa.Classes
     public class ValidatableObject<T> : ObservableObject
     {
         private IEnumerable<string> _errors;
+        private string? _firstError;
         private bool _isValid;
         private T _value = default!;
         public List<IValidationRule<T>> Validations { get; } = [];
@@ -18,7 +19,11 @@ namespace Vistaaa.Classes
             get => _errors;
             private set => SetProperty(ref _errors, value);
         }
-        public string? FirstError => Errors.FirstOrDefault();    
+        public string? FirstError
+        {
+            get => _firstError;
+            private set => SetProperty(ref _firstError, value);
+        }
         public bool IsValid
         {
             get => _isValid;
@@ -42,6 +47,7 @@ namespace Vistaaa.Classes
                 ?.ToArray()
                 ?? Enumerable.Empty<string>();
             IsValid = !Errors.Any();
+            FirstError = Errors.FirstOrDefault();
             return IsValid;
         }
     }

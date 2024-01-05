@@ -32,7 +32,7 @@ public partial class AdvertisementPage : ContentPage
         {
             Location = new Location(49.699936, 20.417650),
             Label = Advertisement?.CompanyName ?? "",
-            Address = $"ul. {company?.Street} {company?.StreetNumber}, {company?.PostalCode} {company?.City}"
+            Address = $"ul. {company?.StreetName} {company?.StreetNumber}, {company?.PostalCode} {company?.City}"
         });
         map.MoveToRegion(MapSpan.FromCenterAndRadius(new Location(49.699936, 20.417650), Distance.FromKilometers(10)));
         positionNameLabel.Text = Advertisement?.PositionName;
@@ -98,8 +98,21 @@ public partial class AdvertisementPage : ContentPage
 			}
     }
 	private async void CheckIfSaved()
-	{
-		if(Advertisement?.ExpirationDate < DateTime.Now)
+	{	if(Preferences.ContainsKey("userId") && Preferences.Get("userType", "") == "Company")
+		{
+			saveButton.IsEnabled = false;
+			applyButton.IsEnabled = false;
+			advertisementButtonsFlexLayout.IsVisible = false;
+			expiredAdvertisementLabel.Text = "Aplikowanie i zapisywanie og³oszeñ nie jest mo¿liwe w przypadku kont firmowych.";
+			expiredAdvertisementLabel.IsVisible = true;
+			return;
+		}
+        if (Preferences.ContainsKey("userId") && await Database.CheckIfApplyingAdvertisementExists(uint.Parse(Preferences.Get("userId", null) ?? ""), Advertisement?.Id ?? 0) is not null)
+        {
+			applyButton.Text = "Aplikowano";
+			applyButton.IsEnabled = false;
+        }
+        if (Advertisement?.ExpirationDate < DateTime.Now)
 		{
             expiredAdvertisementLabel.IsVisible = true;
 			applyButton.IsVisible = false;
@@ -128,6 +141,10 @@ public partial class AdvertisementPage : ContentPage
 				saveButton.BorderColor = Colors.DodgerBlue;
 			}           
         }
+		if(!applyButton.IsVisible && !saveButton.IsVisible)
+			advertisementButtonsFlexLayout.IsVisible = false;
+		else
+			advertisementButtonsFlexLayout.IsVisible = true;
 		saveButton.IsEnabled = true;
 	}
 
@@ -146,11 +163,23 @@ public partial class AdvertisementPage : ContentPage
 			_= Shell.Current.GoToAsync("//profile");
     }
 
-    private void ApplyButton_Clicked(object sender, EventArgs e)
+    private async void ApplyButton_Clicked(object sender, EventArgs e)
     {
         if (Preferences.ContainsKey("userId"))
         {
-            //CheckIfSaved();
+            User user = await Database.GetUserAsync(uint.Parse(Preferences.Get("userId", null) ?? ""));
+			if(string.IsNullOrWhiteSpace(user.FirstName) || string.IsNullOrWhiteSpace(user.LastName))
+				await DisplayAlert("Uzupe³nij dane", "Aby aplikowaæ na og³oszenia musisz uzupe³niæ swoje dane w zak³adce profilu.", "OK");
+			else
+			{
+				bool result = await DisplayAlert("Aplikowanie", "Czy na pewno chcesz aplikowaæ na to og³oszenie?", "Tak", "Nie");
+				if(result)
+				{
+                    await Database.CreateApplyingAdvertisement(new AdvertisementApplying(uint.Parse(Preferences.Get("userId", null) ?? ""), Advertisement?.Id ?? 0));
+                    await DisplayAlert("Aplikowanie", "Aplikacja zosta³a wys³ana.", "OK");
+					CheckIfSaved();
+                }
+			}
         }
         else
             _ = Shell.Current.GoToAsync("//profile");

@@ -21,10 +21,10 @@
         <DataTemplate x:Key="individualUserTemplate">
             <VerticalStackLayout Spacing="10" Padding="10, 0, 10, 10" Loaded="VerticalStackLayout_Loaded">
                 <Label Text="jako użytkownik indywidualny" TextColor="Black" FontSize="20" FontFamily="SignikaNegative" HorizontalOptions="Center" FontAttributes="Bold"/>
-                <Border Style="{StaticResource formBorder}">
+                <Border Style="{StaticResource formBorder}" Margin="0, 10, 0, 0">
                     <Label Text="Adres e-mail" Style="{StaticResource formLabel}"/>
                 </Border>
-                <Entry Keyboard="Email" PlaceholderColor="Gray" MaxLength="254" BackgroundColor="#DDD" Placeholder="Adres e-mail" TextColor="Black" Text="{Binding Path=BindingContext.Email.Value, Mode=TwoWay, Source={x:Reference RegistrationMainPage}}">
+                <Entry PlaceholderColor="Gray" MaxLength="254" BackgroundColor="#DDD" Placeholder="Adres e-mail" TextColor="Black" Text="{Binding Path=BindingContext.Email.Value, Mode=TwoWay, Source={x:Reference RegistrationMainPage}}">
                     <Entry.Behaviors>
                         <mct:EventToCommandBehavior EventName="TextChanged" Command="{Binding Path=BindingContext.ValidateEmailCommand, Source={x:Reference RegistrationMainPage}}" />
                     </Entry.Behaviors>
@@ -33,8 +33,15 @@
                             <Setter Property="BackgroundColor" Value="#77FF0000" />
                         </DataTrigger>
                     </Entry.Triggers>
+                    <Entry.Keyboard>
+                        <Keyboard x:FactoryMethod="Create">
+                            <x:Arguments>
+                                <KeyboardFlags>Suggestions,CapitalizeNone</KeyboardFlags>
+                            </x:Arguments>
+                        </Keyboard>
+                    </Entry.Keyboard>
                 </Entry>
-                <Label Text="{Binding Path=BindingContext.Email.FirstError, Source={x:Reference RegistrationMainPage}}" Style="{StaticResource validationLabel}" IsVisible="True">
+                <Label Text="{Binding Path=BindingContext.Email.FirstError, Mode=TwoWay, Source={x:Reference RegistrationMainPage}}" Style="{StaticResource validationLabel}" IsVisible="True">
                     <Label.Triggers>
                         <Trigger TargetType="Label" Property="Text"  Value="{x:Null}">
                             <Setter Property="IsVisible" Value="False"/>
@@ -44,44 +51,224 @@
                 <Border Style="{StaticResource formBorder}">
                     <Label Text="Hasło" Style="{StaticResource formLabel}"/>
                 </Border>
-                <Entry PlaceholderColor="Gray" MaxLength="255" BackgroundColor="#DDD" Keyboard="Text" Placeholder="Hasło" TextColor="Black" IsPassword="True"/>
+                <Entry PlaceholderColor="Gray" MaxLength="255" BackgroundColor="#DDD" Keyboard="Text" Placeholder="Hasło" TextColor="Black" IsPassword="True" Text="{Binding Path=BindingContext.Password.Value, Mode=TwoWay, Source={x:Reference RegistrationMainPage}}" TextChanged="RepeatPasswordEntry_TextChanged">
+                    <Entry.Behaviors>
+                        <mct:EventToCommandBehavior EventName="TextChanged" Command="{Binding Path=BindingContext.ValidatePasswordCommand, Source={x:Reference RegistrationMainPage}}" />
+                    </Entry.Behaviors>
+                    <Entry.Triggers>
+                        <DataTrigger TargetType="Entry" Binding="{Binding Path=BindingContext.Password.IsValid, Source={x:Reference RegistrationMainPage}}" Value="False">
+                            <Setter Property="BackgroundColor" Value="#77FF0000" />
+                        </DataTrigger>
+                    </Entry.Triggers>
+                </Entry>
+                <Label Text="{Binding Path=BindingContext.Password.FirstError, Mode=TwoWay, Source={x:Reference RegistrationMainPage}}" Style="{StaticResource validationLabel}" IsVisible="True">
+                    <Label.Triggers>
+                        <Trigger TargetType="Label" Property="Text"  Value="{x:Null}">
+                            <Setter Property="IsVisible" Value="False"/>
+                        </Trigger>
+                    </Label.Triggers>
+                </Label>
                 <Border Style="{StaticResource formBorder}">
                     <Label Text="Powtórz hasło" Style="{StaticResource formLabel}"/>
                 </Border>
-                <Entry PlaceholderColor="Gray" MaxLength="255" BackgroundColor="#DDD" Keyboard="Text" Placeholder="Powtórz hasło" TextColor="Black" IsPassword="True"/>
+                <Entry PlaceholderColor="Gray" MaxLength="255" BackgroundColor="#DDD" Keyboard="Text" Placeholder="Powtórz hasło" TextColor="Black" IsPassword="True" TextChanged="RepeatPasswordEntry_TextChanged"/>
+                <Label Text="Podane hasła nie są identyczne" Style="{StaticResource validationLabel}" IsVisible="False"/>
                 <Border Style="{StaticResource formBorder}">
                     <Label Text="Data urodzenia" Style="{StaticResource formLabel}"/>
                 </Border>
-                <DatePicker TextColor="Black" BackgroundColor="#DDD" x:Name="birthDatePicker" HorizontalOptions="FillAndExpand"/>
-                <HorizontalStackLayout>
-                    <CheckBox Color="LightGreen"/>
-                    <Label Text="Akceptuję regulamin serwisu Vistaaa." TextColor="Black" VerticalTextAlignment="Center"/>
-                </HorizontalStackLayout>
-                
+                <DatePicker TextColor="Black" BackgroundColor="#DDD" x:Name="birthDatePicker" HorizontalOptions="FillAndExpand" Date="{Binding Path=BindingContext.Date.Value, Mode=TwoWay, Source={x:Reference RegistrationMainPage}}">
+                    <DatePicker.Behaviors>
+                        <mct:EventToCommandBehavior EventName="DateSelected" Command="{Binding Path=BindingContext.ValidateDateCommand, Source={x:Reference RegistrationMainPage}}" />
+                    </DatePicker.Behaviors>
+                    <DatePicker.Triggers>
+                        <DataTrigger TargetType="DatePicker" Binding="{Binding Path=BindingContext.Date.IsValid, Source={x:Reference RegistrationMainPage}}" Value="False">
+                            <Setter Property="BackgroundColor" Value="#77FF0000" />
+                        </DataTrigger>
+                    </DatePicker.Triggers>
+                </DatePicker>
+                <Label Text="{Binding Path=BindingContext.Date.FirstError, Mode=TwoWay, Source={x:Reference RegistrationMainPage}}" Style="{StaticResource validationLabel}" IsVisible="True">
+                    <Label.Triggers>
+                        <Trigger TargetType="Label" Property="Text"  Value="{x:Null}">
+                            <Setter Property="IsVisible" Value="False"/>
+                        </Trigger>
+                    </Label.Triggers>
+                </Label>
             </VerticalStackLayout>
         </DataTemplate>
         <DataTemplate x:Key="companyUserTemplate">
             <VerticalStackLayout Spacing="10" Padding="10, 0, 10, 10" Loaded="VerticalStackLayout_Loaded_1">
                 <Label Text="jako firma" TextColor="Black" FontSize="20" FontFamily="SignikaNegative" HorizontalOptions="Center" FontAttributes="Bold"/>
-                <Entry Keyboard="Email" PlaceholderColor="Gray" MaxLength="254" BackgroundColor="#DDD" Placeholder="Adres e-mail" TextColor="Black" Margin="0, 10, 0, 0"/>
-                <Entry PlaceholderColor="Gray" MaxLength="255" BackgroundColor="#DDD" Keyboard="Text" Placeholder="Nazwa firmy" TextColor="Black"/>
-                <Entry PlaceholderColor="Gray" MaxLength="255" BackgroundColor="#DDD" Keyboard="Text" Placeholder="Hasło" TextColor="Black" IsPassword="True"/>
-                <Entry PlaceholderColor="Gray" MaxLength="255" BackgroundColor="#DDD" Keyboard="Text" Placeholder="Powtórz hasło" TextColor="Black" IsPassword="True"/>
+                <Border Style="{StaticResource formBorder}" Margin="0, 10, 0, 0">
+                    <Label Text="Adres e-mail" Style="{StaticResource formLabel}"/>
+                </Border>
+                <Entry Text="{Binding Path=BindingContext.CompanyEmail.Value, Mode=TwoWay, Source={x:Reference RegistrationMainPage}}" PlaceholderColor="Gray" MaxLength="254" BackgroundColor="#DDD" Placeholder="Adres e-mail" TextColor="Black" >
+                    <Entry.Behaviors>
+                        <mct:EventToCommandBehavior EventName="TextChanged" Command="{Binding Path=BindingContext.ValidateCompanyEmailCommand, Source={x:Reference RegistrationMainPage}}" />
+                    </Entry.Behaviors>
+                    <Entry.Triggers>
+                        <DataTrigger TargetType="Entry" Binding="{Binding Path=BindingContext.CompanyEmail.IsValid, Source={x:Reference RegistrationMainPage}}" Value="False">
+                            <Setter Property="BackgroundColor" Value="#77FF0000" />
+                        </DataTrigger>
+                    </Entry.Triggers>
+                    <Entry.Keyboard>
+                        <Keyboard x:FactoryMethod="Create">
+                            <x:Arguments>
+                                <KeyboardFlags>Suggestions,CapitalizeNone</KeyboardFlags>
+                            </x:Arguments>
+                        </Keyboard>
+                    </Entry.Keyboard>
+                </Entry>
+                <Label Text="{Binding Path=BindingContext.CompanyEmail.FirstError, Mode=TwoWay, Source={x:Reference RegistrationMainPage}}" Style="{StaticResource validationLabel}" IsVisible="True">
+                    <Label.Triggers>
+                        <Trigger TargetType="Label" Property="Text"  Value="{x:Null}">
+                            <Setter Property="IsVisible" Value="False"/>
+                        </Trigger>
+                    </Label.Triggers>
+                </Label>
+                <Border Style="{StaticResource formBorder}">
+                    <Label Text="Nazwa firmy" Style="{StaticResource formLabel}"/>
+                </Border>
+                <Entry Text="{Binding Path=BindingContext.CompanyName.Value, Mode=TwoWay, Source={x:Reference RegistrationMainPage}}" PlaceholderColor="Gray" MaxLength="50" BackgroundColor="#DDD" Keyboard="Text" Placeholder="Nazwa firmy" TextColor="Black">
+                    <Entry.Behaviors>
+                        <mct:EventToCommandBehavior EventName="TextChanged" Command="{Binding Path=BindingContext.ValidateCompanyNameCommand, Source={x:Reference RegistrationMainPage}}" />
+                    </Entry.Behaviors>
+                    <Entry.Triggers>
+                        <DataTrigger TargetType="Entry" Binding="{Binding Path=BindingContext.CompanyName.IsValid, Source={x:Reference RegistrationMainPage}}" Value="False">
+                            <Setter Property="BackgroundColor" Value="#77FF0000" />
+                        </DataTrigger>
+                    </Entry.Triggers>
+                </Entry>
+                <Label Text="{Binding Path=BindingContext.CompanyName.FirstError, Mode=TwoWay, Source={x:Reference RegistrationMainPage}}" Style="{StaticResource validationLabel}" IsVisible="True">
+                    <Label.Triggers>
+                        <Trigger TargetType="Label" Property="Text"  Value="{x:Null}">
+                            <Setter Property="IsVisible" Value="False"/>
+                        </Trigger>
+                    </Label.Triggers>
+                </Label>
+                <Border Style="{StaticResource formBorder}">
+                    <Label Text="Hasło" Style="{StaticResource formLabel}"/>
+                </Border>
+                <Entry TextChanged="RepeatCompanyPasswordEntry_TextChanged" Text="{Binding Path=BindingContext.CompanyPassword.Value, Mode=TwoWay, Source={x:Reference RegistrationMainPage}}" PlaceholderColor="Gray" MaxLength="255" BackgroundColor="#DDD" Keyboard="Text" Placeholder="Hasło" TextColor="Black" IsPassword="True">
+                    <Entry.Behaviors>
+                        <mct:EventToCommandBehavior EventName="TextChanged" Command="{Binding Path=BindingContext.ValidateCompanyPasswordCommand, Source={x:Reference RegistrationMainPage}}" />
+                    </Entry.Behaviors>
+                    <Entry.Triggers>
+                        <DataTrigger TargetType="Entry" Binding="{Binding Path=BindingContext.CompanyPassword.IsValid, Source={x:Reference RegistrationMainPage}}" Value="False">
+                            <Setter Property="BackgroundColor" Value="#77FF0000" />
+                        </DataTrigger>
+                    </Entry.Triggers>
+                </Entry>
+                <Label Text="{Binding Path=BindingContext.CompanyPassword.FirstError, Mode=TwoWay, Source={x:Reference RegistrationMainPage}}" Style="{StaticResource validationLabel}" IsVisible="True">
+                    <Label.Triggers>
+                        <Trigger TargetType="Label" Property="Text"  Value="{x:Null}">
+                            <Setter Property="IsVisible" Value="False"/>
+                        </Trigger>
+                    </Label.Triggers>
+                </Label>
+                <Border Style="{StaticResource formBorder}">
+                    <Label Text="Powtórz hasło" Style="{StaticResource formLabel}"/>
+                </Border>
+                <Entry TextChanged="RepeatCompanyPasswordEntry_TextChanged"  PlaceholderColor="Gray" MaxLength="255" BackgroundColor="#DDD" Keyboard="Text" Placeholder="Powtórz hasło" TextColor="Black" IsPassword="True"/>
+                <Label Text="Podane hasła nie są identyczne" Style="{StaticResource validationLabel}" IsVisible="False"/>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="3*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Entry PlaceholderColor="Gray" MaxLength="255" BackgroundColor="#DDD" Keyboard="Text" Placeholder="Ulica" TextColor="Black"/>
-                    <Entry PlaceholderColor="Gray" Grid.Column="1" MaxLength="255" BackgroundColor="#DDD" Keyboard="Numeric"  Placeholder="Numer" TextColor="Black"/>
+                    <VerticalStackLayout Spacing="10">
+                        <Border Style="{StaticResource formBorder}">
+                            <Label Text="Ulica" Style="{StaticResource formLabel}"/>
+                        </Border>
+                        <Entry Text="{Binding Path=BindingContext.CompanyStreetName.Value, Mode=TwoWay, Source={x:Reference RegistrationMainPage}}" PlaceholderColor="Gray" MaxLength="100" BackgroundColor="#DDD" Keyboard="Text" Placeholder="Ulica" TextColor="Black">
+                            <Entry.Behaviors>
+                                <mct:EventToCommandBehavior EventName="TextChanged" Command="{Binding Path=BindingContext.ValidateCompanyStreetNameCommand, Source={x:Reference RegistrationMainPage}}" />
+                            </Entry.Behaviors>
+                            <Entry.Triggers>
+                                <DataTrigger TargetType="Entry" Binding="{Binding Path=BindingContext.CompanyStreetName.IsValid, Source={x:Reference RegistrationMainPage}}" Value="False">
+                                    <Setter Property="BackgroundColor" Value="#77FF0000" />
+                                </DataTrigger>
+                            </Entry.Triggers>
+                        </Entry>
+                        <Label Text="{Binding Path=BindingContext.CompanyStreetName.FirstError, Mode=TwoWay, Source={x:Reference RegistrationMainPage}}" Style="{StaticResource validationLabel}" IsVisible="True">
+                            <Label.Triggers>
+                                <Trigger TargetType="Label" Property="Text"  Value="{x:Null}">
+                                    <Setter Property="IsVisible" Value="False"/>
+                                </Trigger>
+                            </Label.Triggers>
+                        </Label>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="1" Spacing="10">
+                        <Border Style="{StaticResource formBorder}">
+                            <Label Text="Numer" Style="{StaticResource formLabel}"/>
+                        </Border>
+                        <Entry Text="{Binding Path=BindingContext.CompanyStreetNumber.Value, Mode=TwoWay, Source={x:Reference RegistrationMainPage}}" PlaceholderColor="Gray" MaxLength="10" BackgroundColor="#DDD" Keyboard="Numeric"  Placeholder="Numer" TextColor="Black">
+                            <Entry.Behaviors>
+                                <mct:EventToCommandBehavior EventName="TextChanged" Command="{Binding Path=BindingContext.ValidateCompanyStreetNumberCommand, Source={x:Reference RegistrationMainPage}}" />
+                            </Entry.Behaviors>
+                            <Entry.Triggers>
+                                <DataTrigger TargetType="Entry" Binding="{Binding Path=BindingContext.CompanyStreetNumber.IsValid, Source={x:Reference RegistrationMainPage}}" Value="False">
+                                    <Setter Property="BackgroundColor" Value="#77FF0000" />
+                                </DataTrigger>
+                            </Entry.Triggers>
+                        </Entry>
+                        <Label Text="{Binding Path=BindingContext.CompanyStreetNumber.FirstError, Mode=TwoWay, Source={x:Reference RegistrationMainPage}}" Style="{StaticResource validationLabel}" IsVisible="True">
+                            <Label.Triggers>
+                                <Trigger TargetType="Label" Property="Text"  Value="{x:Null}">
+                                    <Setter Property="IsVisible" Value="False"/>
+                                </Trigger>
+                            </Label.Triggers>
+                        </Label>
+                    </VerticalStackLayout>
                 </Grid>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Entry PlaceholderColor="Gray" MaxLength="255" BackgroundColor="#DDD" Keyboard="Numeric"  Placeholder="Kod pocztowy" TextColor="Black"/>
-                    <Entry PlaceholderColor="Gray" Grid.Column="1" MaxLength="255" BackgroundColor="#DDD" Keyboard="Text" Placeholder="Miejscowość" TextColor="Black"/>
+                    <VerticalStackLayout Spacing="10">
+                        <Border Style="{StaticResource formBorder}">
+                            <Label Text="Kod pocztowy" Style="{StaticResource formLabel}"/>
+                        </Border>
+                        <Entry Text="{Binding Path=BindingContext.CompanyPostalCode.Value, Mode=TwoWay, Source={x:Reference RegistrationMainPage}}" PlaceholderColor="Gray" MaxLength="6" BackgroundColor="#DDD" Keyboard="Text"  Placeholder="Kod pocztowy" TextColor="Black">
+                            <Entry.Behaviors>
+                                <mct:EventToCommandBehavior EventName="TextChanged" Command="{Binding Path=BindingContext.ValidateCompanyPostalCodeCommand, Source={x:Reference RegistrationMainPage}}" />
+                            </Entry.Behaviors>
+                            <Entry.Triggers>
+                                <DataTrigger TargetType="Entry" Binding="{Binding Path=BindingContext.CompanyPostalCode.IsValid, Source={x:Reference RegistrationMainPage}}" Value="False">
+                                    <Setter Property="BackgroundColor" Value="#77FF0000" />
+                                </DataTrigger>
+                            </Entry.Triggers>
+                        </Entry>
+                        <Label Text="{Binding Path=BindingContext.CompanyPostalCode.FirstError, Mode=TwoWay, Source={x:Reference RegistrationMainPage}}" Style="{StaticResource validationLabel}" IsVisible="True">
+                            <Label.Triggers>
+                                <Trigger TargetType="Label" Property="Text"  Value="{x:Null}">
+                                    <Setter Property="IsVisible" Value="False"/>
+                                </Trigger>
+                            </Label.Triggers>
+                        </Label>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Spacing="10" Grid.Column="1">
+                        <Border Style="{StaticResource formBorder}">
+                            <Label Text="Miejscowość" Style="{StaticResource formLabel}"/>
+                        </Border>
+                        <Entry Text="{Binding Path=BindingContext.CompanyCity.Value, Mode=TwoWay, Source={x:Reference RegistrationMainPage}}" PlaceholderColor="Gray" Grid.Column="1" MaxLength="50" BackgroundColor="#DDD" Keyboard="Text" Placeholder="Miejscowość" TextColor="Black">
+                            <Entry.Behaviors>
+                                <mct:EventToCommandBehavior EventName="TextChanged" Command="{Binding Path=BindingContext.ValidateCompanyCityCommand, Source={x:Reference RegistrationMainPage}}" />
+                            </Entry.Behaviors>
+                            <Entry.Triggers>
+                                <DataTrigger TargetType="Entry" Binding="{Binding Path=BindingContext.CompanyCity.IsValid, Source={x:Reference RegistrationMainPage}}" Value="False">
+                                    <Setter Property="BackgroundColor" Value="#77FF0000" />
+                                </DataTrigger>
+                            </Entry.Triggers>
+                        </Entry>
+                        <Label Text="{Binding Path=BindingContext.CompanyCity.FirstError, Mode=TwoWay, Source={x:Reference RegistrationMainPage}}" Style="{StaticResource validationLabel}" IsVisible="True">
+                            <Label.Triggers>
+                                <Trigger TargetType="Label" Property="Text"  Value="{x:Null}">
+                                    <Setter Property="IsVisible" Value="False"/>
+                                </Trigger>
+                            </Label.Triggers>
+                        </Label>
+                    </VerticalStackLayout>
                 </Grid>
             </VerticalStackLayout>
         </DataTemplate>
@@ -105,16 +292,14 @@
                    IndicatorColor="DarkGray"
                    SelectedIndicatorColor="DodgerBlue"
                    HorizontalOptions="Center" />
-            <!--<Entry Keyboard="Email" TextColor="Black" Text="{Binding Email.Value, Mode=TwoWay}">
-                <Entry.Behaviors>
-                    <mct:EventToCommandBehavior EventName="TextChanged" Command="{Binding ValidateEmailCommand}" />
-                </Entry.Behaviors>
-                <Entry.Triggers>
-                    <DataTrigger TargetType="Entry" Binding="{Binding Email.IsValid}" Value="False">
-                        <Setter Property="BackgroundColor" Value="Red" />
-                    </DataTrigger>
-                </Entry.Triggers>
-            </Entry>-->
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <CheckBox Color="LightGreen" x:Name="registrationCheckbox"/>
+                <Label Text="Akceptuję regulamin serwisu Vistaaa." TextColor="Black" VerticalTextAlignment="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="RegistrationCheckboxLabel_Tapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </HorizontalStackLayout>
             <Grid ColumnSpacing="15">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>

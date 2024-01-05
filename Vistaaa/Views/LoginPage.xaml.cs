@@ -30,6 +30,13 @@ public partial class LoginPage : ContentPage
         if (user is not null)
         {
             Preferences.Set("userId", user.Id.ToString());
+            Preferences.Set("userType", "IndividualUser");
+            await Navigation.PopModalAsync();
+        }
+        else if(await database.VerifyCompanyAsync(emailEntry.Text, passwordEntry.Text) is not null)
+        {
+            Preferences.Set("userId", (await database.VerifyCompanyAsync(emailEntry.Text, passwordEntry.Text))?.Id.ToString());
+            Preferences.Set("userType", "Company");
             await Navigation.PopModalAsync();
         }
         else

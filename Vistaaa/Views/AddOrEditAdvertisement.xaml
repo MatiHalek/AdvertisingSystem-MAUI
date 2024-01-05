@@ -43,7 +43,7 @@
                         <Picker x:Name="companyPicker"/>
                         <Label x:Name="companyValidationLabel" Style="{StaticResource validationLabel}"/>
                     </VerticalStackLayout>
-                    <Button Text="Dodaj" Grid.Column="1" Clicked="AddNewCompanyButton_Clicked" Style="{StaticResource commonButton}" Margin="0, 10, 0, 0" VerticalOptions="Start"/>
+                    <Button Text="Dodaj" x:Name="addNewCompanyButton" Grid.Column="1" Clicked="AddNewCompanyButton_Clicked" Style="{StaticResource commonButton}" Margin="0, 10, 0, 0" VerticalOptions="Start"/>
                 </Grid>
                 <Grid ColumnSpacing="10">
                     <Grid.ColumnDefinitions>
